@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('/donors', DonorController::class)->except(['show']);
-    Route::resource('/blood-groups', BloodGroupController::class)->except(['show']);
+    Route::resource('/donors', DonorController::class);
+    Route::resource('/blood-groups', BloodGroupController::class);
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

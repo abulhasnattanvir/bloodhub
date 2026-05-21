@@ -13,9 +13,19 @@ class BloodGroupController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bloodGroups = BloodGroup::all();
+        $query = BloodGroup::query();
+        
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+        }
+        
+        $bloodGroups = $query->latest()->paginate(10)->withQueryString();
+        
         return view('admin.blood-groups.index', compact('bloodGroups'));
     }
 
@@ -43,7 +53,7 @@ class BloodGroupController extends Controller
      */
     public function show(BloodGroup $bloodGroup)
     {
-        //
+        return view('admin.blood-groups.show', compact('bloodGroup'));
     }
 
     /**

@@ -80,7 +80,7 @@ class DonorController extends Controller
      */
     public function show(Donor $donor)
     {
-        //
+        return view('admin.donors.show', compact('donor'));
     }
 
     /**

@@ -12,6 +12,7 @@ class BloodGroup extends Model
      */
     protected $fillable = [
         'name',
+        'description',
     ];
 
     /**

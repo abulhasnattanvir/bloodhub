@@ -19,24 +19,19 @@ class DonorListController extends Controller
     {
         $query = Donor::with('bloodGroup');
 
-        // Search by name
-        if ($request->filled('name')) {
-            $query->where('full_name', 'like', "%{$request->input('name')}%");
+        // Search by name, phone, or email (like admin system)
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('phone_number', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
         }
 
         // Search by blood group
         if ($request->filled('blood_group')) {
             $query->where('blood_group_id', $request->input('blood_group'));
-        }
-
-        // Search by phone number
-        if ($request->filled('phone')) {
-            $query->where('phone_number', 'like', "%{$request->input('phone')}%");
-        }
-
-        // Search by gender
-        if ($request->filled('gender')) {
-            $query->where('gender', $request->input('gender'));
         }
 
         // Search by availability status
@@ -180,5 +175,28 @@ class DonorListController extends Controller
 
         return redirect()->route('donors.list')
             ->with('success', 'Donor deleted successfully.');
+    }
+
+    /**
+     * Display the specified donor as JSON for API.
+     */
+    public function apiShow(Donor $donor)
+    {
+        return response()->json([
+            'id' => $donor->id,
+            'full_name' => $donor->full_name,
+            'phone_number' => $donor->phone_number,
+            'gender' => $donor->gender,
+            'email' => $donor->email,
+            'address' => $donor->address,
+            'last_donation_date' => $donor->last_donation_date ? $donor->last_donation_date->toIso8601String() : null,
+            'availability_status' => $donor->availability_status,
+            'profile_photo' => $donor->profile_photo ? Storage::url($donor->profile_photo) : null,
+            'bloodGroup' => $donor->bloodGroup ? [
+                'id' => $donor->bloodGroup->id,
+                'name' => $donor->bloodGroup->name
+            ] : null,
+            'notes' => $donor->notes
+        ]);
     }
 }

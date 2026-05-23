@@ -16,24 +16,19 @@ class SearchController extends Controller
     {
         $query = Donor::with('bloodGroup');
 
-        // Search by name
-        if ($request->filled('name')) {
-            $query->where('full_name', 'like', "%{$request->input('name')}%");
+        // Search by name, phone, or email (like admin system)
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                  ->orWhere('phone_number', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
         }
 
         // Search by blood group
         if ($request->filled('blood_group')) {
             $query->where('blood_group_id', $request->input('blood_group'));
-        }
-
-        // Search by phone number
-        if ($request->filled('phone')) {
-            $query->where('phone_number', 'like', "%{$request->input('phone')}%");
-        }
-
-        // Search by gender
-        if ($request->filled('gender')) {
-            $query->where('gender', $request->input('gender'));
         }
 
         // Get donors

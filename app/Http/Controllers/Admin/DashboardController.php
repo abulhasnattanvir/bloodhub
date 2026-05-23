@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Donor;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -16,6 +17,13 @@ class DashboardController extends Controller
         $totalDonors = Donor::count();
         $availableDonors = Donor::where('availability_status', 'available')->count();
         $recentDonors = Donor::with('bloodGroup')->latest()->take(5)->get();
+        
+        // Today's stats
+        $today = Carbon::today();
+        $todayDonors = Donor::whereDate('created_at', $today)->count();
+        $todayDonations = Donor::whereNotNull('last_donation_date')
+                                ->whereDate('last_donation_date', $today)
+                                ->count();
 
         // Blood group statistics
         $bloodGroupStats = Donor::selectRaw('blood_groups.name, count(donors.id) as count')
@@ -28,7 +36,9 @@ class DashboardController extends Controller
             'totalDonors',
             'availableDonors',
             'recentDonors',
-            'bloodGroupStats'
+            'bloodGroupStats',
+            'todayDonors',
+            'todayDonations'
         ));
     }
 }

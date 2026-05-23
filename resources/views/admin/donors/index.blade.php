@@ -20,66 +20,54 @@
                 </div>
             </div>
 
-            <!-- Search and Filter Form -->
+            <!-- Search and Filter Fields -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
-                    <form method="GET" action="{{ route('admin.donors.index') }}" class="space-y-4">
-                        <div class="sm:grid sm:grid-cols-3 gap-4">
-                            <div>
-                                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
-                                    {{ __('Search by name') }}
-                                </label>
-                                <input type="text" id="search" name="search" 
-                                       value="{{ request()->input('search') }}"
-                                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary focus:ring-opacity-50 sm:text-sm">
-                            </div>
-                            
-                            <div>
-                                <label for="blood_group" class="block text-sm font-medium text-gray-700 mb-1">
-                                    {{ __('Blood Group') }}
-                                </label>
-                                <select id="blood_group" name="blood_group" 
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary focus:ring-opacity-50 sm:text-sm">
-                                    <option value=""> {{ __('All Blood Groups') }} </option>
-                                    @foreach($bloodGroups as $bloodGroup)
-                                        <option value="{{ $bloodGroup->id }}" 
-                                                {{ request()->input('blood_group') == $bloodGroup->id ? 'selected' : '' }}>
-                                            {{ $bloodGroup->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            
-                            <div>
-                                <label for="availability" class="block text-sm font-medium text-gray-700 mb-1">
-                                    {{ __('Availability Status') }}
-                                </label>
-                                <select id="availability" name="availability_status" 
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary focus:ring-opacity-50 sm:text-sm">
-                                    <option value=""> {{ __('All Statuses') }} </option>
-                                    <option value="available" 
-                                            {{ request()->input('availability_status') == 'available' ? 'selected' : '' }}>
-                                        {{ __('Available') }}
-                                    </option>
-                                    <option value="not_available" 
-                                            {{ request()->input('availability_status') == 'not_available' ? 'selected' : '' }}>
-                                        {{ __('Not Available') }}
-                                    </option>
-                                </select>
-                            </div>
+                    <div class="sm:grid sm:grid-cols-3 gap-4">
+                        <div>
+                            <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
+                                {{ __('Search by name') }}
+                            </label>
+                            <input type="text" id="search" 
+                                   value="{{ request()->input('search') }}"
+                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary focus:ring-opacity-50 sm:text-sm"
+                                   placeholder="{{ __('Type to search...') }}">
                         </div>
                         
-                        <div class="pt-2">
-                            <button type="submit" 
-                                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark">
-                                {{ __('Filter') }}
-                            </button>
-                            <a href="{{ route('admin.donors.index') }}" 
-                               class="ml-3 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                                {{ __('Reset') }}
-                            </a>
+                        <div>
+                            <label for="blood_group" class="block text-sm font-medium text-gray-700 mb-1">
+                                {{ __('Blood Group') }}
+                            </label>
+                            <select id="blood_group" 
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary focus:ring-opacity-50 sm:text-sm">
+                                <option value=""> {{ __('All Blood Groups') }} </option>
+                                @foreach($bloodGroups as $bloodGroup)
+                                    <option value="{{ $bloodGroup->id }}" 
+                                            {{ request()->input('blood_group') == $bloodGroup->id ? 'selected' : '' }}>
+                                        {{ $bloodGroup->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
-                    </form>
+                        
+                        <div>
+                            <label for="availability" class="block text-sm font-medium text-gray-700 mb-1">
+                                {{ __('Availability Status') }}
+                            </label>
+                            <select id="availability" 
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary focus:ring-opacity-50 sm:text-sm">
+                                <option value=""> {{ __('All Statuses') }} </option>
+                                <option value="available" 
+                                        {{ request()->input('availability_status') == 'available' ? 'selected' : '' }}>
+                                    {{ __('Available') }}
+                                </option>
+                                <option value="not_available" 
+                                        {{ request()->input('availability_status') == 'not_available' ? 'selected' : '' }}>
+                                    {{ __('Not Available') }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -164,7 +152,7 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                                        {{ $donor->availability_status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                         {{ $donor->availability_status === 'available' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                                     {{ ucfirst($donor->availability_status) }}
                                                 </span>
                                             </td>
@@ -217,3 +205,82 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search');
+    const bloodGroupSelect = document.getElementById('blood_group');
+    const availabilitySelect = document.getElementById('availability');
+    
+    // Debounce function
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function () {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
+    }
+    
+    // Update URL parameters and reload page
+    function updateFilters() {
+        const params = new URLSearchParams(window.location.search);
+        
+        // Get values
+        const searchValue = searchInput ? searchInput.value.trim() : '';
+        const bloodGroupValue = bloodGroupSelect ? bloodGroupSelect.value : '';
+        const availabilityValue = availabilitySelect ? availabilitySelect.value : '';
+        
+        // Set or remove parameters
+        if (searchValue) {
+            params.set('search', searchValue);
+        } else {
+            params.delete('search');
+        }
+        
+        if (bloodGroupValue) {
+            params.set('blood_group', bloodGroupValue);
+        } else {
+            params.delete('blood_group');
+        }
+        
+        if (availabilityValue) {
+            params.set('availability_status', availabilityValue);
+        } else {
+            params.delete('availability_status');
+        }
+        
+        // Reload page with new parameters
+        const newUrl = `${window.location.pathname}?${params.toString()}`;
+        window.location.href = newUrl;
+    }
+    
+    // Add event listeners with debounce
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(function() {
+            updateFilters();
+        }, 500));
+        
+        // Also handle Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                updateFilters();
+            }
+        });
+    }
+    
+    if (bloodGroupSelect) {
+        bloodGroupSelect.addEventListener('change', debounce(function() {
+            updateFilters();
+        }, 300));
+    }
+    
+    if (availabilitySelect) {
+        availabilitySelect.addEventListener('change', debounce(function() {
+            updateFilters();
+        }, 300));
+    }
+});
+</script>

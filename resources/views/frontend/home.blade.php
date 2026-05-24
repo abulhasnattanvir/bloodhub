@@ -65,23 +65,21 @@
                     <span
                         class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-red-100 text-red-600 font-semibold mb-6">
                         <i class="fas fa-heartbeat"></i>
-                        Emergency Blood Support
+                        {{ __('app.emergency_blood_support') }}
                     </span>
 
                     <h1 class="text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 mb-6">
 
-                        Save Lives <br>
-
+                        {{ __('app.save_lives') }} <br>
                         <span class="text-red-600">
-                            With Every Drop
+                            {{ __('app.every_drop') }}
                         </span>
 
                     </h1>
 
                     <p class="text-lg text-gray-600 leading-relaxed mb-8 max-w-xl">
 
-                        Find verified blood donors quickly and connect instantly
-                        during emergencies. Your one donation can save multiple lives.
+                        {{ __('app.hero_description') }}
 
                     </p>
 
@@ -98,7 +96,7 @@
                             class="px-8 py-4 rounded-2xl border border-red-200 bg-white hover:bg-red-50 transition font-semibold text-gray-700">
 
                             <i class="fas fa-users mr-2"></i>
-                            View Donors
+                            {{ __('app.view_donor_btn') }}
                         </a>
 
                     </div>
@@ -144,7 +142,7 @@
                                 </h2>
 
                                 <p class="text-gray-600 mt-2">
-                                    Match Success
+                                    {{ __('app.match_success') }}
                                 </p>
                             </div>
 
@@ -156,7 +154,7 @@
                                 </h2>
 
                                 <p class="text-gray-600 mt-2">
-                                    Emergency Help
+                                    {{ __('app.emergency_support') }}
                                 </p>
                             </div>
 
@@ -180,11 +178,11 @@
             <div class="text-center mb-14">
 
                 <span class="inline-block px-4 py-2 rounded-full bg-red-100 text-red-600 font-semibold mb-4">
-                    Recent Donors
+                    {{ __('app.recent_donors') }}
                 </span>
 
                 <h2 class="text-4xl font-extrabold text-gray-900 mb-4">
-                    Meet Our Heroes
+                    {{ __('app.meet_our_heroes') }}
                 </h2>
 
                 <p class="text-gray-600 max-w-2xl mx-auto">

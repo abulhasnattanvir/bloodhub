@@ -99,7 +99,7 @@
                 </h1>
 
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Have questions or need assistance? Our team is always ready to help donors and recipients anytime.
+                    {{ __('app.have_questions_text') }}
                 </p>
             </div>
 
@@ -114,8 +114,7 @@
                     </h2>
 
                     <p class="text-gray-600 mb-8 leading-relaxed">
-                        Whether you're a blood donor, recipient, or simply looking for information,
-                        feel free to contact our support team anytime.
+                        {{ __('app.whether_you_are_text') }}
                     </p>
 
                     <div class="space-y-5">
@@ -234,7 +233,7 @@
                     </h2>
 
                     <span class="px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm">
-                        Live Location
+                        {{ __('app.live_location') }}
                     </span>
                 </div>
 

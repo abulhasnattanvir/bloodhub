@@ -107,19 +107,25 @@ return [
     'never' => 'Never',
     'all_blood_groups' => 'All Blood Groups',
     'all_status' => 'All Status',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Home Page
     |--------------------------------------------------------------------------
     |
     */
-
+    'emergency_blood_support' => 'Emergency Blood Support',
+    'save_lives' => 'Save Lives',
+    'every_drop' => 'With Every Drop',
+    'hero_description' => 'Find verified blood donors quickly and connect instantly during emergencies. Your one donation can save multiple lives.',
+    'view_donor_btn' => 'View Donors',
     'search_donors' => 'Search Donors',
     'total_donors' => 'Total Donors',
     'available_donors' => 'Available Donors',
-    'match_success_rate' => 'Match Success Rate',
+    'match_success' => 'Match Success Rate',
     'emergency_support' => 'Emergency Support',
+    'recent_donors' => 'Recent Donors',
+    'meet_our_heroes' => 'Meet Our Heroes',
     
     /*
     |--------------------------------------------------------------------------
@@ -141,6 +147,9 @@ return [
 
     'contact' => 'Contact Us',
     'get_in_touch' => 'Get In Touch',
+    'send_us_a_message' => 'Send us a Message',
+    'have_questions_text' => 'Have questions or need assistance? Our team is always ready to help donors and recipients anytime.',
+    'whether_you_are_text' => "Whether you're a blood donor, recipient, or simply looking for information, feel free to contact our support team anytime.",
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Address',
@@ -155,6 +164,7 @@ return [
     'send_message' => 'Send Message',
     'our_location' => 'Our Location',
     'map_would_appear_here' => 'Map would appear here',
+    'live_location' => 'Live Location',
 
     /*
     |--------------------------------------------------------------------------

@@ -1,84 +1,256 @@
-{{-- Extend the frontend layout --}}
 @extends('layouts.frontend')
 
-{{-- Define the content for the slot --}}
 @section('content')
-    <section class="py-5">
-        <div class="container">
-            <h1 class="mb-4">Contact Us</h1>
-            <p class="lead">
-                Have questions or need assistance? We're here to help!
-            </p>
-            
-            <div class="row mb-5">
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Get In Touch</h5>
-                            <p class="card-text">
-                                Whether you're a donor, recipient, or just have questions about our platform,
-                                please don't hesitate to reach out to us.
-                            </p>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <i class="fas fa-envelope me-2"></i>
-                                    <strong>Email:</strong> info@blooddonor.example.com
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="fas fa-phone me-2"></i>
-                                    <strong>Phone:</strong> +1 (555) 123-4567
-                                </li>
-                                <li class="list-group-item">
-                                    <i class="fas fa-map-marker-alt me-2"></i>
-                                    <strong>Address:</strong> 123 Blood Donor Street, City, State 12345
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Send Us a Message</h5>
-                            <form>
-                                <div class="mb-3">
-                                    <label for="contactName" class="form-label">Your Name</label>
-                                    <input type="text" class="form-control" id="contactName" placeholder="Enter your name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="contactEmail" class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="contactEmail" placeholder="Enter your email">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="contactSubject" class="form-label">Subject</label>
-                                    <input type="text" class="form-control" id="contactSubject" placeholder="Enter subject">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="contactMessage" class="form-label">Message</label>
-                                    <textarea class="form-control" id="contactMessage" rows="5" placeholder="Enter your message"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Send Message</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+    <style>
+        .contact-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            background: #fff;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .contact-input:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+        }
+
+        .contact-btn {
+            background: linear-gradient(to right, #dc2626, #ef4444);
+            padding: 14px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            height: 350px;
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        }
+
+        body.dark-mode .contact-card {
+            background: rgba(30, 30, 30, 0.95);
+            color: #f3f4f6;
+        }
+
+        body.dark-mode .contact-input {
+            background: #1f2937;
+            border-color: #374151;
+            color: white;
+        }
+
+        body.dark-mode .contact-input::placeholder {
+            color: #9ca3af;
+        }
+    </style>
+
+    <section class="relative py-16 overflow-hidden">
+
+        <!-- Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-red-100"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4">
+
+            <!-- Heading -->
+            <div class="text-center mb-14">
+                <span class="inline-block px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm font-semibold mb-4">
+                    {{ __('app.contact') }}
+                </span>
+
+                <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
+                    {{ __('app.contact') }}
+                </h1>
+
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Have questions or need assistance? Our team is always ready to help donors and recipients anytime.
+                </p>
             </div>
-            
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title mb-0">Our Location</h5>
-                        </div>
-                        <div class="card-body">
-                            <div id="map" style="height: 300px; background: #eee;">
-                                <p class="text-center py-5">Map would appear here</p>
+
+            <!-- Main Grid -->
+            <div class="grid lg:grid-cols-2 gap-10 mb-10">
+
+                <!-- Contact Info -->
+                <div class="contact-card p-8">
+
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">
+                        {{ __('app.get_in_touch') }}
+                    </h2>
+
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        Whether you're a blood donor, recipient, or simply looking for information,
+                        feel free to contact our support team anytime.
+                    </p>
+
+                    <div class="space-y-5">
+
+                        <!-- Email -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-gray-800">
+                                    {{ __('app.email') }}
+                                </h4>
+
+                                <p class="text-gray-600">
+                                    info@blooddonor.example.com
+                                </p>
                             </div>
                         </div>
+
+                        <!-- Phone -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-gray-800">
+                                    {{ __('app.phone') }}
+                                </h4>
+
+                                <p class="text-gray-600">
+                                    +1 (555) 123-4567
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+
+                            <div>
+                                <h4 class="font-bold text-gray-800">
+                                    {{ __('app.address') }}
+                                </h4>
+
+                                <p class="text-gray-600">
+                                    123 Blood Donor Street, City, State 12345
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+                <!-- Contact Form -->
+                <div class="contact-card p-8">
+
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                        {{ __('app.send_us_a_message') }}
+                    </h2>
+
+                    <form id="contactForm" class="space-y-5">
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-gray-700">
+                                {{ __('app.name') }}
+                            </label>
+
+                            <input type="text" class="contact-input" placeholder="{{ __('app.enter_your_name') }}">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-gray-700">
+                                {{ __('app.email_address') }}
+                            </label>
+
+                            <input type="email" class="contact-input" placeholder="{{ __('app.enter_your_email') }}">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-gray-700">
+                                {{ __('app.subject') }}
+                            </label>
+
+                            <input type="text" class="contact-input" placeholder="{{ __('app.enter_subject') }}">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold mb-2 text-gray-700">
+                                {{ __('app.message') }}
+                            </label>
+
+                            <textarea rows="6" class="contact-input resize-none" placeholder="{{ __('app.enter_your_message') }}"></textarea>
+                        </div>
+
+                        <button type="submit" class="contact-btn">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            {{ __('app.send_message') }}
+                        </button>
+
+                    </form>
+                </div>
+
             </div>
+
+            <!-- Map -->
+            <div class="contact-card p-6">
+
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        {{ __('app.our_location') }}
+                    </h2>
+
+                    <span class="px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm">
+                        Live Location
+                    </span>
+                </div>
+
+                <div class="map-container flex items-center justify-center">
+
+                    <div class="text-center">
+                        <i class="fas fa-map-marked-alt text-6xl text-red-500 mb-4"></i>
+
+                        <p class="text-lg text-gray-600">
+                            {{ __('app.map_would_appear_here') }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </section>
 @endsection

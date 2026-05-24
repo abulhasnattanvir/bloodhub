@@ -1,231 +1,177 @@
-{{-- Extend the frontend layout --}}
 @extends('layouts.frontend')
 
 @section('content')
-    <!-- Search and Filter Section -->
-    <section class="py-4 bg-light">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <h2 class="h4">Search Donors</h2>
-                </div>
-                {{-- <div class="col-md-6 text-md-end">
-                    <a href="{{ route('donors.create') }}" class="btn btn-primary btn-sm d-none d-md-block">Add Donor</a>
-                </div> --}}
+
+    <!-- =========================
+        SEARCH HERO DASHBOARD
+    ========================= -->
+    <section class="bg-gradient-to-r from-red-50 to-white py-10">
+        <div class="max-w-7xl mx-auto px-4">
+
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                {{ __('app.search_donors') }}
+            </h1>
+
+            <p class="text-gray-500 mb-6">
+                Find blood donors instantly by filters or smart search
+            </p>
+
+            <!-- QUICK BLOOD FILTER BUTTONS -->
+            <div class="flex flex-wrap gap-2 mb-6">
+
+                <button onclick="setBlood('')" class="px-3 py-1 bg-gray-200 rounded-full">All</button>
+                @foreach ($bloodGroups as $bg)
+                    <button onclick="setBlood('{{ $bg->id }}')"
+                        class="px-3 py-1 bg-red-100 text-red-600 rounded-full hover:bg-red-200">
+                        {{ $bg->name }}
+                    </button>
+                @endforeach
+
             </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <input type="text" id="search-input" name="search" class="form-control"
-                            placeholder="Search by name, phone, or email" value="{{ $request->input('search') }}">
-                        <button class="btn btn-outline-secondary" type="button" id="search-reset">Reset</button>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <select id="blood-group-select" name="blood_group" class="form-select">
-                        <option value="">All Blood Groups</option>
-                        @foreach ($bloodGroups as $bloodGroup)
-                            <option value="{{ $bloodGroup->id }}"
-                                {{ $request->input('blood_group') == $bloodGroup->id ? 'selected' : '' }}>
-                                {{ $bloodGroup->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <select id="availability-select" name="availability_status" class="form-select">
-                        <option value="">All Status</option>
-                        <option value="available"
-                            {{ $request->input('availability_status') == 'available' ? 'selected' : '' }}>Available</option>
-                        <option value="not_available"
-                            {{ $request->input('availability_status') == 'not_available' ? 'selected' : '' }}>Not Available
+
+            <!-- MAIN FILTER BAR -->
+            <div class="grid md:grid-cols-3 gap-4">
+
+                <input type="text" id="search-input" class="w-full px-4 py-3 border rounded-xl"
+                    placeholder="Search name, phone, email">
+
+                <select id="blood-group-select" class="w-full px-4 py-3 border rounded-xl">
+                    <option value="">All Blood Groups</option>
+                    @foreach ($bloodGroups as $bloodGroup)
+                        <option value="{{ $bloodGroup->id }}">
+                            {{ $bloodGroup->name }}
                         </option>
-                    </select>
-                </div>
+                    @endforeach
+                </select>
+
+                <select id="availability-select" class="w-full px-4 py-3 border rounded-xl">
+                    <option value="">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="not_available">Not Available</option>
+                </select>
+
             </div>
+
         </div>
     </section>
 
-    <!-- Donors Table Section -->
-    <section class="py-4">
-        <div class="container">
+    <!-- =========================
+        RESULTS SECTION (CARDS)
+    ========================= -->
+    <section class="py-10">
+        <div class="max-w-7xl mx-auto px-4">
+
             @if ($donors->isEmpty())
-                <div class="alert alert-info">No donors found matching your criteria.</div>
+                <div class="text-center py-10 text-gray-500">
+                    No donors found 😢
+                </div>
             @else
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Photo</th>
-                                <th>Name</th>
-                                <th>Blood Group</th>
-                                <th>Phone</th>
-                                <th>Gender</th>
-                                <th>Last Donation</th>
-                                <th>Availability</th>
-                                <th>Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($donors as $donor)
-                                <tr>
-                                    <td>
-                                        @if ($donor->profile_photo)
-                                            <img src="{{ Storage::url($donor->profile_photo) }}" alt="Donor Photo"
-                                                class="img-fluid rounded"
-                                                style="width: 50px; height: 50px; object-fit: cover;">
-                                        @else
-                                            <div class="bg-light rounded d-flex align-items-center justify-content-center"
-                                                style="width: 50px; height: 50px;">
-                                                <i class="fas fa-user text-muted"></i>
-                                            </div>
-                                        @endif
-                                    </td>
-                                    <td>{{ $donor->full_name }}</td>
-                                    <td>
-                                        <span
-                                            class="badge bg-{{ str_contains($donor->bloodGroup->name, '+') ? 'success' : 'danger' }}">
-                                            {{ $donor->bloodGroup->name }}
-                                        </span>
-                                    </td>
-                                    <td>{{ $donor->phone_number }}</td>
-                                    <td>
-                                        @if ($donor->gender === 'male')
-                                            <span class="badge bg-primary">Male</span>
-                                        @elseif($donor->gender === 'female')
-                                            <span class="badge bg-danger">Female</span>
-                                        @else
-                                            <span class="badge bg-secondary">Other</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($donor->last_donation_date)
-                                            {{ $donor->last_donation_date->format('M d, Y') }}
-                                        @else
-                                            <span class="text-muted">Never</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if ($donor->availability_status === 'available')
-                                            <span class="badge bg-success">Available</span>
-                                        @else
-                                            <span class="badge bg-secondary">Not Available</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-truncate" style="max-width: 200px;">{{ $donor->address }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <!-- STATS -->
+                <div class="grid md:grid-cols-4 gap-4 mb-6">
+
+                    <div class="bg-white p-4 rounded-xl shadow">
+                        <p class="text-gray-500">Total Results</p>
+                        <h2 class="text-2xl font-bold">{{ $donors->total() }}</h2>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow">
+                        <p class="text-gray-500">Available</p>
+                        <h2 class="text-2xl font-bold text-green-600">
+                            {{ $donors->where('availability_status', 'available')->count() }}
+                        </h2>
+                    </div>
+
                 </div>
 
-                <!-- Pagination -->
-                <div class="mt-4">
+                <!-- RESULT GRID -->
+                <div class="grid md:grid-cols-3 gap-6">
+
+                    @foreach ($donors as $donor)
+                        <div class="bg-white rounded-2xl shadow p-5 hover:shadow-lg transition">
+
+                            <!-- HEADER -->
+                            <div class="flex items-center gap-3">
+
+                                @if ($donor->profile_photo)
+                                    <img src="{{ Storage::url($donor->profile_photo) }}"
+                                        class="w-14 h-14 rounded-full object-cover">
+                                @else
+                                    <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user text-gray-400"></i>
+                                    </div>
+                                @endif
+
+                                <div>
+                                    <h3 class="font-bold text-gray-800">
+                                        {{ $donor->full_name }}
+                                    </h3>
+
+                                    <span class="text-sm text-gray-500">
+                                        {{ $donor->bloodGroup->name }}
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <!-- INFO -->
+                            <div class="mt-3 text-sm text-gray-600 space-y-1">
+
+                                <p>📞 {{ $donor->phone_number }}</p>
+                                <p>📍 {{ Str::limit($donor->address, 40) }}</p>
+
+                                <p>
+                                    Status:
+                                    @if ($donor->availability_status == 'available')
+                                        <span class="text-green-600 font-semibold">Available</span>
+                                    @else
+                                        <span class="text-gray-500">Not Available</span>
+                                    @endif
+                                </p>
+
+                            </div>
+
+                            <!-- ACTION -->
+                            <div class="mt-4 flex gap-2">
+
+                                <a href="tel:{{ $donor->phone_number }}"
+                                    class="flex-1 bg-green-500 text-white py-2 rounded-lg text-center">
+                                    Call
+                                </a>
+
+                                <button class="flex-1 bg-red-500 text-white py-2 rounded-lg view-donor-btn"
+                                    data-donor-id="{{ $donor->id }}">
+                                    View
+                                </button>
+
+                            </div>
+
+                        </div>
+                    @endforeach
+
+                </div>
+
+                <!-- PAGINATION -->
+                <div class="mt-8">
                     {{ $donors->links() }}
                 </div>
             @endif
+
         </div>
     </section>
+
+    <!-- MODAL -->
+    <div id="donorModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+
+        <div class="bg-white w-full max-w-lg rounded-2xl p-6 relative">
+
+            <button id="closeModal" class="absolute top-3 right-4 text-2xl text-gray-500">
+                ×
+            </button>
+
+            <div id="donorModalBody">Loading...</div>
+
+        </div>
+
+    </div>
+
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('search-input');
-            const bloodGroupSelect = document.getElementById('blood-group-select');
-            const availabilitySelect = document.getElementById('availability-select');
-            const searchReset = document.getElementById('search-reset');
-
-            // Debounce function
-            function debounce(func, delay) {
-                let debounceTimer;
-                return function() {
-                    const context = this;
-                    const args = arguments;
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(() => func.apply(context, args), delay);
-                };
-            }
-
-            // Update URL parameters and reload page
-            function updateFilters() {
-                // Check if elements exist before accessing them
-                if (!searchInput && !bloodGroupSelect && !availabilitySelect) {
-                    return;
-                }
-
-                const params = new URLSearchParams(window.location.search);
-
-                // Get values safely
-                const searchValue = searchInput ? searchInput.value.trim() : '';
-                const bloodGroupValue = bloodGroupSelect ? bloodGroupSelect.value : '';
-                const availabilityValue = availabilitySelect ? availabilitySelect.value : '';
-
-                // Set or remove parameters
-                if (searchValue) {
-                    params.set('search', searchValue);
-                } else {
-                    params.delete('search');
-                }
-
-                if (bloodGroupValue) {
-                    params.set('blood_group', bloodGroupValue);
-                } else {
-                    params.delete('blood_group');
-                }
-
-                if (availabilityValue) {
-                    params.set('availability_status', availabilityValue);
-                } else {
-                    params.delete('availability_status');
-                }
-
-                // Reload page with new parameters
-                const newUrl = `${window.location.pathname}?${params.toString()}`;
-                window.location.href = newUrl;
-            }
-
-            // Reset search
-            function resetSearch() {
-                if (searchInput) {
-                    searchInput.value = '';
-                    updateFilters();
-                }
-            }
-
-            // Add event listeners with debounce
-            if (searchInput) {
-                searchInput.addEventListener('input', debounce(function() {
-                    updateFilters();
-                }, 500));
-
-                // Also handle Enter key
-                searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        updateFilters();
-                    }
-                });
-            }
-
-            if (bloodGroupSelect) {
-                bloodGroupSelect.addEventListener('change', debounce(function() {
-                    updateFilters();
-                }, 300));
-            }
-
-            if (availabilitySelect) {
-                availabilitySelect.addEventListener('change', debounce(function() {
-                    updateFilters();
-                }, 300));
-            }
-
-            if (searchReset) {
-                searchReset.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    resetSearch();
-                });
-            }
-        });
-    </script>
-@endpush

@@ -35,6 +35,14 @@ Route::get('/donors', [DonorListController::class, 'index'])->name('donors.list'
 // Route::delete('/donors/{donor}', [DonorListController::class, 'destroy'])->name('donors.destroy');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/lang/{locale}', function ($locale) {
+
+    if (in_array($locale, ['en', 'bn'])) {
+        session(['locale' => $locale]);
+    }
+
+    return redirect()->back();
+})->name('lang.switch');
 
     // Authentication Routes (provided by Breeze)
     Route::middleware('auth')->group(function () {

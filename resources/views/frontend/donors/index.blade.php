@@ -1,365 +1,338 @@
-{{-- Extend the frontend layout --}}
 @extends('layouts.frontend')
 
 @section('content')
-    <!-- Search and Filter Section -->
-    <section class="py-4 bg-light">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <h2 class="h4">Donor List</h2>
-                </div>
-                {{-- <div class="col-md-6 text-md-end">
-                    <a href="{{ route('donors.create') }}" class="btn btn-primary btn-sm d-none d-md-block">Add Donor</a>
-                </div> --}}
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="input-group">
-                        <input type="text" id="search-input" name="search" class="form-control"
-                            placeholder="Search by name, phone, or email" value="{{ $request->input('search') }}">
-                        <button class="btn btn-outline-secondary" type="button" id="search-reset">Reset</button>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <select id="blood-group-select" name="blood_group" class="form-select">
-                        <option value="">All Blood Groups</option>
-                        @foreach ($bloodGroups as $bloodGroup)
-                            <option value="{{ $bloodGroup->id }}"
-                                {{ $request->input('blood_group') == $bloodGroup->id ? 'selected' : '' }}>
-                                {{ $bloodGroup->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <select id="availability-select" name="availability_status" class="form-select">
-                        <option value="">All Status</option>
-                        <option value="available"
-                            {{ $request->input('availability_status') == 'available' ? 'selected' : '' }}>Available</option>
-                        <option value="not_available"
-                            {{ $request->input('availability_status') == 'not_available' ? 'selected' : '' }}>Not Available
+
+    <!-- =========================
+         FILTER SECTION
+    ========================= -->
+    <section class="py-10 bg-gradient-to-r from-red-50 to-white">
+        <div class="max-w-7xl mx-auto px-4">
+
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                {{ __('app.donor_list') }}
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-4">
+
+                <input type="text" id="search-input"
+                    class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-400"
+                    placeholder="Search name, phone, email" value="{{ request('search') }}">
+
+                <select id="blood-group-select" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-400">
+
+                    <option value="">All Blood Groups</option>
+
+                    @foreach ($bloodGroups as $bloodGroup)
+                        <option value="{{ $bloodGroup->id }}"
+                            {{ request('blood_group') == $bloodGroup->id ? 'selected' : '' }}>
+                            {{ $bloodGroup->name }}
                         </option>
-                    </select>
-                </div>
+                    @endforeach
+
+                </select>
+
+                <select id="availability-select" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-400">
+
+                    <option value="">All Status</option>
+                    <option value="available" {{ request('availability_status') == 'available' ? 'selected' : '' }}>
+                        Available
+                    </option>
+                    <option value="not_available" {{ request('availability_status') == 'not_available' ? 'selected' : '' }}>
+                        Not Available
+                    </option>
+
+                </select>
+
             </div>
+
         </div>
     </section>
 
-    <!-- Donors Table Section -->
-    <section class="py-4">
-        <div class="container">
+    <!-- =========================
+         DESKTOP TABLE
+    ========================= -->
+    <section class="py-10 hidden md:block">
+        <div class="max-w-7xl mx-auto px-4">
+
             @if ($donors->isEmpty())
-                <div class="alert alert-info">No donors found matching your criteria.</div>
+                <div class="text-center text-gray-500 py-10">
+                    No donors found
+                </div>
             @else
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
+                <div class="bg-white rounded-2xl shadow overflow-x-auto">
+
+                    <table class="min-w-full text-sm">
+
+                        <thead class="bg-red-600 text-white">
                             <tr>
-                                <th>Photo</th>
-                                <th>Name</th>
-                                <th>Blood Group</th>
-                                <th>Phone</th>
-                                <th>Gender</th>
-                                <th>Last Donation</th>
-                                <th>Availability</th>
-                                <th>Address</th>
-                                <th>Action</th>
+                                <th class="p-4">Photo</th>
+                                <th class="p-4">Name</th>
+                                <th class="p-4">Blood</th>
+                                <th class="p-4">Phone</th>
+                                <th class="p-4">Gender</th>
+                                <th class="p-4">Last Donation</th>
+                                <th class="p-4">Status</th>
+                                <th class="p-4">Address</th>
+                                <th class="p-4">Action</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach ($donors as $donor)
-                                <tr>
-                                    <td>
+                                <tr class="border-b hover:bg-red-50 transition">
+
+                                    <td class="p-3">
                                         @if ($donor->profile_photo)
-                                            <img src="{{ Storage::url($donor->profile_photo) }}" alt="Donor Photo"
-                                                class="img-fluid rounded"
-                                                style="width: 50px; height: 50px; object-fit: cover;">
+                                            <img src="{{ Storage::url($donor->profile_photo) }}"
+                                                class="w-10 h-10 rounded-full object-cover">
                                         @else
-                                            <div class="bg-light rounded d-flex align-items-center justify-content-center"
-                                                style="width: 50px; height: 50px;">
-                                                <i class="fas fa-user text-muted"></i>
+                                            <div
+                                                class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                                                <i class="fas fa-user text-gray-400"></i>
                                             </div>
                                         @endif
                                     </td>
-                                    <td>{{ $donor->full_name }}</td>
-                                    <td>
+
+                                    <td class="p-3 font-semibold">{{ $donor->full_name }}</td>
+
+                                    <td class="p-3">
                                         <span
-                                            class="badge bg-{{ str_contains($donor->bloodGroup->name, '+') ? 'success' : 'danger' }}">
+                                            class="px-3 py-1 rounded-full text-xs font-bold
+                                {{ str_contains($donor->bloodGroup->name, 'A') ? 'bg-red-100 text-red-600' : '' }}
+                                {{ str_contains($donor->bloodGroup->name, 'B') ? 'bg-green-100 text-green-600' : '' }}
+                                {{ str_contains($donor->bloodGroup->name, 'O') ? 'bg-yellow-100 text-yellow-700' : '' }}
+                                {{ str_contains($donor->bloodGroup->name, 'AB') ? 'bg-blue-100 text-blue-600' : '' }}">
                                             {{ $donor->bloodGroup->name }}
                                         </span>
                                     </td>
-                                    <td>{{ $donor->phone_number }}</td>
-                                    <td>
-                                        @if ($donor->gender === 'male')
-                                            <span class="badge bg-primary">Male</span>
-                                        @elseif($donor->gender === 'female')
-                                            <span class="badge bg-danger">Female</span>
+
+                                    <td class="p-3">{{ $donor->phone_number }}</td>
+
+                                    <td class="p-3">{{ ucfirst($donor->gender) }}</td>
+
+                                    <td class="p-3">
+                                        {{ $donor->last_donation_date ? $donor->last_donation_date->format('M d, Y') : 'Never' }}
+                                    </td>
+
+                                    <td class="p-3">
+                                        @if ($donor->availability_status == 'available')
+                                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs">
+                                                Available
+                                            </span>
                                         @else
-                                            <span class="badge bg-secondary">Other</span>
+                                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
+                                                Not Available
+                                            </span>
                                         @endif
                                     </td>
-                                    <td>
-                                        @if ($donor->last_donation_date)
-                                            {{ $donor->last_donation_date->format('M d, Y') }}
-                                        @else
-                                            <span class="text-muted">Never</span>
-                                        @endif
+
+                                    <td class="p-3 text-gray-500 max-w-[180px] truncate">
+                                        {{ $donor->address }}
                                     </td>
-                                    <td>
-                                        @if ($donor->availability_status === 'available')
-                                            <span class="badge bg-success">Available</span>
-                                        @else
-                                            <span class="badge bg-secondary">Not Available</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-truncate" style="max-width: 200px;">{{ $donor->address }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-sm btn-outline-primary view-donor-btn"
-                                            data-bs-toggle="modal" data-bs-target="#donorModal"
+
+                                    <td class="p-3 flex gap-2">
+
+                                        <button class="view-donor-btn px-3 py-1 bg-red-50 text-red-600 rounded-lg"
                                             data-donor-id="{{ $donor->id }}">
-                                            <i class="fas fa-eye"></i> View
+                                            View
                                         </button>
+
+                                        <a href="tel:{{ $donor->phone_number }}"
+                                            class="px-3 py-1 bg-green-50 text-green-600 rounded-lg">
+                                            Call
+                                        </a>
+
                                     </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
+
                     </table>
+
                 </div>
 
-                <!-- Pagination -->
-                <div class="mt-4">
+                <div class="mt-5">
                     {{ $donors->links() }}
                 </div>
             @endif
+
         </div>
     </section>
 
-    <!-- Donor Details Modal -->
-    <div class="modal fade" id="donorModal" tabindex="-1" aria-labelledby="donorModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="donorModalLabel">Donor Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" id="donorModalBody">
-                    <!-- Donor details will be loaded here via AJAX -->
-                    <div class="text-center py-5">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
+    <!-- =========================
+         MOBILE CARD VIEW
+    ========================= -->
+    <section class="md:hidden py-6">
+        <div class="max-w-7xl mx-auto px-4 space-y-4">
+
+            @foreach ($donors as $donor)
+                <div class="bg-white shadow rounded-2xl p-4">
+
+                    <div class="flex items-center gap-3">
+
+                        @if ($donor->profile_photo)
+                            <img src="{{ Storage::url($donor->profile_photo) }}"
+                                class="w-14 h-14 rounded-full object-cover">
+                        @else
+                            <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                        @endif
+
+                        <div>
+                            <h3 class="font-bold">{{ $donor->full_name }}</h3>
+                            <p class="text-sm text-gray-500">{{ $donor->bloodGroup->name }}</p>
                         </div>
+
                     </div>
+
+                    <div class="mt-3 text-sm text-gray-600 space-y-1">
+                        <p><b>Phone:</b> {{ $donor->phone_number }}</p>
+                        <p><b>Gender:</b> {{ ucfirst($donor->gender) }}</p>
+                        <p><b>Status:</b> {{ $donor->availability_status }}</p>
+                    </div>
+
+                    <div class="mt-4 flex gap-2">
+
+                        <a href="tel:{{ $donor->phone_number }}"
+                            class="flex-1 bg-green-500 text-white py-2 rounded-lg text-center">
+                            Call
+                        </a>
+
+                        <button class="view-donor-btn flex-1 bg-red-500 text-white py-2 rounded-lg"
+                            data-donor-id="{{ $donor->id }}">
+                            View
+                        </button>
+
+                    </div>
+
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+            @endforeach
+
         </div>
+    </section>
+
+    <!-- =========================
+         MODAL
+    ========================= -->
+    <div id="donorModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+
+        <div class="bg-white w-full max-w-lg rounded-2xl p-6 relative shadow-2xl">
+
+            <button id="closeModal" class="absolute right-4 top-3 text-2xl text-gray-500 hover:text-red-500">
+                ×
+            </button>
+
+            <div id="donorModalBody" class="text-gray-700">
+                Loading...
+            </div>
+
+        </div>
+
     </div>
+
 @endsection
 
+<!-- =========================
+     SCRIPT
+========================= -->
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('search-input');
-            const bloodGroupSelect = document.getElementById('blood-group-select');
-            const availabilitySelect = document.getElementById('availability-select');
-            const searchReset = document.getElementById('search-reset');
 
-            // Debounce function
-            function debounce(func, delay) {
-                let debounceTimer;
-                return function() {
-                    const context = this;
-                    const args = arguments;
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(() => func.apply(context, args), delay);
+            const search = document.getElementById('search-input');
+            const blood = document.getElementById('blood-group-select');
+            const status = document.getElementById('availability-select');
+
+            function debounce(func, delay = 500) {
+                let timer;
+                return function(...args) {
+                    clearTimeout(timer);
+                    timer = setTimeout(() => func.apply(this, args), delay);
                 };
             }
 
-            // Update URL parameters and reload page
             function updateFilters() {
-                // Check if elements exist before accessing them
-                if (!searchInput && !bloodGroupSelect && !availabilitySelect) {
-                    return;
-                }
+                const params = new URLSearchParams();
 
-                const params = new URLSearchParams(window.location.search);
+                if (search?.value.trim()) params.append('search', search.value.trim());
+                if (blood?.value) params.append('blood_group', blood.value);
+                if (status?.value) params.append('availability_status', status.value);
 
-                // Get values safely
-                const searchValue = searchInput ? searchInput.value.trim() : '';
-                const bloodGroupValue = bloodGroupSelect ? bloodGroupSelect.value : '';
-                const availabilityValue = availabilitySelect ? availabilitySelect.value : '';
-
-                // Set or remove parameters
-                if (searchValue) {
-                    params.set('search', searchValue);
-                } else {
-                    params.delete('search');
-                }
-
-                if (bloodGroupValue) {
-                    params.set('blood_group', bloodGroupValue);
-                } else {
-                    params.delete('blood_group');
-                }
-
-                if (availabilityValue) {
-                    params.set('availability_status', availabilityValue);
-                } else {
-                    params.delete('availability_status');
-                }
-
-                // Reload page with new parameters
-                const newUrl = `${window.location.pathname}?${params.toString()}`;
-                window.location.href = newUrl;
+                window.location.href = `?${params.toString()}`;
             }
 
-            // Reset search
-            function resetSearch() {
-                if (searchInput) {
-                    searchInput.value = '';
-                    updateFilters();
-                }
+            const debouncedUpdate = debounce(updateFilters, 500);
+
+            search?.addEventListener('input', debouncedUpdate);
+            blood?.addEventListener('change', debounce(updateFilters, 300));
+            status?.addEventListener('change', debounce(updateFilters, 300));
+
+            // MODAL
+            const modal = document.getElementById('donorModal');
+            const body = document.getElementById('donorModalBody');
+            const close = document.getElementById('closeModal');
+
+            function openModal() {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
             }
 
-            // Add event listeners with debounce
-            if (searchInput) {
-                searchInput.addEventListener('input', debounce(function() {
-                    updateFilters();
-                }, 500));
-
-                // Also handle Enter key
-                searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        updateFilters();
-                    }
-                });
+            function hideModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
             }
 
-            if (bloodGroupSelect) {
-                bloodGroupSelect.addEventListener('change', debounce(function() {
-                    updateFilters();
-                }, 300));
-            }
+            close?.addEventListener('click', hideModal);
 
-            if (availabilitySelect) {
-                availabilitySelect.addEventListener('change', debounce(function() {
-                    updateFilters();
-                }, 300));
-            }
+            modal?.addEventListener('click', (e) => {
+                if (e.target === modal) hideModal();
+            });
 
-            if (searchReset) {
-                searchReset.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    resetSearch();
-                });
-            }
+            document.querySelectorAll('.view-donor-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
 
-            // Handle donor view modal
-            const donorModal = document.getElementById('donorModal');
-            const donorModalBody = document.getElementById('donorModalBody');
-            const viewButtons = document.querySelectorAll('.view-donor-btn');
+                    const id = this.dataset.donorId;
 
-            if (donorModal && donorModalBody && viewButtons.length > 0) {
-                // Initialize Bootstrap modal
-                const modal = new bootstrap.Modal(donorModal);
+                    openModal();
 
-                viewButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        const donorId = this.getAttribute('data-donor-id');
-
-                        // Show loading state
-                        donorModalBody.innerHTML = `
-                    <div class="text-center py-5">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                `;
-
-                        // Show modal
-                        modal.show();
-
-                        // Fetch donor details via AJAX
-                        fetch(`/api/donors/${donorId}`)
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('Network response was not ok');
-                                }
-                                return response.json();
-                            })
-                            .then(donor => {
-                                // Format the donor details for display
-                                let lastDonation = donor.last_donation_date ?
-                                    new Date(donor.last_donation_date).toLocaleDateString(
-                                        'en-US', {
-                                            year: 'numeric',
-                                            month: 'short',
-                                            day: 'numeric'
-                                        }) : 'Never';
-
-                                donorModalBody.innerHTML = `
-                            <div class="row">
-                                <div class="col-md-4 text-center">
-                                    ${donor.profile_photo ? 
-                                        `<img src="${donor.profile_photo}" alt="${donor.full_name}" class="img-fluid rounded mb-3" style="width: 150px; height: 150px; object-fit: cover;">` : 
-                                        `<div class="bg-light rounded d-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
-                                                     <i class="fas fa-user fa-3x text-muted"></i>
-                                                 </div>`}
-                                    <h4>${donor.full_name}</h4>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="row mb-3">
-                                        <div class="col-md-6"><strong>Blood Group:</strong> ${donor.bloodGroup?.name || 'N/A'}</div>
-                                        <div class="col-md-6"><strong>Phone:</strong> ${donor.phone_number || 'N/A'}</div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6"><strong>Gender:</strong> ${donor.gender === 'male' ? 'Male' : donor.gender === 'female' ? 'Female' : 'Other'}</div>
-                                        <div class="col-md-6"><strong>Last Donation:</strong> ${lastDonation}</div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6"><strong>Availability:</strong> <span class="badge ${donor.availability_status === 'available' ? 'bg-success' : 'bg-secondary'}">${donor.availability_status === 'available' ? 'Available' : 'Not Available'}</span></div>
-                                        <div class="col-md-6"><strong>Email:</strong> ${donor.email || 'N/A'}</div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-12"><strong>Address:</strong></div>
-                                        <div class="col-12">${donor.address || 'N/A'}</div>
-                                    </div>
-                                    ${donor.notes ? `
-                                                <div class="row mb-3">
-                                                    <div class="col-12"><strong>Notes:</strong></div>
-                                                    <div class="col-12">${donor.notes}</div>
-                                                </div>
-                                            ` : ''}
-                                </div>
-                            </div>
-                        `;
-                            })
-                            .catch(error => {
-                                console.error('Error fetching donor details:', error);
-                                donorModalBody.innerHTML = `
-                            <div class="alert alert-danger">
-                                Failed to load donor details. Please try again.
-                            </div>
-                        `;
-                            });
-                    });
-                });
-
-                // Clear modal content when hidden
-                donorModal.addEventListener('hidden.bs.modal', function() {
-                    donorModalBody.innerHTML = `
-                <div class="text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
+                    body.innerHTML = `
+                <div class="text-center py-10 text-gray-500">
+                    Loading...
                 </div>
             `;
+
+                    fetch(`/api/donors/${id}`)
+                        .then(res => res.json())
+                        .then(donor => {
+
+                            body.innerHTML = `
+                        <div class="space-y-2">
+                            <h2 class="text-2xl font-bold">${donor.full_name}</h2>
+
+                            <p><b>Phone:</b> ${donor.phone_number ?? 'N/A'}</p>
+                            <p><b>Blood:</b> ${donor.blood_group?.name ?? 'N/A'}</p>
+                            <p><b>Email:</b> ${donor.email ?? 'N/A'}</p>
+                            <p><b>Gender:</b> ${donor.gender ?? 'N/A'}</p>
+                            <p><b>Address:</b> ${donor.address ?? 'N/A'}</p>
+
+                            <div class="mt-4">
+                                <a href="tel:${donor.phone_number}"
+                                   class="bg-green-500 text-white px-4 py-2 rounded-lg">
+                                   Call Now
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                        })
+                        .catch(() => {
+                            body.innerHTML = `<p class="text-red-500">Failed to load</p>`;
+                        });
+
                 });
-            }
+            });
+
         });
     </script>
 @endpush

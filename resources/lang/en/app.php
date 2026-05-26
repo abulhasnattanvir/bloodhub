@@ -126,6 +126,42 @@ return [
     'emergency_support' => 'Emergency Support',
     'recent_donors' => 'Recent Donors',
     'meet_our_heroes' => 'Meet Our Heroes',
+    'heroes_description' => 'These amazing people are helping save lives through blood donation.',
+    'donors_by_blood_group' => 'Donors by Blood Group',
+    'why_donation_matter' => 'Why Blood Donation Matters',
+    'donation_can_save' => 'Every donation can save up to 3 lives',
+    'strong_community' => 'Strong Community',
+    'saving_network' => 'Build a life-saving network',
+    'health_benefits' => 'Health Benefits',
+    'blood_circulation' => 'Improves blood circulation',
+    'life_saving' => 'Life Saving',
+    'donation_lives' => 'One donation saves 3 lives',
+    'global_impact' => 'Global Impact',
+    'help_people_worldwide' => 'Help people worldwide',
+    'guidelines' => 'Blood Donation Guidelines',
+    'age' => '18+',
+    'requirement' => 'Age Requirement',
+    'kg' => '50kg',
+    'minimum_weight' => 'Minimum Weight',
+    'month' => '3',
+    'between_donation' => 'Months Between Donation',
+    'mililiter' => '450ml',
+    'per_donation' => 'Per Donation',
+    'faq' => 'FAQ',
+    'frequently_asked_questions' => 'Frequently Asked Questions',
+    'quick_answers_common_questions' => 'Quick answers to common questions about blood donation',
+    'q1' => 'How often can I donate blood?',
+    'a1' => 'You can donate whole blood every 3 months (90 days) safely.',
+
+    'q2' => 'Who can donate blood?',
+    'a2' => 'Anyone aged 18+ with good health and minimum required weight can donate.',
+
+    'q3' => 'Is blood donation safe?',
+    'a3' => 'Yes, it is completely safe. New sterile equipment is used for every donor.',
+    
+    'q4' => 'What should I do after donating blood?',
+    'a4' => 'Rest, drink water, and avoid heavy exercise for 24 hours.',
+
     
     /*
     |--------------------------------------------------------------------------

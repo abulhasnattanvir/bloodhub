@@ -52,6 +52,265 @@
         }
     </style>
 
+    <!-- =========================
+                     HERO SLIDER SECTION
+                ========================= -->
+
+    {{-- <section class="hero-slider-section relative overflow-hidden">
+
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+
+            <div class="swiper heroSlider hero-glass rounded-[35px] overflow-hidden">
+
+                <div class="swiper-wrapper">
+
+                    <!-- ================= SLIDE 1 ================= -->
+                    <div class="swiper-slide">
+                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
+
+                            <div>
+                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
+                                    <i class="fas fa-heartbeat"></i> মানব সেবা-ই আমাদের স্বপ্ন
+                                </span>
+
+                                <h1 class="hero-title mb-6">
+                                    রক্ত দিন <span class="text-red-600">জীবন বাঁচান</span>
+                                </h1>
+
+                                <p class="hero-text mb-8">
+                                    জরুরি রক্ত প্রয়োজন হলে দ্রুত ডোনার খুঁজুন এবং জীবন বাঁচাতে পাশে থাকুন।
+                                </p>
+
+                                <div class="flex gap-4 flex-wrap">
+                                    <a href="{{ route('search') }}"
+                                        class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
+                                        ডোনার খুঁজুন
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div>
+                                <img src="{{ asset('images/slide1.png') }}" class="hero-image mx-auto w-full max-w-lg">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ================= SLIDE 2 ================= -->
+                    <div class="swiper-slide">
+                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
+
+                            <div>
+                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
+                                    <i class="fas fa-users"></i> স্বেচ্ছায় রক্তদান
+                                </span>
+
+                                <h1 class="hero-title mb-6">
+                                    হাজারো <span class="text-red-600">ডোনার একসাথে</span>
+                                </h1>
+
+                                <p class="hero-text mb-8">
+                                    আমাদের কমিউনিটিতে যুক্ত হয়ে প্রতিদিন মানুষকে সাহায্য করুন।
+                                </p>
+
+                                <a href="{{ route('donors.list') }}"
+                                    class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
+                                    ডোনার তালিকা
+                                </a>
+                            </div>
+
+                            <div>
+                                <img src="{{ asset('images/slide2.png') }}" class="hero-image mx-auto w-full max-w-lg">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ================= SLIDE 3 ================= -->
+                    <div class="swiper-slide">
+                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
+
+                            <div>
+                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
+                                    <i class="fas fa-hand-holding-heart"></i> মানবিক সহায়তা
+                                </span>
+
+                                <h1 class="hero-title mb-6">
+                                    দরিদ্রদের পাশে <span class="text-red-600">আমরা আছি</span>
+                                </h1>
+
+                                <p class="hero-text mb-8">
+                                    শীতবস্ত্র, খাদ্য ও জরুরি সহায়তা দিয়ে আমরা মানুষের পাশে দাঁড়াই।
+                                </p>
+
+                                <a href="#" class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
+                                    আরো জানুন
+                                </a>
+                            </div>
+
+                            <div>
+                                <img src="{{ asset('images/slide3.png') }}" class="hero-image mx-auto w-full max-w-lg">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ================= SLIDE 4 ================= -->
+                    <div class="swiper-slide">
+                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
+
+                            <div>
+                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
+                                    <i class="fas fa-graduation-cap"></i> শিক্ষা সহায়তা
+                                </span>
+
+                                <h1 class="hero-title mb-6">
+                                    শিক্ষার আলো <span class="text-red-600">সবার জন্য</span>
+                                </h1>
+
+                                <p class="hero-text mb-8">
+                                    দরিদ্র ও মেধাবী শিক্ষার্থীদের জন্য আমরা বিনামূল্যে সহায়তা দিই।
+                                </p>
+
+                                <a href="#" class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
+                                    আরও দেখুন
+                                </a>
+                            </div>
+
+                            <div>
+                                <img src="{{ asset('images/slide4.png') }}" class="hero-image mx-auto w-full max-w-lg">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- ================= SLIDE 5 ================= -->
+                    <div class="swiper-slide">
+                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
+
+                            <div>
+                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
+                                    <i class="fas fa-shield-heart"></i> দুর্যোগ সহায়তা
+                                </span>
+
+                                <h1 class="hero-title mb-6">
+                                    বিপদে <span class="text-red-600">আমরা পাশে</span>
+                                </h1>
+
+                                <p class="hero-text mb-8">
+                                    বন্যা, ঘূর্ণিঝড় ও দুর্যোগে ক্ষতিগ্রস্ত মানুষের পাশে আমরা দাঁড়াই।
+                                </p>
+
+                                <a href="#" class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
+                                    সহযোগিতা করুন
+                                </a>
+                            </div>
+
+                            <div>
+                                <img src="{{ asset('images/slide5.png') }}" class="hero-image mx-auto w-full max-w-lg">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- pagination -->
+                <div class="swiper-pagination !bottom-5"></div>
+
+            </div>
+
+        </div>
+    </section> --}}
+
+    <!-- =========================
+             HERO SLIDER (DYNAMIC)
+        ========================= -->
+
+    <section class="hero-slider-section relative overflow-hidden">
+
+        <!-- Background Shapes -->
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+
+            @if ($sliders->count())
+                <div class="swiper heroSlider hero-glass rounded-[35px] overflow-hidden">
+
+                    <div class="swiper-wrapper">
+
+                        @foreach ($sliders as $slider)
+                            <div class="swiper-slide">
+
+                                <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
+
+                                    <!-- LEFT CONTENT -->
+                                    <div>
+
+                                        @if ($slider->icon)
+                                            <span
+                                                class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-red-100 text-red-600 mb-6">
+                                                <i class="{{ $slider->icon }}"></i>
+                                                {{ $slider->highlight_text }}
+                                            </span>
+                                        @endif
+
+                                        <h1 class="hero-title mb-6">
+                                            {!! $slider->title !!}
+                                        </h1>
+
+                                        @if ($slider->description)
+                                            <p class="hero-text mb-8">
+                                                {{ $slider->description }}
+                                            </p>
+                                        @endif
+
+                                        @if ($slider->button_text)
+                                            <a href="{{ $slider->button_link }}"
+                                                class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold inline-block">
+
+                                                {{ $slider->button_text }}
+                                            </a>
+                                        @endif
+
+                                    </div>
+
+                                    <!-- RIGHT IMAGE -->
+                                    <div class="relative">
+
+                                        <img src="{{ asset('storage/' . $slider->image) }}"
+                                            class="hero-image w-full max-w-xl mx-auto" alt="slider image">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="swiper-pagination !bottom-5"></div>
+
+                </div>
+            @else
+                <!-- fallback -->
+                <div class="text-center py-20">
+                    <h2 class="text-2xl font-bold text-gray-500">
+                        No Slider Found
+                    </h2>
+                </div>
+            @endif
+
+        </div>
+    </section>
+
+
     <!-- HERO -->
     <section class="relative overflow-hidden hero-gradient py-24">
 

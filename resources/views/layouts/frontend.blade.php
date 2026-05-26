@@ -4,10 +4,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('app.name') }}</title>
+    <title>{{ setting('site_name', 'BloodHub') }}</title>
+    @if (setting('favicon'))
+        <link rel="icon" href="{{ asset('storage/' . setting('favicon')) }}">
+    @endif
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- =========================
+     ADD THIS IN <HEAD>
+========================= -->
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        .hero-slider-section {
+            position: relative;
+            overflow: hidden;
+            padding: 90px 0;
+            background:
+                radial-gradient(circle at top left, rgba(255, 0, 76, 0.12), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.12), transparent 30%),
+                linear-gradient(135deg, #fff5f5 0%, #ffffff 50%, #fff0f0 100%);
+        }
+
+        body.dark-mode .hero-slider-section {
+            background:
+                radial-gradient(circle at top left, rgba(255, 0, 76, 0.10), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.08), transparent 30%),
+                linear-gradient(135deg, #111827 0%, #0f172a 50%, #111827 100%);
+        }
+
+        .hero-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .hero-glass {
+            background: rgba(17, 24, 39, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-weight: 900;
+            color: #111827;
+        }
+
+        body.dark-mode .hero-title {
+            color: #ffffff;
+        }
+
+        .hero-text {
+            color: #6b7280;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .hero-text {
+            color: #d1d5db;
+        }
+
+        .hero-btn-primary {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            transition: all 0.35s ease;
+            box-shadow: 0 12px 25px rgba(220, 38, 38, 0.25);
+        }
+
+        .hero-btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 35px rgba(220, 38, 38, 0.35);
+        }
+
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #fecaca;
+            transition: all 0.35s ease;
+        }
+
+        .hero-btn-secondary:hover {
+            background: #fee2e2;
+            transform: translateY(-3px);
+        }
+
+        body.dark-mode .hero-btn-secondary {
+            background: rgba(31, 41, 55, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        body.dark-mode .hero-btn-secondary:hover {
+            background: rgba(55, 65, 81, 0.9);
+        }
+
+        .hero-image {
+            animation: floatImage 5s ease-in-out infinite;
+            filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.15));
+        }
+
+        @keyframes floatImage {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .hero-badge {
+            background: rgba(220, 38, 38, 0.08);
+            color: #dc2626;
+        }
+
+        body.dark-mode .hero-badge {
+            background: rgba(220, 38, 38, 0.15);
+            color: #fca5a5;
+        }
+
+        .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            opacity: .4;
+            transition: .3s;
+        }
+
+        .swiper-pagination-bullet-active {
+            width: 32px;
+            border-radius: 999px;
+            opacity: 1;
+        }
+
+        .hero-shape {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(70px);
+            opacity: 0.3;
+        }
+
+        .hero-shape-1 {
+            width: 280px;
+            height: 280px;
+            background: #f87171;
+            top: -80px;
+            left: -60px;
+        }
+
+        .hero-shape-2 {
+            width: 350px;
+            height: 350px;
+            background: #fb7185;
+            bottom: -120px;
+            right: -80px;
+        }
+
+        @media(max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
     <style>
         :root {
             --primary: #dc3545;
@@ -199,7 +362,13 @@
                 <!-- Logo -->
                 <div>
                     <a href="{{ route('home') }}" class="text-white text-2xl font-bold tracking-wide">
-                        {{ __('app.name') }}
+                        @if (setting('logo'))
+                            <img src="{{ asset('storage/' . setting('logo')) }}" class="h-10" alt="Logo">
+                        @else
+                            <span class="text-lg font-bold">
+                                {{ setting('site_name', 'BloodHub') }}
+                            </span>
+                        @endif
                     </a>
                 </div>
 
@@ -409,7 +578,7 @@
                 <!-- Emergency -->
                 <div>
                     <h3 class="text-xl font-bold mb-5">
-                        Emergency Support
+                        {{ __('app.footer.emergency') }}
                     </h3>
 
                     <div class="space-y-4">
@@ -455,11 +624,11 @@
                 <!-- Newsletter -->
                 <div>
                     <h3 class="text-xl font-bold mb-5">
-                        Stay Updated
+                        {{ __('app.footer.stay_updated') }}
                     </h3>
 
                     <p class="text-gray-300 mb-5">
-                        Get blood donation updates and emergency requests instantly.
+                        {{ __('app.footer.get_updates_description') }}
                     </p>
 
                     <form class="space-y-4">
@@ -482,8 +651,8 @@
             <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
 
                 <p class="text-gray-400 text-sm text-center md:text-left">
-                    © {{ now()->year }} {{ __('app.name') }}.
-                    {{ __('app.footer.all_rights_reserved') }}
+                    © {{ now()->year }} {{ setting('site_name', 'BloodHub') }}.
+                    {{ setting('footer_text') }}
                 </p>
 
                 <div class="flex items-center gap-6 text-sm">
@@ -507,6 +676,35 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.js" defer></script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            new Swiper(".heroSlider", {
+
+                loop: true,
+
+                speed: 1200,
+
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+
+                effect: "slide",
+
+            });
+
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Language Switcher

@@ -1,254 +1,251 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'BloodHub Admin') }}</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    <title>{{ config('app.name', 'BloodHub Admin') }}</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- FONT -->
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
 
-        <!-- Alpine.js for mobile menu -->
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    </head>
-    <body class="font-sans antialiased bg-gray-50">
-        <div class="min-h-screen flex flex-col">
-            <!-- Mobile Navbar -->
-            <nav class="hidden md:hidden bg-white border-b border-gray-200 px-4 py-3 z-50">
-                <div class="flex items-center justify-between w-full">
-                    <!-- Logo -->
-                    <a href="{{ url('/admin/dashboard') }}" class="flex items-center space-x-2">
-                        <span class="text-xl font-semibold text-gray-900">BloodHub Admin</span>
-                    </a>
-                    
-                    <!-- Mobile Menu Button -->
-                    <button @click="open = !open" class="p-2 text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+    <!-- FONT AWESOME -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- VITE -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- PREVENT BLACK FLASH (IMPORTANT) -->
+    <style>
+        html {
+            background: #f9fafb;
+        }
+
+        body {
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+    </style>
+
+    <script>
+        // Dark mode BEFORE render (fix flicker)
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
+</head>
+
+<body class="font-sans antialiased bg-gray-50" x-data="{ open: false, userMenu: false }">
+
+    <script>
+        // remove flash
+        window.addEventListener('load', function() {
+            document.body.style.opacity = 1;
+        });
+    </script>
+
+    <div class="min-h-screen flex">
+
+        <!-- ================= MOBILE OVERLAY ================= -->
+        <div x-show="open" @click="open = false" class="fixed inset-0 bg-black/40 z-40" x-transition></div>
+
+        <!-- ================= MOBILE SIDEBAR ================= -->
+        <aside x-show="open" x-transition class="fixed left-0 top-0 w-72 h-full bg-white shadow-xl z-50">
+
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="font-bold">Menu</h2>
+                <button @click="open = false"><i class="fas fa-times"></i></button>
+            </div>
+
+            <nav class="p-4 space-y-2">
+
+                <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded hover:bg-gray-100">Dashboard</a>
+                <a href="{{ route('admin.donors.index') }}" class="block px-3 py-2 rounded hover:bg-gray-100">Donors</a>
+                <a href="{{ route('admin.sliders.index') }}"
+                    class="block px-3 py-2 rounded hover:bg-gray-100">Sliders</a>
+                <a href="{{ route('admin.blood-groups.index') }}"
+                    class="block px-3 py-2 rounded hover:bg-gray-100">Blood Groups</a>
+                <a href="{{ route('admin.settings.index') }}"
+                    class="block px-3 py-2 rounded hover:bg-gray-100">Settings</a>
+
             </nav>
 
-            <!-- Desktop Layout -->
-            <div class="hidden md:flex flex-1">
-                <!-- Sidebar -->
-                <nav class="w-64 bg-white border-r border-gray-200 flex-shrink-0">
-                    <div class="flex-shrink-0 flex items-center px-4 py-4 border-b border-gray-200">
-                        <a href="{{ url('/admin/dashboard') }}" class="text-xl font-semibold text-gray-900">
-                            BloodHub Admin
-                        </a>
+            <!-- PROFILE -->
+            <div class="border-t p-4">
+
+                <div class="flex items-center gap-3 mb-3">
+                    <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default.png') }}"
+                        class="w-10 h-10 rounded-full">
+                    <div>
+                        <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
+                        <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
                     </div>
-                    
-                    <div class="mt-6 space-y-2 px-4">
-                        <a href="{{ route('admin.dashboard') }}"
-                           class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.dashboard') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                            <i class="fas fa-tachometer-alt mr-3"></i>
-                            <span>Dashboard</span>
-                        </a>
-        
-                        <a href="{{ route('admin.donors.index') }}"
-                           class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.donors.*') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                            <i class="fas fa-users mr-3"></i>
-                            <span>All Donors</span>
-                        </a>
-        
-                        <a href="{{ route('admin.donors.create') }}"
-                           class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.donors.create') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                            <i class="fas fa-user-plus mr-3"></i>
-                            <span>Add Donor</span>
-                        </a>
-        
-                        <a href="{{ route('admin.blood-groups.index') }}"
-                           class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.blood-groups.*') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                            <i class="fas fa-tint mr-3"></i>
-                            <span>Blood Groups</span>
-                        </a>
-        
-                        <a href="{{ route('admin.settings.index') }}"
-                           class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.settings.*') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                            <i class="fas fa-cog mr-3"></i>
-                            <span>Settings</span>
-                        </a>
-                    </div>
-                    
-                    <div class="mt-auto pt-6 px-4 border-t border-gray-200">
-                        <div class="flex items-center px-3 py-2 text-sm font-medium text-gray-500">
-                            <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default-profile.png') }}" 
-                                 alt="{{ Auth::user()->name }}" 
-                                 class="h-8 w-8 rounded-full mr-3">
-                            <div>
-                                <div class="font-medium">{{ Auth::user()->name }}</div>
-                                <div class="text-sm text-gray-400">{{ Auth::user()->email }}</div>
-                            </div>
-                        </div>
-        
-                        <form method="POST" action="{{ route('logout') }}" class="mt-3 w-full">
-                            @csrf
-                            <button type="submit"
-                                    class="flex w-full items-center px-3 py-2 text-sm font-medium text-left text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
-                                <i class="fas fa-sign-out-alt mr-3"></i>
-                                <span>Logout</span>
-                            </button>
-                        </form>
-                    </div>
-                </nav>
-                
-                <!-- Main Content -->
-                <div class="flex-1 flex flex-col overflow-hidden">
-                    <!-- Header -->
-                    <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                        <div class="flex items-center space-x-4">
-                            <!-- Mobile Menu Toggle (hidden on desktop) -->
-                            <button @click="open = !open" class="md:hidden p-2 text-gray-500 hover:text-gray-700">
-                                <i class="fas fa-bars"></i>
-                            </button>
-                            
-                            <h1 class="text-xl font-semibold text-gray-900">
-                                @isset($header)
-                                    {{ $header }}
-                                @else
-                                    Dashboard
-                                @endisset
-                            </h1>
-                        </div>
-                        
-                        <div class="flex items-center space-x-4">
-                            <!-- Search -->
-                            <div class="relative w-64">
-                                <input type="text" 
-                                       placeholder="Search..." 
-                                       class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary focus:outline-none transition-all duration-200 text-sm">
-                                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                            </div>
-                            
-                            <!-- Notifications -->
-                            <div class="relative">
-                                <button class="p-2 text-gray-500 hover:text-gray-700">
-                                    <i class="fas fa-bell"></i>
-                                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"></span>
-                                </button>
-                            </div>
-                            
-                            <!-- User Profile -->
-                            <div class="relative">
-                                <button @click="userMenuOpen = !userMenuOpen" class="p-2 text-gray-500 hover:text-gray-700">
-                                    <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default-profile.png') }}" 
-                                         alt="{{ Auth::user()->name }}" 
-                                         class="h-8 w-8 rounded-full">
-                                </button>
-                                
-                                <!-- User Menu Dropdown -->
-                                <div x-show="userMenuOpen" @click.away="userMenuOpen = false" 
-                                     class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 z-20">
-                                    <a href="{{ route('profile.edit') }}" 
-                                       class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        <i class="fas fa-user mr-3"></i>
-                                        <span>Profile</span>
-                                    </a>
-                                    <form method="POST" action="{{ route('logout') }}" class="mb-0">
-                                        @csrf
-                                        <button type="submit" 
-                                                class="flex w-full items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                            <i class="fas fa-sign-out-alt mr-3"></i>
-                                            <span>Logout</span>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </header>
-                    
-                    <!-- Page Content -->
-                    <main class="flex-1 overflow-y-auto p-6">
-                        @yield('content')
-                    </main>
-                    
-                    <!-- Footer -->
-                    <footer class="bg-white border-t border-gray-200 px-6 py-4 text-center text-sm text-gray-500">
-                        &copy; {{ now()->year }} BloodHub. All rights reserved.
-                    </footer>
                 </div>
-            </div>
-            
-            <!-- Mobile Sidebar -->
-            <div :class="{'block': open, 'hidden': !open}" 
-                 class="fixed inset-0 z-40 flex flex-col bg-white border-r border-gray-200">
-                <div class="flex-shrink-0 flex items-center px-4 py-4 border-b border-gray-200">
-                    <a href="{{ url('/admin/dashboard') }}" class="text-xl font-semibold text-gray-900">
-                        BloodHub Admin
-                    </a>
-                    <button @click="open = false" class="ml-auto p-2 text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times"></i>
+
+                <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100 rounded">
+                    <i class="fas fa-user mr-2"></i> Profile
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
                     </button>
-                </div>
-                
-                <div class="mt-6 space-y-2 px-4 flex-1 overflow-y-auto">
-                    <a href="{{ route('admin.dashboard') }}"
-                       class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.dashboard') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                        <i class="fas fa-tachometer-alt mr-3"></i>
-                        <span>Dashboard</span>
-                    </a>
-        
-                    <a href="{{ route('admin.donors.index') }}"
-                       class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.donors.*') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                        <i class="fas fa-users mr-3"></i>
-                        <span>All Donors</span>
-                    </a>
-        
-                    <a href="{{ route('admin.donors.create') }}"
-                       class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.donors.create') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                        <i class="fas fa-user-plus mr-3"></i>
-                        <span>Add Donor</span>
-                    </a>
-        
-                    <a href="{{ route('admin.blood-groups.index') }}"
-                       class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.blood-groups.*') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                        <i class="fas fa-tint mr-3"></i>
-                        <span>Blood Groups</span>
-                    </a>
-        
-                    <a href="{{ route('admin.settings.index') }}"
-                       class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.settings.*') ? 'bg-primary text-white' : '' }} rounded-lg transition-colors duration-200">
-                        <i class="fas fa-cog mr-3"></i>
-                        <span>Settings</span>
-                    </a>
-                </div>
-                
-                <div class="pt-6 px-4 border-t border-gray-200">
-                    <div class="flex items-center px-3 py-2 text-sm font-medium text-gray-500">
-                        <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default-profile.png') }}" 
-                             alt="{{ Auth::user()->name }}" 
-                             class="h-8 w-8 rounded-full mr-3">
-                        <div>
-                            <div class="font-medium">{{ Auth::user()->name }}</div>
-                            <div class="text-sm text-gray-400">{{ Auth::user()->email }}</div>
-                        </div>
-                    </div>
-            
-                    <form method="POST" action="{{ route('logout') }}" class="mt-3 w-full">
-                        @csrf
-                        <button type="submit"
-                                class="flex w-full items-center px-3 py-2 text-sm font-medium text-left text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
-                            <i class="fas fa-sign-out-alt mr-3"></i>
-                            <span>Logout</span>
-                        </button>
-                    </form>
-                </div>
+                </form>
+
             </div>
+
+        </aside>
+
+        <!-- ================= SIDEBAR (DESKTOP) ================= -->
+        <aside class="hidden md:flex w-64 bg-white border-r flex-col">
+
+            <div class="p-4 border-b">
+                <a href="{{ route('admin.dashboard') }}" class="font-bold text-lg">
+                    BloodHub Admin
+                </a>
+            </div>
+
+            <nav class="flex-1 p-3 space-y-1">
+
+                <a href="{{ route('admin.dashboard') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.dashboard') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-home mr-3"></i> Dashboard
+                </a>
+
+                <a href="{{ route('admin.donors.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.donors.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-users mr-3"></i> Donors
+                </a>
+
+                <a href="{{ route('admin.sliders.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.sliders.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-sliders-h mr-3"></i> Sliders
+                </a>
+
+                <a href="{{ route('admin.blood-groups.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.blood-groups.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-tint mr-3"></i> Blood Groups
+                </a>
+
+                <a href="{{ route('admin.settings.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.settings.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-tint mr-3"></i> Site Setting
+                </a>
+
+            </nav>
+
+            <!-- DESKTOP PROFILE -->
+            <div class="border-t p-4">
+
+                <div class="flex items-center gap-3 mb-3">
+                    <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default.png') }}"
+                        class="w-10 h-10 rounded-full">
+                    <div>
+                        <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
+                        <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
+                    </div>
+                </div>
+
+                <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100 rounded">
+                    <i class="fas fa-user mr-2"></i> Profile
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </button>
+                </form>
+
+            </div>
+
+        </aside>
+
+        <!-- ================= MAIN ================= -->
+        <div class="flex-1 flex flex-col">
+
+            <!-- HEADER -->
+            <header class="bg-white border-b px-4 py-3 flex justify-between items-center">
+
+                <div class="flex items-center gap-3">
+                    <button @click="open = true" class="md:hidden text-xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <h1 class="font-semibold text-lg">
+                        @isset($header)
+                            {{ $header }}
+                        @else
+                            Dashboard
+                        @endisset
+                    </h1>
+                </div>
+
+                <div class="flex items-center gap-4">
+
+                    <!-- SEARCH -->
+                    <input type="text" placeholder="Search..."
+                        class="hidden md:block border rounded-lg px-3 py-2 text-sm">
+
+                    <!-- NOTIFICATION -->
+                    <button class="relative">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+
+                    <!-- PROFILE DROPDOWN -->
+                    <div x-data="{ drop: false }" class="relative">
+
+                        <button @click="drop = !drop">
+                            <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default.png') }}"
+                                class="w-8 h-8 rounded-full">
+                        </button>
+
+                        <div x-show="drop" @click.away="drop = false"
+                            class="absolute right-0 mt-2 w-40 bg-white border rounded shadow">
+
+                            <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100">
+                                Profile
+                            </a>
+
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50">
+                                    Logout
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <!-- CONTENT -->
+            <main class="p-4 md:p-6 flex-1">
+                @yield('content')
+            </main>
+
+            <!-- FOOTER -->
+            <footer class="bg-white border-t text-center text-sm py-3 text-gray-500">
+                © {{ date('Y') }} BloodHub
+            </footer>
+
         </div>
 
-        <script>
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('app', () => ({
-                    open: false,
-                    userMenuOpen: false
-                }))
-            })
-        </script>
-    </body>
+    </div>
+
+</body>
+
 </html>

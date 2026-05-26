@@ -215,5 +215,8 @@ return [
         'quick_links' => 'Quick Links',
         'contact_us' => 'Contact Us',
         'all_rights_reserved' => 'All rights reserved.',
+        'emergency' => 'Emergency Support.',
+        'stay_updated' => 'Stay Updated',
+        'get_updates_description' => 'Get blood donation updates and emergency requests instantly.',
     ],
 ];

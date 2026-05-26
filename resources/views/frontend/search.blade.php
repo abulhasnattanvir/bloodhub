@@ -3,8 +3,8 @@
 @section('content')
 
     <!-- =========================
-        SEARCH HERO DASHBOARD
-    ========================= -->
+            SEARCH HERO DASHBOARD
+        ========================= -->
     <section class="bg-gradient-to-r from-red-50 to-white py-10">
         <div class="max-w-7xl mx-auto px-4">
 
@@ -56,8 +56,8 @@
     </section>
 
     <!-- =========================
-        RESULTS SECTION (CARDS)
-    ========================= -->
+            RESULTS SECTION (CARDS)
+        ========================= -->
     <section class="py-10">
         <div class="max-w-7xl mx-auto px-4">
 
@@ -175,3 +175,74 @@
     </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const bloodGroupSelect = document.getElementById('blood-group-select');
+        const availabilitySelect = document.getElementById('availability-select');
+
+        // DEBOUNCE
+        function debounce(func, delay = 500) {
+
+            let timer;
+
+            return function(...args) {
+
+                clearTimeout(timer);
+
+                timer = setTimeout(() => {
+                    func.apply(this, args);
+                }, delay);
+
+            };
+        }
+
+        // APPLY FILTERS
+        function applyFilters() {
+
+            const params = new URLSearchParams();
+
+            // SEARCH
+            if (searchInput.value.trim()) {
+                params.append('search', searchInput.value.trim());
+            }
+
+            // BLOOD GROUP
+            if (bloodGroupSelect.value) {
+                params.append('blood_group', bloodGroupSelect.value);
+            }
+
+            // STATUS
+            if (availabilitySelect.value) {
+                params.append('availability_status', availabilitySelect.value);
+            }
+
+            window.location.href = `?${params.toString()}`;
+        }
+
+        // QUICK BLOOD BUTTON
+        function setBlood(id) {
+
+            bloodGroupSelect.value = id;
+
+            applyFilters();
+        }
+
+        // EVENTS
+        searchInput.addEventListener(
+            'input',
+            debounce(applyFilters, 500)
+        );
+
+        bloodGroupSelect.addEventListener(
+            'change',
+            debounce(applyFilters, 300)
+        );
+
+        availabilitySelect.addEventListener(
+            'change',
+            debounce(applyFilters, 300)
+        );
+    </script>
+@endpush

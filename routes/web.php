@@ -5,12 +5,14 @@ use App\Http\Controllers\Admin\DonorController;
 use App\Http\Controllers\Admin\BloodGroupController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\DonorListController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\ProfileController as UserProfileController;
+use App\Http\Controllers\SliderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,14 +55,29 @@ Route::get('/lang/{locale}', function ($locale) {
     
     // Admin Routes
     Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+
+        //slider
+        Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
+        Route::get('/sliders/create', [SliderController::class, 'create'])->name('sliders.create');
+        Route::post('/sliders', [SliderController::class, 'store'])->name('sliders.store');
+
+        Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('sliders.edit');
+        Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
+
+        Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
+
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('/donors', DonorController::class);
         Route::resource('/blood-groups', BloodGroupController::class);
-        Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
-        Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
+
+        //setting
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+    
         // Admin profile routes
         Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('admin.profile.edit');
         Route::patch('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('admin.profile.update');
+        
     });
 
 require __DIR__.'/auth.php';

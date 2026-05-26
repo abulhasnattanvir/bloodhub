@@ -1,9 +1,6 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('All Donors') }}
-        </h2>
-    </x-slot>
+@extends('layouts.admin')
+
+@section('content')
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -14,8 +11,8 @@
                 </h3>
                 <div class="space-y-2 sm:space-y-0 sm:space-x-3 mt-4 sm:mt-0">
                     <a href="{{ route('admin.donors.create') }}"
-                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-secondary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark">
-                        {{ __('Add Donor') }}
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        + {{ __('Add Donor') }}
                     </a>
                 </div>
             </div>
@@ -211,7 +208,7 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

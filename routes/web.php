@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\DonorListController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController as UserProfileController;
 use App\Http\Controllers\SliderController;
 use App\Models\FooterSetting;
@@ -48,7 +49,11 @@ use Illuminate\Support\Facades\Route;
 
         return redirect()->back();
     })->name('lang.switch');
-    
+
+    //Member
+    Route::get('/become-member', [MemberController::class, 'create'])->name('member.create');
+    Route::post('/become-member', [MemberController::class, 'store'])->name('member.store');
+        
     //page
     Route::get('/page/{slug}', [PageController::class, 'show'])
         ->name('page.show');
@@ -107,7 +112,14 @@ use Illuminate\Support\Facades\Route;
         //Footer Setting
         Route::get('/footer-settings', [FooterSettingController::class, 'edit'])->name('footer.edit');
         Route::post('/footer-settings', [FooterSettingController::class, 'update'])->name('footer.update');
-        
+
+        //Member
+        Route::get('/members', [MemberController::class, 'index'])->name('members.create');
+        Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
+        Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
+        Route::post('/members/{id}/approve', [MemberController::class, 'approve'])->name('members.approve');
+        Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
+        Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
     });
 
 require __DIR__.'/auth.php';

@@ -155,13 +155,13 @@
                 <a href="{{ route('admin.footer.edit') }}"
                     class="flex items-center px-3 py-2 rounded-lg text-sm
                {{ request()->routeIs('admin.footer.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-pager mr-3"></i> Page
+                    <i class="fa-solid fa-pager mr-3"></i> Footer Setting
                 </a>
 
                 <a href="{{ route('admin.members.create') }}"
                     class="flex items-center px-3 py-2 rounded-lg text-sm
                {{ request()->routeIs('admin.footer.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-pager mr-3"></i> Page
+                    <i class="fa-solid fa-pager mr-3"></i> Member
                 </a>
 
             </nav>

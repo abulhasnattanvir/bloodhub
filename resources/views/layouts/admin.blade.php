@@ -5,15 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'BloodHub Admin') }}</title>
+    <title>{{ setting('site_name', 'Tawkkul Soft') }}</title>
+    @if (setting('favicon'))
+        <link rel="icon" href="{{ asset('storage/' . setting('favicon')) }}">
+    @endif
 
     <!-- FONT -->
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
 
     <!-- FONT AWESOME -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- VITE -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -70,6 +74,7 @@
                     class="block px-3 py-2 rounded hover:bg-gray-100">Blood Groups</a>
                 <a href="{{ route('admin.settings.index') }}"
                     class="block px-3 py-2 rounded hover:bg-gray-100">Settings</a>
+                <a href="{{ route('admin.pages.index') }}" class="block px-3 py-2 rounded hover:bg-gray-100">Pages</a>
 
             </nav>
 
@@ -138,7 +143,19 @@
                 <a href="{{ route('admin.settings.index') }}"
                     class="flex items-center px-3 py-2 rounded-lg text-sm
                {{ request()->routeIs('admin.settings.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fas fa-tint mr-3"></i> Site Setting
+                    <i class="fa-solid fa-gears mr-2"></i> Site Setting
+                </a>
+
+                <a href="{{ route('admin.pages.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.pages.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-pager mr-3"></i> Page
+                </a>
+
+                <a href="{{ route('admin.footer.edit') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.footer.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-pager mr-3"></i> Page
                 </a>
 
             </nav>
@@ -246,6 +263,8 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    @stack('scripts')
 </body>
 
 </html>

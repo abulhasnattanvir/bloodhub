@@ -31,8 +31,23 @@
             <input type="text" name="address" value="{{ $settings['address'] ?? '' }}" class="border p-2 rounded w-full"
                 placeholder="Address">
 
-            <!-- FOOTER -->
-            <textarea name="footer_text" class="border p-2 rounded w-full h-24" placeholder="Footer Text">{{ $settings['footer_text'] ?? '' }}</textarea>
+            {{--  FOOTER --}}
+            {{-- social icon --}}
+            <div class="grid md:grid-cols-2 gap-4">
+                <input type="text" name="site_name" value="{{ $settings['site_name'] ?? '' }}"
+                    class="border p-2 rounded w-full" placeholder="Site Name">
+
+                <input type="text" name="tagline" value="{{ $settings['tagline'] ?? '' }}"
+                    class="border p-2 rounded w-full" placeholder="Tagline">
+
+                <input type="text" name="email" value="{{ $settings['email'] ?? '' }}"
+                    class="border p-2 rounded w-full" placeholder="Email">
+
+                <input type="text" name="phone" value="{{ $settings['phone'] ?? '' }}"
+                    class="border p-2 rounded w-full" placeholder="Phone">
+
+                <textarea name="footer_text" class="border p-2 rounded w-full h-24" placeholder="Footer Text">{{ $settings['footer_text'] ?? '' }}</textarea>
+            </div>
 
             <!-- LOGO -->
             <div>

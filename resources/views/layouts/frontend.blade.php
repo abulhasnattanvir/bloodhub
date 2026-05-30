@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ setting('site_name', 'BloodHub') }}</title>
+    <title>{{ setting('site_name', 'Tawkkul Soft') }}</title>
     @if (setting('favicon'))
         <link rel="icon" href="{{ asset('storage/' . setting('favicon')) }}">
     @endif
@@ -481,9 +481,15 @@
 
                 <!-- About -->
                 <div>
-                    <h2 class="text-3xl font-extrabold mb-4 text-white">
-                        {{ __('app.name') }}
-                    </h2>
+                    <a href="{{ route('home') }}" class="text-white text-2xl font-bold tracking-wide pb-12 d-flex">
+                        @if (setting('logo'))
+                            <img src="{{ asset('storage/' . setting('logo')) }}" class="h-10" alt="Logo">
+                        @else
+                            <h2 class="text-3xl font-extrabold mb-4 text-white">
+                                {{ setting('site_name', 'BloodHub') }}
+                            </h2>
+                        @endif
+                    </a>
 
                     <p class="text-gray-300 leading-relaxed mb-6">
                         {{ __('app.footer.about_description') }}
@@ -590,7 +596,7 @@
 
                             <div>
                                 <p class="text-sm text-gray-400">24/7 Hotline</p>
-                                <h4 class="font-semibold">+123 456 7890</h4>
+                                <h4 class="font-semibold">{{ setting('phone') }}</h4>
                             </div>
                         </div>
 
@@ -601,7 +607,7 @@
 
                             <div>
                                 <p class="text-sm text-gray-400">Email Address</p>
-                                <h4 class="font-semibold">info@bloodhub.org</h4>
+                                <h4 class="font-semibold">{{ setting('email') }}</h4>
                             </div>
                         </div>
 
@@ -613,7 +619,7 @@
                             <div>
                                 <p class="text-sm text-gray-400">Location</p>
                                 <h4 class="font-semibold">
-                                    123 Blood Donation Street, City
+                                    {{ setting('address') }}
                                 </h4>
                             </div>
                         </div>
@@ -651,21 +657,24 @@
             <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
 
                 <p class="text-gray-400 text-sm text-center md:text-left">
-                    © {{ now()->year }} {{ setting('site_name', 'BloodHub') }}.
+                    © {{ now()->year }} {{ setting('site_name', 'TawakkulSoft') }}.
                     {{ setting('footer_text') }}
                 </p>
 
                 <div class="flex items-center gap-6 text-sm">
 
-                    <a href="#" class="text-gray-400 hover:text-red-400 transition">
+                    <a href="{{ route('page.show', 'privacy-policy') }}"
+                        class="text-gray-400 hover:text-red-400 transition">
                         Privacy Policy
                     </a>
 
-                    <a href="#" class="text-gray-400 hover:text-red-400 transition">
+                    <a href="{{ route('page.show', 'terms-conditions') }}"
+                        class="text-gray-400 hover:text-red-400 transition">
                         Terms & Conditions
                     </a>
 
-                    <a href="#" class="text-gray-400 hover:text-red-400 transition">
+                    <a href="{{ route('page.show', 'support') }}"
+                        class="text-gray-400 hover:text-red-400 transition">
                         Support
                     </a>
 
@@ -675,7 +684,7 @@
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.js" defer></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.js" defer></script> --}}
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

@@ -158,10 +158,16 @@
                     <i class="fa-solid fa-pager mr-3"></i> Footer Setting
                 </a>
 
-                <a href="{{ route('admin.members.create') }}"
+                <a href="{{ route('admin.members.index') }}"
                     class="flex items-center px-3 py-2 rounded-lg text-sm
-               {{ request()->routeIs('admin.footer.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+               {{ request()->routeIs('admin.members.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-pager mr-3"></i> Member
+                </a>
+
+                <a href="{{ route('admin.council.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm
+               {{ request()->routeIs('admin.council.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-pager mr-3"></i> Council
                 </a>
 
             </nav>

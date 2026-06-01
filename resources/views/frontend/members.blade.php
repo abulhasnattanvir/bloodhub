@@ -62,6 +62,58 @@
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div>
+                        <select name="gender"
+                            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
+        @error('gender') border-red-500 @else border-gray-200 @enderror">
+
+                            <option value="">Select Gender</option>
+
+                            <option value="male" {{ old('gender', $member->gender ?? '') == 'male' ? 'selected' : '' }}>
+                                Male
+                            </option>
+
+                            <option value="female" {{ old('gender', $member->gender ?? '') == 'female' ? 'selected' : '' }}>
+                                Female
+                            </option>
+
+                            <option value="other" {{ old('gender', $member->gender ?? '') == 'other' ? 'selected' : '' }}>
+                                Other
+                            </option>
+
+                        </select>
+                        <br>
+                        @error('gender')
+                            <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <!-- PROFESSION -->
+                    <div>
+                        <select name="profession"
+                            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
+                        @error('profession') border-red-500 @else border-gray-200 @enderror">
+
+                            <option value="">Select Profession</option>
+
+                            <option value="Student">Student</option>
+                            <option value="Job Holder">Job Holder</option>
+                            <option value="Businessman">Businessman</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Doctor">Doctor</option>
+                            <option value="Engineer">Engineer</option>
+                            <option value="Freelancer">Freelancer</option>
+                            <option value="Government Service">Government Service</option>
+                            <option value="Private Service">Private Service</option>
+                            <option value="Housewife">Housewife</option>
+                            <option value="Other">Other</option>
+
+                        </select>
+
+                        @error('profession')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
 
                     {{-- EMAIL --}}
                     <div>

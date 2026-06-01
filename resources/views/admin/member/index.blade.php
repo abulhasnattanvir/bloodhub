@@ -41,7 +41,7 @@
                         Filter
                     </button>
 
-                    <a href="{{ route('admin.members.create') }}"
+                    <a href="{{ route('admin.members.index') }}"
                         class="bg-gray-500 text-white px-4 py-2 rounded w-full text-center">
                         Reset
                     </a>
@@ -57,6 +57,8 @@
                         <th class="p-3">Photo</th>
                         <th>Name</th>
                         <th>Phone</th>
+                        <th>Profession</th>
+                        <th>Gender</th>
                         <th>Blood</th>
                         <th>City</th>
                         <th>Status</th>
@@ -78,54 +80,60 @@
 
                             <td>{{ $member->name }}</td>
                             <td>{{ $member->phone }}</td>
+                            <td>{{ $member->profession }}</td>
+                            <td>{{ $member->gender }}</td>
                             <td>{{ $member->blood_group }}</td>
                             <td>{{ $member->city }}</td>
 
                             <td>
-                                <span
-                                    class="px-2 py-1 rounded text-white
-                            @if ($member->status == 'approved') bg-green-500
-                            @elseif($member->status == 'rejected') bg-red-500
-                            @else bg-yellow-500 @endif">
-                                    {{ $member->status }}
-                                </span>
+                                <div class="flex justify-center items-center gap-2">
+                                    <span
+                                        class="px-2 py-1 rounded text-white
+                                @if ($member->status == 'approved') bg-green-500
+                                @elseif($member->status == 'rejected') bg-red-500
+                                @else bg-yellow-500 @endif">
+                                        {{ $member->status }}
+                                    </span>
+                                </div>
                             </td>
 
-                            <td class="flex center gap-2 p-2">
+                            <td class="p-2">
+                                <div class="flex justify-center items-center gap-2">
 
-                                <!-- APPROVE -->
-                                <form method="POST" action="{{ route('admin.members.approve', $member->id) }}">
-                                    @csrf
-                                    <button class="bg-green-600 text-white px-2 py-1 rounded">
-                                        Approve
-                                    </button>
-                                </form>
+                                    <!-- APPROVE -->
+                                    <form method="POST" action="{{ route('admin.members.approve', $member->id) }}">
+                                        @csrf
+                                        <button class="bg-green-600 text-white px-2 py-1 rounded">
+                                            Approve
+                                        </button>
+                                    </form>
 
-                                <!-- REJECT -->
-                                <form method="POST" action="{{ route('admin.members.reject', $member->id) }}">
-                                    @csrf
-                                    <button class="bg-yellow-500 text-white px-2 py-1 rounded">
-                                        Reject
-                                    </button>
-                                </form>
+                                    <!-- REJECT -->
+                                    <form method="POST" action="{{ route('admin.members.reject', $member->id) }}">
+                                        @csrf
+                                        <button class="bg-yellow-500 text-white px-2 py-1 rounded">
+                                            Reject
+                                        </button>
+                                    </form>
 
-                                <!-- EDIT -->
-                                <a href="{{ route('admin.members.edit', $member->id) }}"
-                                    class="bg-blue-600 text-white px-2 py-1 rounded">
-                                    Edit
-                                </a>
+                                    <!-- EDIT -->
+                                    <a href="{{ route('admin.members.edit', $member->id) }}"
+                                        class="bg-blue-600 text-white px-2 py-1 rounded">
+                                        Edit
+                                    </a>
 
-                                <!-- DELETE -->
-                                <form method="POST" action="{{ route('admin.member.destory', $member->id) }}">
-                                    @csrf
-                                    @method('DELETE')
+                                    <!-- DELETE -->
+                                    <form method="POST" action="{{ route('admin.member.destory', $member->id) }}">
+                                        @csrf
+                                        @method('DELETE')
 
-                                    <button onclick="return confirm('Are you sure?')"
-                                        class="bg-red-600 text-white px-2 py-1 rounded">
-                                        Delete
-                                    </button>
-                                </form>
+                                        <button onclick="return confirm('Are you sure?')"
+                                            class="bg-red-600 text-white px-2 py-1 rounded">
+                                            Delete
+                                        </button>
+                                    </form>
 
+                                </div>
                             </td>
 
                         </tr>

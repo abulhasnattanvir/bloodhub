@@ -32,7 +32,8 @@ class MemberController extends Controller
         $request->validate([
             'name' => 'required',
             'phone' => 'required|unique:members,phone|max:11|min:11',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'gender' => 'required|in:male,female,other',
+            'profession' => 'nullable|string|max:100',
         ]);
 
         // PHOTO UPLOAD
@@ -49,6 +50,8 @@ class MemberController extends Controller
         Member::create([
             'name' => $request->name,
             'phone' => $request->phone,
+            'gender' => $request->gender,
+            'profession' => $request->profession,
             'email' => $request->email,
             'blood_group' => $request->blood_group,
             'city' => $request->city,
@@ -58,6 +61,35 @@ class MemberController extends Controller
         ]);
 
         return back()->with('success', 'Application submitted successfully!');
+    }
+
+
+    public function frontendIndex(Request $request)
+    {
+        $query = Member::where('status', 'approved');
+
+        // 🔍 optional search
+        if ($request->search) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('city', 'like', '%' . $request->search . '%')
+                    ->orWhere('blood_group', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // 🩸 blood filter
+        if ($request->blood_group) {
+            $query->where('blood_group', $request->blood_group);
+        }
+
+        // 📍 city filter
+        if ($request->city) {
+            $query->where('city', 'like', '%' . $request->city . '%');
+        }
+
+        $members = $query->latest()->paginate(9);
+
+        return view('frontend.members.index', compact('members'));
     }
 
     // ADMIN LIST
@@ -127,7 +159,7 @@ class MemberController extends Controller
     public function edit($id)
     {
         $member = Member::findOrFail($id);
-        return view('admin.members.edit', compact('member'));
+        return view('admin.member.edit', compact('member'));
     }
 
     //UPDATE
@@ -137,6 +169,8 @@ class MemberController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'gender' => 'required|in:male,female,other',
+            'profession' => 'nullable|string|max:100',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -159,6 +193,8 @@ class MemberController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'gender' => $request->gender,
+            'profession' => $request->profession,
             'blood_group' => $request->blood_group,
             'city' => $request->city,
             'address' => $request->address,
@@ -166,6 +202,6 @@ class MemberController extends Controller
             'photo' => $member->photo,
         ]);
 
-        return redirect()->route('admin.members')->with('success', 'Member updated successfully');
+        return redirect()->route('admin.members.index')->with('success', 'Member updated successfully');
     }
 }

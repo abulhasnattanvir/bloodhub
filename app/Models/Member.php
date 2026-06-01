@@ -10,10 +10,12 @@ class Member extends Model
         'name',
         'email',
         'phone',
+        'gender',
+        'profession',
         'blood_group',
         'address',
-        'photo',
         'city',
         'status',
+        'photo',
     ];
 }

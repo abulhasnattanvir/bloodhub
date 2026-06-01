@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DonorController;
 use App\Http\Controllers\Admin\BloodGroupController;
+use App\Http\Controllers\Admin\CouncilController;
 use App\Http\Controllers\Admin\FooterSettingController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -53,7 +54,12 @@ use Illuminate\Support\Facades\Route;
     //Member
     Route::get('/become-member', [MemberController::class, 'create'])->name('member.create');
     Route::post('/become-member', [MemberController::class, 'store'])->name('member.store');
-        
+    Route::get('/members', [MemberController::class, 'frontendIndex'])->name('members.index');
+
+    //Council
+    Route::get('/council', [CouncilController::class, 'frontend'])
+        ->name('council.frontend');
+
     //page
     Route::get('/page/{slug}', [PageController::class, 'show'])
         ->name('page.show');
@@ -114,12 +120,23 @@ use Illuminate\Support\Facades\Route;
         Route::post('/footer-settings', [FooterSettingController::class, 'update'])->name('footer.update');
 
         //Member
-        Route::get('/members', [MemberController::class, 'index'])->name('members.create');
+        Route::get('/members', [MemberController::class, 'index'])->name('members.index');
         Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
         Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
         Route::post('/members/{id}/approve', [MemberController::class, 'approve'])->name('members.approve');
         Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
         Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
+
+
+        //council
+        Route::get('/council', [CouncilController::class, 'index'])->name('council.index');
+        Route::get('/council/create', [CouncilController::class, 'create'])->name('council.create');
+        Route::post('/council', [CouncilController::class, 'store'])->name('council.store');
+
+        Route::get('/council/{id}/edit', [CouncilController::class, 'edit'])->name('council.edit');
+        Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
+
+        Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
     });
 
 require __DIR__.'/auth.php';

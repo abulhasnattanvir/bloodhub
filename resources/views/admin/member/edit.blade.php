@@ -1,60 +1,246 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="max-w-2xl mx-auto p-6">
+    <div class="max-w-5xl mx-auto p-6">
 
-        <h2 class="text-2xl font-bold mb-4">Edit Member</h2>
+        {{-- Page Header --}}
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">
+                Edit Member
+            </h1>
+            <p class="text-gray-500 mt-1">
+                Update donor information and account status.
+            </p>
+        </div>
+
+        {{-- Validation Errors --}}
+        @if ($errors->any())
+            <div class="mb-6 bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl">
+                <ul class="list-disc pl-5 space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('admin.members.update', $member->id) }}" enctype="multipart/form-data"
-            class="bg-white shadow rounded-xl p-6 space-y-4">
+            class="bg-white shadow-xl rounded-2xl border border-gray-100 overflow-hidden">
 
             @csrf
             @method('PUT')
 
-            <input type="text" name="name" value="{{ $member->name }}" class="w-full border p-2 rounded"
-                placeholder="Name">
+            {{-- Top Section --}}
+            <div class="p-6 border-b bg-gradient-to-r from-red-50 to-white">
 
-            <input type="text" name="phone" value="{{ $member->phone }}" class="w-full border p-2 rounded"
-                placeholder="Phone">
+                <div class="flex flex-col md:flex-row items-center gap-6">
 
-            <input type="email" name="email" value="{{ $member->email }}" class="w-full border p-2 rounded"
-                placeholder="Email">
+                    {{-- Photo --}}
+                    <div class="flex-shrink-0">
 
-            <select name="blood_group" class="w-full border p-2 rounded">
-                <option value="">Select Blood Group</option>
-                @foreach (['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $bg)
-                    <option value="{{ $bg }}" {{ $member->blood_group == $bg ? 'selected' : '' }}>
-                        {{ $bg }}
-                    </option>
-                @endforeach
-            </select>
+                        @if ($member->photo)
+                            <img src="{{ asset($member->photo) }}"
+                                class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg">
+                        @else
+                            <div
+                                class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-sm">
+                                No Photo
+                            </div>
+                        @endif
 
-            <input type="text" name="city" value="{{ $member->city }}" class="w-full border p-2 rounded"
-                placeholder="City">
+                    </div>
 
-            <textarea name="address" class="w-full border p-2 rounded" placeholder="Address">{{ $member->address }}</textarea>
+                    {{-- Upload --}}
+                    <div class="flex-1 w-full">
 
-            <!-- STATUS -->
-            <select name="status" class="w-full border p-2 rounded">
-                <option value="pending" {{ $member->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="approved" {{ $member->status == 'approved' ? 'selected' : '' }}>Approved</option>
-                <option value="rejected" {{ $member->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
-            </select>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">
+                            Profile Photo
+                        </label>
 
-            <!-- PHOTO -->
-            <div>
-                <label class="font-semibold">Photo</label><br>
+                        <input type="file" name="photo" accept="image/*"
+                            class="w-full border border-gray-300 rounded-xl p-3">
 
-                @if ($member->photo)
-                    <img src="{{ asset($member->photo) }}" class="w-16 h-16 rounded-full mb-2 object-cover">
-                @endif
+                        <p class="text-xs text-gray-500 mt-2">
+                            JPG, JPEG, PNG. Max size 2MB.
+                        </p>
 
-                <input type="file" name="photo" class="w-full border p-2 rounded">
+                    </div>
+
+                </div>
+
             </div>
 
-            <button class="bg-blue-600 text-white w-full py-2 rounded">
-                Update Member
-            </button>
+            {{-- Form Body --}}
+            <div class="p-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                    {{-- Name --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Full Name *
+                        </label>
+
+                        <input type="text" name="name" value="{{ old('name', $member->name) }}"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400 focus:border-red-400">
+                    </div>
+
+                    {{-- Phone --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Phone Number *
+                        </label>
+
+                        <input type="text" name="phone" value="{{ old('phone', $member->phone) }}"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400 focus:border-red-400">
+                    </div>
+
+                    {{-- Email --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Email
+                        </label>
+
+                        <input type="email" name="email" value="{{ old('email', $member->email) }}"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400 focus:border-red-400">
+                    </div>
+
+                    {{-- Gender --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Gender *
+                        </label>
+
+                        <select name="gender"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400">
+
+                            <option value="">Select Gender</option>
+
+                            <option value="male" {{ old('gender', $member->gender) == 'male' ? 'selected' : '' }}>
+                                Male
+                            </option>
+
+                            <option value="female" {{ old('gender', $member->gender) == 'female' ? 'selected' : '' }}>
+                                Female
+                            </option>
+
+                            <option value="other" {{ old('gender', $member->gender) == 'other' ? 'selected' : '' }}>
+                                Other
+                            </option>
+
+                        </select>
+                    </div>
+
+                    {{-- Profession --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Profession
+                        </label>
+
+                        <select name="profession"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400">
+
+                            <option value="">Select Profession</option>
+
+                            @foreach (['Student', 'Job Holder', 'Businessman', 'Teacher', 'Doctor', 'Engineer', 'Freelancer', 'Government Service', 'Private Service', 'Housewife', 'Other'] as $profession)
+                                <option value="{{ $profession }}"
+                                    {{ old('profession', $member->profession) == $profession ? 'selected' : '' }}>
+                                    {{ $profession }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    {{-- Blood Group --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Blood Group
+                        </label>
+
+                        <select name="blood_group"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400">
+
+                            <option value="">Select Blood Group</option>
+
+                            @foreach (['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $bg)
+                                <option value="{{ $bg }}"
+                                    {{ old('blood_group', $member->blood_group) == $bg ? 'selected' : '' }}>
+                                    {{ $bg }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    {{-- City --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            City
+                        </label>
+
+                        <input type="text" name="city" value="{{ old('city', $member->city) }}"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400">
+                    </div>
+
+                    {{-- Status --}}
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Status
+                        </label>
+
+                        <select name="status"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400">
+
+                            <option value="pending" {{ old('status', $member->status) == 'pending' ? 'selected' : '' }}>
+                                Pending
+                            </option>
+
+                            <option value="approved" {{ old('status', $member->status) == 'approved' ? 'selected' : '' }}>
+                                Approved
+                            </option>
+
+                            <option value="rejected" {{ old('status', $member->status) == 'rejected' ? 'selected' : '' }}>
+                                Rejected
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                {{-- Address --}}
+                <div class="mt-5">
+
+                    <label class="block mb-2 font-medium text-gray-700">
+                        Address
+                    </label>
+
+                    <textarea name="address" rows="4"
+                        class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400">{{ old('address', $member->address) }}</textarea>
+
+                </div>
+
+            </div>
+
+            {{-- Footer --}}
+            <div class="bg-gray-50 border-t p-6">
+
+                <div class="flex flex-col md:flex-row gap-3 justify-end">
+
+                    <a href="{{ route('admin.members.index') }}"
+                        class="px-6 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 text-center">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                        class="px-8 py-3 rounded-xl bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold shadow-lg hover:from-red-700 hover:to-red-600 transition">
+                        Update Member
+                    </button>
+
+                </div>
+
+            </div>
 
         </form>
     </div>

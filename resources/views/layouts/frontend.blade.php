@@ -11,10 +11,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- =========================
-     ADD THIS IN <HEAD>
-========================= -->
-
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
@@ -355,113 +351,166 @@
 </head>
 
 <body>
-    <nav x-data="{ open: false, langOpen: false }" class="bg-red-600 shadow-lg sticky top-0 z-50">
+    <nav x-data="{ open: false }" class="bg-red-600 shadow-lg sticky top-0 z-50">
+
         <div class="max-w-7xl mx-auto px-4">
+
             <div class="flex justify-between items-center h-16">
 
                 <!-- Logo -->
-                <div>
-                    <a href="{{ route('home') }}" class="text-white text-2xl font-bold tracking-wide">
-                        @if (setting('logo'))
-                            <img src="{{ asset('storage/' . setting('logo')) }}" class="h-10" alt="Logo">
-                        @else
-                            <span class="text-lg font-bold">
-                                {{ setting('site_name', 'BloodHub') }}
-                            </span>
-                        @endif
-                    </a>
-                </div>
+                <a href="{{ route('home') }}" class="flex items-center">
+
+                    @if (setting('logo'))
+                        <img src="{{ asset('storage/' . setting('logo')) }}" alt="{{ setting('site_name') }}"
+                            class="h-10">
+                    @else
+                        <span class="text-white text-xl font-bold">
+                            {{ setting('site_name', 'BloodHub') }}
+                        </span>
+                    @endif
+
+                </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-4">
+                <div class="hidden md:flex items-center space-x-2">
 
-                    <a href="{{ route('home') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700 transition">
-                        {{ __('app.home') }}
-                    </a>
+                    @foreach ($menus as $menu)
+                        @if ($menu->children->count())
+                            <div class="relative group">
 
-                    <a href="{{ route('search') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700 transition">
-                        {{ __('app.search_donors') }}
-                    </a>
+                                <button
+                                    class="text-white px-4 py-2 rounded-lg hover:bg-red-700 transition flex items-center gap-2">
 
-                    <a href="{{ route('donors.list') }}"
-                        class="text-white px-3 py-2 rounded-lg hover:bg-red-700 transition">
-                        {{ __('app.donor_list') }}
-                    </a>
+                                    {{ $menu->title }}
 
-                    <a href="{{ route('about') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700 transition">
-                        {{ __('app.about') }}
-                    </a>
+                                    <i class="fas fa-chevron-down text-xs"></i>
 
-                    <a href="{{ route('contact') }}"
-                        class="text-white px-3 py-2 rounded-lg hover:bg-red-700 transition">
-                        {{ __('app.contact') }}
-                    </a>
+                                </button>
 
-                    <!-- Language Dropdown -->
-                    <div class="relative">
-                        <button @click="langOpen = !langOpen"
-                            class="text-white px-3 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2">
+                                <div
+                                    class="absolute left-0 top-full mt-1 min-w-[250px]
+                                bg-white rounded-xl shadow-xl
+                                opacity-0 invisible
+                                group-hover:opacity-100
+                                group-hover:visible
+                                transition-all duration-200">
 
-                            {{ strtoupper(app()->getLocale()) }}
+                                    @foreach ($menu->children as $child)
+                                        <a href="{{ url($child->url) }}"
+                                            class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600">
 
-                            <i class="fas fa-chevron-down text-sm"></i>
-                        </button>
+                                            {{ $child->title }}
 
-                        <div x-show="langOpen" @click.away="langOpen = false"
-                            class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg overflow-hidden">
+                                        </a>
+                                    @endforeach
 
-                            <a href="{{ route('lang.switch', 'en') }}" class="block px-4 py-2 hover:bg-gray-100">
-                                English
+                                </div>
+
+                            </div>
+                        @else
+                            <a href="{{ url($menu->url) }}"
+                                class="text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+
+                                {{ $menu->title }}
+
                             </a>
+                        @endif
+                    @endforeach
 
-                            <a href="{{ route('lang.switch', 'bn') }}" class="block px-4 py-2 hover:bg-gray-100">
-                                বাংলা
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Theme Toggle -->
-                    <button id="themeToggle" class="text-white text-xl hover:text-yellow-300 transition">
-                        <i class="fas fa-moon"></i>
-                    </button>
                 </div>
 
                 <!-- Mobile Button -->
-                <div class="md:hidden">
-                    <button @click="open = !open" class="text-white text-2xl">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
+                <button @click="open = true" class="md:hidden text-white text-2xl">
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
             </div>
 
-            <!-- Mobile Menu -->
-            <div x-show="open" x-transition class="md:hidden pb-4">
-
-                <div class="flex flex-col space-y-2">
-
-                    <a href="{{ route('home') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700">
-                        {{ __('app.home') }}
-                    </a>
-
-                    <a href="{{ route('search') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700">
-                        {{ __('app.search_donors') }}
-                    </a>
-
-                    <a href="{{ route('donors.list') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700">
-                        {{ __('app.donor_list') }}
-                    </a>
-
-                    <a href="{{ route('about') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700">
-                        {{ __('app.about') }}
-                    </a>
-
-                    <a href="{{ route('contact') }}" class="text-white px-3 py-2 rounded-lg hover:bg-red-700">
-                        {{ __('app.contact') }}
-                    </a>
-
-                </div>
-            </div>
         </div>
+
+        <!-- Overlay -->
+        <div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 bg-black/50 z-40 md:hidden"
+            @click="open = false">
+        </div>
+
+        <!-- Mobile Sidebar -->
+        <div x-show="open" x-cloak x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="-translate-x-full"
+            class="fixed top-0 left-0
+        w-[320px] max-w-[85vw]
+        h-full bg-white
+        shadow-2xl
+        z-50
+        overflow-y-auto
+        md:hidden">
+
+            <!-- Header -->
+            <div class="flex items-center justify-between p-4 border-b">
+
+                <h3 class="font-bold text-lg">
+                    Menu
+                </h3>
+
+                <button @click="open = false" class="text-gray-700 text-xl">
+
+                    <i class="fas fa-times"></i>
+
+                </button>
+
+            </div>
+
+            <!-- Menu Items -->
+            <div class="p-3">
+
+                @foreach ($menus as $menu)
+                    <div x-data="{ submenu: false }" class="border-b border-gray-100">
+
+                        @if ($menu->children->count())
+                            <button @click="submenu = !submenu"
+                                class="w-full flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-100">
+
+                                <span>
+                                    {{ $menu->title }}
+                                </span>
+
+                                <i class="fas fa-chevron-down transition-transform duration-200"
+                                    :class="{ 'rotate-180': submenu }">
+                                </i>
+
+                            </button>
+
+                            <div x-show="submenu" x-collapse class="pb-2">
+
+                                @foreach ($menu->children as $child)
+                                    <a href="{{ url($child->url) }}"
+                                        class="block pl-6 py-2 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600">
+
+                                        {{ $child->title }}
+
+                                    </a>
+                                @endforeach
+
+                            </div>
+                        @else
+                            <a href="{{ url($menu->url) }}"
+                                class="block py-3 px-2 rounded-lg hover:bg-red-50 hover:text-red-600">
+
+                                {{ $menu->title }}
+
+                            </a>
+                        @endif
+
+                    </div>
+                @endforeach
+
+            </div>
+
+        </div>
+
     </nav>
 
     <main>
@@ -684,7 +733,7 @@
         </div>
     </footer>
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.js" defer></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.js" defer></script>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

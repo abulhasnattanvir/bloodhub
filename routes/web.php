@@ -5,10 +5,12 @@ use App\Http\Controllers\Admin\DonorController;
 use App\Http\Controllers\Admin\BloodGroupController;
 use App\Http\Controllers\Admin\CouncilController;
 use App\Http\Controllers\Admin\FooterSettingController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\DonorListController;
@@ -43,13 +45,13 @@ use Illuminate\Support\Facades\Route;
     Route::get('/about', [AboutController::class, 'index'])->name('about');
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::get('/lang/{locale}', function ($locale) {
-
         if (in_array($locale, ['en', 'bn'])) {
             session(['locale' => $locale]);
         }
-
         return redirect()->back();
     })->name('lang.switch');
+
+    
 
     //Member
     Route::get('/become-member', [MemberController::class, 'create'])->name('member.create');
@@ -57,63 +59,58 @@ use Illuminate\Support\Facades\Route;
     Route::get('/members', [MemberController::class, 'frontendIndex'])->name('members.index');
 
     //Council
-    Route::get('/council', [CouncilController::class, 'frontend'])
-        ->name('council.frontend');
+    Route::get('/council', [CouncilController::class, 'frontend'])->name('council.frontend');
 
     //page
-    Route::get('/page/{slug}', [PageController::class, 'show'])
-        ->name('page.show');
+    Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
 
-    // Authentication Routes (provided by Breeze)
+    //manual payment
+    Route::get('/donation', [DonationController::class, 'create'])->name('donation.create');
+    Route::post('/donation', [DonationController::class, 'store'])->name('donation.store');
+
+    //donation contributors
+    Route::get('/donation-contributors', [DonationController::class, 'contributors'])->name('donation.contributors');
+
+    //Authentication Routes (provided by Breeze)
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
     });
     
-    // Admin Routes
+    //Admin Routes
     Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
-        //slider
+        //Slider
         Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
         Route::get('/sliders/create', [SliderController::class, 'create'])->name('sliders.create');
         Route::post('/sliders', [SliderController::class, 'store'])->name('sliders.store');
-
         Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('sliders.edit');
         Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
-
         Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
 
+        //Dashboard
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        
+        //Blood groups
         Route::resource('/donors', DonorController::class);
         Route::resource('/blood-groups', BloodGroupController::class);
 
-        //setting
+        //Setting
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
         Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
     
-        // Admin profile routes
+        //Admin profile routes
         Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('admin.profile.edit');
         Route::patch('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('admin.profile.update');
 
         //Page
-        Route::get('/pages', [PageController::class, 'index'])
-            ->name('pages.index');
-
-        Route::get('/pages/create', [PageController::class, 'create'])
-            ->name('pages.create');
-
-        Route::post('/pages/store', [PageController::class, 'store'])
-            ->name('pages.store');
-
-        Route::get('/pages/{page}/edit', [PageController::class, 'edit'])
-            ->name('pages.edit');
-
-        Route::put('/pages/{page}', [PageController::class, 'update'])
-            ->name('pages.update');
-
-        Route::delete('/pages/{page}', [PageController::class, 'destroy'])
-            ->name('pages.destroy');
+        Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
+        Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
+        Route::post('/pages/store', [PageController::class, 'store'])->name('pages.store');
+        Route::get('/pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
+        Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
+        Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 
         //Footer Setting
         Route::get('/footer-settings', [FooterSettingController::class, 'edit'])->name('footer.edit');
@@ -127,16 +124,23 @@ use Illuminate\Support\Facades\Route;
         Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
         Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
 
-
-        //council
+        //Council
         Route::get('/council', [CouncilController::class, 'index'])->name('council.index');
         Route::get('/council/create', [CouncilController::class, 'create'])->name('council.create');
         Route::post('/council', [CouncilController::class, 'store'])->name('council.store');
-
         Route::get('/council/{id}/edit', [CouncilController::class, 'edit'])->name('council.edit');
         Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
-
         Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
+
+        //Manual Payment
+        Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
+        Route::post('/donations/{id}/approve', [DonationController::class, 'approve'])->name('donations.approve');
+        Route::post('/donations/{id}/reject', [DonationController::class, 'reject'])->name('donations.reject');
+        Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
+
+        //Menu Setting
+        Route::resource('menus', MenuController::class);
+        
     });
 
 require __DIR__.'/auth.php';

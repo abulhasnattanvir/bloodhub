@@ -170,6 +170,17 @@
                     <i class="fa-solid fa-pager mr-3"></i> Council
                 </a>
 
+                <a href="{{ route('admin.donations.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm {{ request()->routeIs('admin.donations.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-pager mr-3"></i> Donation
+                </a>
+
+                <a href="{{ route('admin.menus.index') }}"
+                    class="flex items-center px-3 py-2 rounded-lg text-sm {{ request()->routeIs('admin.menus.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-bars mr-3"></i>
+                    Menu Manager
+                </a>
+
             </nav>
 
             <!-- DESKTOP PROFILE -->

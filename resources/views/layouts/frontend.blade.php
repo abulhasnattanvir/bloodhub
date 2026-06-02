@@ -350,69 +350,59 @@
     </style>
 </head>
 
-<body>
-    <nav x-data="{ open: false }" class="bg-red-600 shadow-lg sticky top-0 z-50">
+<body x-data="{ open: false }" :class="{ 'overflow-hidden': open }">
+    <nav class="bg-red-600 shadow-lg sticky top-0 z-50">
 
         <div class="max-w-7xl mx-auto px-4">
-
-            <div class="flex justify-between items-center h-16">
+            <div class="flex items-center justify-between h-16">
 
                 <!-- Logo -->
-                <a href="{{ route('home') }}" class="flex items-center">
-
+                <a href="{{ route('home') }}" class="flex items-center flex-shrink-0">
                     @if (setting('logo'))
-                        <img src="{{ asset('storage/' . setting('logo')) }}" alt="{{ setting('site_name') }}"
-                            class="h-10">
+                        <img src="{{ asset('storage/' . setting('logo')) }}" class="h-10" alt="Logo">
                     @else
                         <span class="text-white text-xl font-bold">
                             {{ setting('site_name', 'BloodHub') }}
                         </span>
                     @endif
-
                 </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-2">
+                <div class="hidden md:flex items-center space-x-2 flex-1 justify-end overflow-hidden">
 
                     @foreach ($menus as $menu)
                         @if ($menu->children->count())
                             <div class="relative group">
 
                                 <button
-                                    class="text-white px-4 py-2 rounded-lg hover:bg-red-700 transition flex items-center gap-2">
+                                    class="text-white px-4 py-2 rounded-lg hover:bg-red-700 transition flex items-center gap-2 whitespace-nowrap">
 
                                     {{ $menu->title }}
-
                                     <i class="fas fa-chevron-down text-xs"></i>
 
                                 </button>
 
                                 <div
-                                    class="absolute left-0 top-full mt-1 min-w-[250px]
-                                bg-white rounded-xl shadow-xl
-                                opacity-0 invisible
-                                group-hover:opacity-100
-                                group-hover:visible
-                                transition-all duration-200">
+                                    class="absolute left-0 top-full mt-1 min-w-[220px]
+                            bg-white rounded-xl shadow-xl
+                            opacity-0 invisible
+                            group-hover:opacity-100
+                            group-hover:visible
+                            transition-all duration-200 z-50">
 
                                     @foreach ($menu->children as $child)
                                         <a href="{{ url($child->url) }}"
                                             class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-600">
-
                                             {{ $child->title }}
-
                                         </a>
                                     @endforeach
 
                                 </div>
-
                             </div>
                         @else
                             <a href="{{ url($menu->url) }}"
-                                class="text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
-
+                                class="text-white px-4 py-2 rounded-lg hover:bg-red-700 transition whitespace-nowrap">
                                 {{ $menu->title }}
-
                             </a>
                         @endif
                     @endforeach
@@ -420,15 +410,13 @@
                 </div>
 
                 <!-- Mobile Button -->
-                <button @click="open = true" class="md:hidden text-white text-2xl">
-
+                <button @click="open = true" class="md:hidden text-white text-2xl flex-shrink-0">
                     <i class="fas fa-bars"></i>
-
                 </button>
 
             </div>
-
         </div>
+
 
         <!-- Overlay -->
         <div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 bg-black/50 z-40 md:hidden"

@@ -71,15 +71,16 @@ use Illuminate\Support\Facades\Route;
     //donation contributors
     Route::get('/donation-contributors', [DonationController::class, 'contributors'])->name('donation.contributors');
 
-    //Authentication Routes (provided by Breeze)
+    // USER PROFILE (Breeze)
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
     });
-    
-    //Admin Routes
-    Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+
+
+//Admin Routes
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
         //Slider
         Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
@@ -101,8 +102,8 @@ use Illuminate\Support\Facades\Route;
         Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
     
         //Admin profile routes
-        Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('admin.profile.edit');
-        Route::patch('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('admin.profile.update');
+        Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
 
         //Page
         Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
@@ -140,6 +141,7 @@ use Illuminate\Support\Facades\Route;
 
         //Menu Setting
         Route::resource('menus', MenuController::class);
+        Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
         
     });
 

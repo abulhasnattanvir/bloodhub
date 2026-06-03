@@ -9,23 +9,11 @@ use Illuminate\Http\Request;
 class MenuController extends Controller
 {
 
-    //frontend view
-    // View::composer('*', function ($view) {
-
-    //     $menus = Menu::with('children')
-    //         ->whereNull('parent_id')
-    //         ->where('status', 1)
-    //         ->orderBy('sort_order')
-    //         ->get();
-
-    //     $view->with('menus', $menus);
-    // });
-
     public function index()
     {
         $menus = Menu::with('parent')
-            ->orderBy('sort_order')
-            ->get();
+            ->orderBy('sort_order', 'asc')
+            ->paginate(20);
 
         return view('admin.menus.index', compact('menus'));
     }
@@ -39,7 +27,22 @@ class MenuController extends Controller
 
     public function store(Request $request)
     {
-        Menu::create($request->all());
+        $request->validate([
+            'title' => 'required|max:255',
+            'url' => 'nullable|max:255',
+            'parent_id' => 'nullable|exists:menus,id',
+            'sort_order' => 'nullable|integer',
+            'status' => 'required|boolean',
+        ]);
+
+        Menu::create([
+            'title' => $request->title,
+            'url' => $request->url,
+            'parent_id' => $request->parent_id,
+            'sort_order' => $request->sort_order ?? 0,
+            'target_blank' => $request->has('target_blank'),
+            'status' => $request->status,
+        ]);
 
         return redirect()
             ->route('admin.menus.index')
@@ -55,11 +58,44 @@ class MenuController extends Controller
 
     public function update(Request $request, Menu $menu)
     {
-        $menu->update($request->all());
+        $request->validate([
+            'title' => 'required|max:255',
+            'url' => 'nullable|max:255',
+            'parent_id' => 'nullable|exists:menus,id',
+            'sort_order' => 'nullable|integer|min:0',
+            'status' => 'required|boolean',
+        ]);
+
+        $menu->update([
+            'title' => $request->title,
+            'url' => $request->url,
+            'parent_id' => $request->parent_id,
+            'sort_order' => $request->sort_order ?? 0,
+            'target_blank' => $request->has('target_blank'),
+            'status' => $request->status,
+        ]);
 
         return redirect()
             ->route('admin.menus.index')
             ->with('success', 'Menu Updated');
+    }
+
+    public function sort(Request $request)
+    {
+        $menus = $request->menus;
+
+        foreach ($menus as $index => $menu) {
+
+            Menu::where('id', $menu['id'])->update([
+                'sort_order' => $index,
+                'parent_id'  => $menu['parent_id'] ?? null,
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Menu order updated successfully'
+        ]);
     }
 
     public function destroy(Menu $menu)

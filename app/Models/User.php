@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -10,22 +9,31 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Mass assignable fields
      */
-    protected $fillable = ['name', 'email', 'password', 'is_admin'];
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'profile_image',
+        'is_admin',
+    ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * Hidden fields
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Casts
      */
     protected function casts(): array
     {
@@ -37,10 +45,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user is an administrator.
+     * Check admin
      */
     public function isAdmin(): bool
     {
-        return $this->is_admin === true;
+        return (bool) $this->is_admin;
+    }
+
+    public function getProfileImageUrlAttribute()
+    {
+        return $this->profile_image
+            ? asset('storage/' . $this->profile_image)
+            : asset('default-avatar.png');
     }
 }

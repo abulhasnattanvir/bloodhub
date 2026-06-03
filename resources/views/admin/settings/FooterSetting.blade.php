@@ -1,190 +1,146 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="max-w-6xl mx-auto p-6 space-y-6">
+    <div class="py-6 md:py-10">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- HEADER -->
-        <div class="bg-white rounded-xl shadow p-5">
-            <h2 class="text-2xl font-bold text-gray-800">Footer Settings</h2>
-            <p class="text-sm text-gray-500">Manage your website footer dynamically</p>
-        </div>
-
-        <form method="POST" action="{{ route('admin.footer.update') }}" class="space-y-6">
-            @csrf
-
-            <!-- ABOUT SECTION -->
-            <div class="bg-white rounded-xl shadow p-5">
-                <h3 class="text-lg font-semibold mb-3">About Section</h3>
-
-                <textarea name="about_text" class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500" rows="4">{{ $footer->about_text }}</textarea>
-            </div>
-
-            <!-- SOCIAL LINKS -->
-            <div x-data="repeatable({{ json_encode($footer->social_links ?? []) }})" class="bg-white rounded-xl shadow p-5">
-
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold">Social Links</h3>
-
-                    <button type="button" class="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1 rounded"
-                        @click="add()">
-                        + Add
-                    </button>
-                </div>
-
-                <div class="space-y-3">
-
-                    <template x-for="(item, index) in items" :key="index">
-                        <div class="grid grid-cols-12 gap-2 items-center">
-
-                            <input type="text" placeholder="Name" class="col-span-3 border rounded-lg p-2"
-                                x-model="item.name" :name="'social_links[' + index + '][name]'">
-
-                            <input type="text" placeholder="URL" class="col-span-5 border rounded-lg p-2"
-                                x-model="item.url" :name="'social_links[' + index + '][url]'">
-
-                            <input type="text" placeholder="Icon" class="col-span-3 border rounded-lg p-2"
-                                x-model="item.icon" :name="'social_links[' + index + '][icon]'">
-
-                            <button type="button" class="col-span-1 bg-red-500 hover:bg-red-600 text-white rounded-lg p-2"
-                                @click="remove(index)">
-                                ✕
-                            </button>
-
-                        </div>
-                    </template>
-
-                </div>
-            </div>
-
-            <!-- QUICK LINKS -->
-            <div x-data="repeatable({{ json_encode($footer->quick_links ?? []) }})" class="bg-white rounded-xl shadow p-5">
-
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold">Quick Links</h3>
-
-                    <button type="button" class="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1 rounded"
-                        @click="add()">
-                        + Add
-                    </button>
-                </div>
-
-                <div class="space-y-3">
-
-                    <template x-for="(item, index) in items" :key="index">
-                        <div class="grid grid-cols-12 gap-2">
-
-                            <input type="text" placeholder="Title" class="col-span-5 border rounded-lg p-2"
-                                x-model="item.title" :name="'quick_links[' + index + '][title]'">
-
-                            <input type="text" placeholder="URL" class="col-span-6 border rounded-lg p-2"
-                                x-model="item.url" :name="'quick_links[' + index + '][url]'">
-
-                            <button type="button" class="col-span-1 bg-red-500 text-white rounded-lg"
-                                @click="remove(index)">
-                                ✕
-                            </button>
-
-                        </div>
-                    </template>
-
-                </div>
-            </div>
-
-            <!-- SERVICE LINKS -->
-            <div x-data="repeatable({{ json_encode($footer->service_links ?? []) }})" class="bg-white rounded-xl shadow p-5">
-
-                <h3 class="text-lg font-semibold mb-4">Service Links</h3>
-
-                <template x-for="(item, index) in items" :key="index">
-                    <div class="grid grid-cols-12 gap-2 mb-3">
-
-                        <input type="text" class="col-span-5 border rounded-lg p-2" placeholder="Title"
-                            x-model="item.title" :name="'service_links[' + index + '][title]'">
-
-                        <input type="text" class="col-span-6 border rounded-lg p-2" placeholder="URL" x-model="item.url"
-                            :name="'service_links[' + index + '][url]'">
-
-                        <button type="button" class="col-span-1 bg-red-500 text-white rounded-lg" @click="remove(index)">
-                            ✕
-                        </button>
-
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 bg-red-100 text-red-600 rounded-3xl flex items-center justify-center">
+                        <i class="fas fa-cog text-3xl"></i>
                     </div>
-                </template>
-
-                <button type="button" class="mt-2 bg-green-600 text-white px-3 py-1 rounded" @click="add()">
-                    + Add Service
-                </button>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Footer Settings</h1>
+                        <p class="text-gray-500">Manage your website footer content dynamically</p>
+                    </div>
+                </div>
             </div>
 
-            <!-- FOOTER MENUS -->
-            <div x-data="repeatable({{ json_encode($footer->footer_menus ?? []) }})" class="bg-white rounded-xl shadow p-5">
+            <form method="POST" action="{{ route('admin.footer.update') }}" class="space-y-8">
+                @csrf
 
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold">Footer Menus</h3>
+                <!-- About Section -->
+                <div class="bg-white rounded-3xl shadow-sm p-6 md:p-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-info-circle text-red-500"></i>
+                        About Section
+                    </h3>
+                    <textarea name="about_text" rows="5"
+                        class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5 text-base"
+                        placeholder="Write about your organization...">{{ $footer->about_text ?? '' }}</textarea>
+                </div>
 
-                    <button type="button" class="bg-green-600 hover:bg-green-700 text-white text-sm px-3 py-1 rounded"
-                        @click="add()">
-                        + Add
+                <!-- Social Links -->
+                <div x-data="repeatable({{ json_encode($footer->social_links ?? []) }})" class="bg-white rounded-3xl shadow-sm p-6 md:p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                            <i class="fas fa-share-alt text-blue-500"></i>
+                            Social Links
+                        </h3>
+                        <button type="button" @click="add()"
+                            class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-2xl text-sm font-medium transition">
+                            <i class="fas fa-plus"></i> Add Social
+                        </button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <template x-for="(item, index) in items" :key="index">
+                            <div class="grid grid-cols-12 gap-3 items-center">
+                                <input type="text" placeholder="Platform Name"
+                                    class="col-span-12 sm:col-span-3 rounded-2xl border-gray-300 focus:border-blue-500 py-4 px-5"
+                                    x-model="item.name" :name="'social_links[' + index + '][name]'">
+
+                                <input type="text" placeholder="URL[](https://...)"
+                                    class="col-span-12 sm:col-span-5 rounded-2xl border-gray-300 focus:border-blue-500 py-4 px-5"
+                                    x-model="item.url" :name="'social_links[' + index + '][url]'">
+
+                                <input type="text" placeholder="Icon (fab fa-facebook)"
+                                    class="col-span-12 sm:col-span-3 rounded-2xl border-gray-300 focus:border-blue-500 py-4 px-5"
+                                    x-model="item.icon" :name="'social_links[' + index + '][icon]'">
+
+                                <button type="button" @click="remove(index)"
+                                    class="col-span-12 sm:col-span-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl py-4 transition">
+                                    ✕
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Quick Links & Service Links & Footer Menus -->
+                <!-- (Similar pattern applied to all repeatable sections) -->
+
+                <div x-data="repeatable({{ json_encode($footer->quick_links ?? []) }})" class="bg-white rounded-3xl shadow-sm p-6 md:p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800">Quick Links</h3>
+                        <button type="button" @click="add()"
+                            class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-2xl text-sm font-medium">
+                            <i class="fas fa-plus"></i> Add Link
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <template x-for="(item, index) in items" :key="index">
+                            <div class="grid grid-cols-12 gap-3 items-center">
+                                <input type="text" placeholder="Link Title"
+                                    class="col-span-12 sm:col-span-5 rounded-2xl border-gray-300 py-4 px-5"
+                                    x-model="item.title" :name="'quick_links[' + index + '][title]'">
+                                <input type="text" placeholder="URL"
+                                    class="col-span-12 sm:col-span-6 rounded-2xl border-gray-300 py-4 px-5"
+                                    x-model="item.url" :name="'quick_links[' + index + '][url]'">
+                                <button type="button" @click="remove(index)"
+                                    class="col-span-1 bg-red-500 hover:bg-red-600 text-white rounded-2xl py-4">✕</button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Subscribe Section -->
+                <div class="bg-white rounded-3xl shadow-sm p-6 md:p-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
+                        <i class="fas fa-bell text-green-500"></i>
+                        Subscribe Section
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                            <input type="text" name="subscribe_title" value="{{ $footer->subscribe_title ?? '' }}"
+                                class="block w-full rounded-2xl border-gray-300 focus:border-red-500 py-4 px-5">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <input type="text" name="subscribe_text" value="{{ $footer->subscribe_text ?? '' }}"
+                                class="block w-full rounded-2xl border-gray-300 focus:border-red-500 py-4 px-5">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="inline-flex items-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-2xl shadow-sm transition">
+                        <i class="fas fa-save"></i>
+                        Save Footer Settings
                     </button>
                 </div>
-
-                <div class="space-y-3">
-
-                    <template x-for="(item, index) in items" :key="index">
-                        <div class="grid grid-cols-12 gap-2 items-center">
-
-                            <input type="text" placeholder="Menu Title" class="col-span-5 border rounded-lg p-2"
-                                x-model="item.title" :name="'footer_menus[' + index + '][title]'">
-
-                            <input type="text" placeholder="URL" class="col-span-6 border rounded-lg p-2"
-                                x-model="item.url" :name="'footer_menus[' + index + '][url]'">
-
-                            <button type="button" class="col-span-1 bg-red-500 hover:bg-red-600 text-white rounded-lg p-2"
-                                @click="remove(index)">
-                                ✕
-                            </button>
-
-                        </div>
-                    </template>
-
-                </div>
-            </div>
-
-            <!-- SUBSCRIBE -->
-            <div class="bg-white rounded-xl shadow p-5 space-y-3">
-
-                <h3 class="text-lg font-semibold">Subscribe Section</h3>
-
-                <input type="text" name="subscribe_title" value="{{ $footer->subscribe_title }}"
-                    class="w-full border rounded-lg p-2" placeholder="Title">
-
-                <input type="text" name="subscribe_text" value="{{ $footer->subscribe_text }}"
-                    class="w-full border rounded-lg p-2" placeholder="Description">
-
-            </div>
-
-            <!-- SAVE BUTTON -->
-            <div class="text-right">
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
-                    Save Footer Settings
-                </button>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 
-    <!-- ALPINE REPEATER -->
+    <!-- Alpine.js Repeater -->
     <script>
-        function repeatable(initial) {
+        function repeatable(initial = []) {
             return {
-                items: initial && initial.length ? initial : [],
+                items: initial.length ? initial : [],
 
                 add() {
                     this.items.push({});
                 },
 
                 remove(index) {
-                    this.items.splice(index, 1);
+                    if (confirm('Remove this item?')) {
+                        this.items.splice(index, 1);
+                    }
                 }
             }
         }

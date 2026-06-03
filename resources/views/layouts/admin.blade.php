@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100 rounded">
+                <a href="{{ route('admin.profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100 rounded">
                     <i class="fas fa-user mr-2"></i> Profile
                 </a>
 
@@ -187,15 +187,19 @@
             <div class="border-t p-4">
 
                 <div class="flex items-center gap-3 mb-3">
-                    <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default.png') }}"
-                        class="w-10 h-10 rounded-full">
+                    @if (auth()->user()->profile_image)
+                        <img src="{{ asset('storage/' . auth()->user()->profile_image) }}"
+                            class="w-10 h-10 rounded-full object-cover">
+                    @else
+                        <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+                    @endif
                     <div>
                         <div class="text-sm font-semibold">{{ Auth::user()->name }}</div>
                         <div class="text-xs text-gray-500">{{ Auth::user()->email }}</div>
                     </div>
                 </div>
 
-                <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100 rounded">
+                <a href="{{ route('admin.profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100 rounded">
                     <i class="fas fa-user mr-2"></i> Profile
                 </a>
 
@@ -246,14 +250,19 @@
                     <div x-data="{ drop: false }" class="relative">
 
                         <button @click="drop = !drop">
-                            <img src="{{ Storage::url(Auth::user()->profile_photo ?? 'default.png') }}"
-                                class="w-8 h-8 rounded-full">
+                            @if (auth()->user()->profile_image)
+                                <img src="{{ asset('storage/' . auth()->user()->profile_image) }}"
+                                    class="w-10 h-10 rounded-full object-cover">
+                            @else
+                                <div class="w-10 h-10 rounded-full bg-gray-300"></div>
+                            @endif
                         </button>
 
                         <div x-show="drop" @click.away="drop = false"
                             class="absolute right-0 mt-2 w-40 bg-white border rounded shadow">
 
-                            <a href="{{ route('profile.edit') }}" class="block px-3 py-2 text-sm hover:bg-gray-100">
+                            <a href="{{ route('admin.profile.edit') }}"
+                                class="block px-3 py-2 text-sm hover:bg-gray-100">
                                 Profile
                             </a>
 

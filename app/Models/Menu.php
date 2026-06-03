@@ -27,9 +27,30 @@ class Menu extends Model
         return $this->belongsTo(Menu::class);
     }
 
-    public function isActive()
+    /**
+     * Improved isActive method for nested menus
+     */
+    public function isActive(): bool
     {
-        return request()->is(trim($this->url, '/') . '/*')
-            || request()->url() == url($this->url);
+        $currentPath = trim(request()->path(), '/');
+
+        // Check if current menu itself is active
+        $menuPath = trim($this->url, '/');
+
+        if ($currentPath === $menuPath || str_starts_with($currentPath, $menuPath . '/')) {
+            return true;
+        }
+
+        // If this menu has children, check if any child is active
+        if ($this->children->count() > 0) {
+            foreach ($this->children as $child) {
+                $childPath = trim($child->url, '/');
+                if ($currentPath === $childPath || str_starts_with($currentPath, $childPath . '/')) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

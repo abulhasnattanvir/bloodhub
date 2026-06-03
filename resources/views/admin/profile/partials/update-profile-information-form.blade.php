@@ -34,6 +34,18 @@
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
         </div>
 
+        <!-- PROFILE IMAGE -->
+        <div class="mt-4">
+            <label class="block font-medium">Profile Image</label>
+
+            <input type="file" name="profile_image" class="mt-1 block w-full border rounded p-2">
+
+            @if ($user->profile_image)
+                <img src="{{ asset('storage/' . $user->profile_image) }}"
+                    class="w-16 h-16 mt-2 rounded-full object-cover">
+            @endif
+        </div>
+
         <!-- EMAIL VERIFY -->
         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
             <div>

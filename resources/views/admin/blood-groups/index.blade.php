@@ -1,118 +1,124 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900">Blood Groups</h1>
+                    <p class="text-gray-500 mt-1">Manage all available blood groups</p>
+                </div>
+
+                <a href="{{ route('admin.blood-groups.create') }}"
+                    class="inline-flex items-center gap-2 px-5 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl shadow-sm transition">
+                    <i class="fas fa-plus"></i>
+                    Add Blood Group
+                </a>
+            </div>
+
             @if ($bloodGroups->isEmpty())
-                <div class="text-center py-12">
-                    <p class="text-gray-500">{{ __('No blood groups found.') }}</p>
+                <div class="bg-white rounded-2xl shadow-sm py-16 text-center">
+                    <i class="fas fa-tint text-6xl text-gray-200 mb-4"></i>
+                    <p class="text-gray-500 text-lg">No blood groups found</p>
                     <a href="{{ route('admin.blood-groups.create') }}"
-                        class="inline-flex items-center px-4 py-2 mt-4 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-dark">
-                        {{ __('Add Blood Group') }}
+                        class="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition">
+                        <i class="fas fa-plus"></i>
+                        Add First Blood Group
                     </a>
                 </div>
             @else
-                <!-- Search and Filter Form -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                    <div class="p-6">
-                        <form method="GET" action="{{ route('admin.blood-groups.index') }}" class="space-y-4">
-                            <div class="sm:grid sm:grid-cols-3 gap-4">
-                                <div>
-                                    <label for="search" class="block text-sm font-medium text-gray-700 mb-1">
-                                        {{ __('Search by name') }}
-                                    </label>
-                                    <input type="text" id="search" name="search"
-                                        value="{{ old('search', request('search')) }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary focus:ring-opacity-50 sm:text-sm">
-                                </div>
-                                <div class="col-span-2 sm:col-span-1">
-                                    <button type="submit"
-                                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                        {{ __('Search') }}
-                                    </button>
-                                </div>
-                            </div>
+                <!-- Search Bar -->
+                <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+                    <form method="GET" action="{{ route('admin.blood-groups.index') }}"
+                        class="flex flex-col sm:flex-row gap-4">
+                        <div class="flex-1">
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                placeholder="Search by blood group name..."
+                                class="w-full rounded-xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-3 px-4">
+                        </div>
+                        <button type="submit"
+                            class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl transition flex items-center gap-2">
+                            <i class="fas fa-search"></i>
+                            Search
+                        </button>
 
-                            @if (request('search'))
-                                <div class="mt-2 flex justify-between">
-                                    <p class="text-sm text-gray-500">
-                                        Found {{ $bloodGroups->total() }} {{ __('result') }}
-                                    </p>
-                                    <a href="{{ route('admin.blood-groups.index') }}"
-                                        class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                        {{ __('Reset') }}
-                                    </a>
-                                </div>
-                            @endif
-                        </form>
-                    </div>
+                        @if (request('search'))
+                            <a href="{{ route('admin.blood-groups.index') }}"
+                                class="px-6 py-3 text-gray-600 hover:bg-gray-100 rounded-xl transition flex items-center">
+                                Reset
+                            </a>
+                        @endif
+                    </form>
                 </div>
 
-                <!-- Blood Groups Table -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __('Name') }}
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ __('Description') }}
-                                    </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only">{{ __('Actions') }}</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach ($bloodGroups as $bloodGroup)
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <!-- Table Card -->
+                <div class="bg-white rounded-3xl shadow-sm overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-100">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th
+                                    class="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                    Blood Group
+                                </th>
+                                <th
+                                    class="px-8 py-5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                    Description
+                                </th>
+                                <th
+                                    class="px-8 py-5 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            @foreach ($bloodGroups as $bloodGroup)
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-8 py-5">
+                                        <span
+                                            class="inline-flex items-center px-4 py-2 bg-red-100 text-red-700 font-semibold rounded-2xl text-lg">
                                             {{ $bloodGroup->name }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            {{ $bloodGroup->description ?? __('No description') }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <div class="flex space-x-2">
-                                                <!-- Edit Button -->
-                                                <a href="{{ route('admin.blood-groups.edit', $bloodGroup->id) }}"
-                                                    class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-primary-600 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
+                                        </span>
+                                    </td>
+                                    <td class="px-8 py-5 text-gray-600">
+                                        {{ $bloodGroup->description ?? '—' }}
+                                    </td>
+                                    <td class="px-8 py-5 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <a href="{{ route('admin.blood-groups.edit', $bloodGroup->id) }}"
+                                                class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-xl transition">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
 
-                                                <!-- Delete Button -->
-                                                <form action="{{ route('admin.blood-groups.destroy', $bloodGroup->id) }}"
-                                                    method="POST" class="inline-block"
-                                                    onsubmit="return confirm('{{ __('Are you sure you want to delete this blood group?') }}');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-red-600 hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                            <form action="{{ route('admin.blood-groups.destroy', $bloodGroup->id) }}"
+                                                method="POST" class="inline"
+                                                onsubmit="return confirm('Are you sure you want to delete this blood group?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="px-4 py-2 text-red-600 hover:bg-red-50 rounded-xl transition">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
 
                 <!-- Pagination -->
-                @if ($bloodGroups->total() > 10)
-                    <div class="mt-6 flex items-center justify-between px-6">
+                @if ($bloodGroups->hasPages())
+                    <div class="mt-8 flex items-center justify-between">
                         <p class="text-sm text-gray-500">
                             Showing {{ $bloodGroups->firstItem() }} to {{ $bloodGroups->lastItem() }}
-                            of {{ $bloodGroups->total() }} {{ __('results') }}
+                            of {{ $bloodGroups->total() }} results
                         </p>
-
-                        {{ $bloodGroups->links() }}
+                        <div class="mt-4">
+                            {{ $bloodGroups->links() }}
+                        </div>
                     </div>
                 @endif
             @endif

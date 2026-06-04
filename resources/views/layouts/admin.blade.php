@@ -68,6 +68,10 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.goals.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fas fa-tint w-5"></i> Goles
                 </a>
+                <a href="{{ route('admin.activities.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.activities.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-tint w-5"></i> Goles
+                </a>
 
                 <div class="pt-6 mt-6 border-t">
                     <a href="{{ route('admin.pages.index') }}"

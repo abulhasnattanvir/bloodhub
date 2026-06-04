@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\Donor;
 use App\Models\BloodGroup;
@@ -28,13 +29,16 @@ class HomeController extends Controller
             ->orderBy('order', 'asc')
             ->get();
 
+        $activities = Activity::latest()->get();
+
         return view('frontend.home', compact(
             'totalDonors',
             'availableDonors',
             'recentDonors',
             'bloodGroups',
             'sliders',
-            'goals'
+            'goals',
+            'activities'
         ));
     }
 }

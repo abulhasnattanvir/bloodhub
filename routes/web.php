@@ -17,6 +17,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\DonorListController;
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\ActivityController;
+use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
 use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
@@ -74,6 +76,11 @@ use Illuminate\Support\Facades\Route;
 
     //donation contributors
     Route::get('/donation-contributors', [DonationController::class, 'contributors'])->name('donation.contributors');
+
+
+    // Frontend Activities (Post Type Style)
+    Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
+    Route::get('/activities/{activity:slug}', [ActivityController::class, 'show'])->name('activities.show');
 
 //goals
 Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
@@ -155,6 +162,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
         //Goals
         Route::resource('goals', AdminGoalController::class);
+
+        //activaities
+        Route::resource('activities', AdminActivityController::class);
+
         
     });
 

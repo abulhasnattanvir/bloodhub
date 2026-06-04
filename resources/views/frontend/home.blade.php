@@ -53,8 +53,8 @@
     </style>
 
     <!-- =========================
-                                                                                         HERO SLIDER SECTION
-                                                                                    ========================= -->
+                                                                                                     HERO SLIDER SECTION
+                                                                                                ========================= -->
 
     {{-- <section class="hero-slider-section relative overflow-hidden">
 
@@ -227,8 +227,8 @@
     </section> --}}
 
     <!-- =========================
-                                                                                 HERO SLIDER (DYNAMIC)
-                                                                            ========================= -->
+                                                                                             HERO SLIDER (DYNAMIC)
+                                                                                        ========================= -->
     <section class="hero-slider-section relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
@@ -324,49 +324,39 @@
         </div>
     </section>
 
-    {{-- Full impact --}}
-    @php
-        $activities = [
-            ['icon' => 'fa-book-open', 'text' => 'শিক্ষা সহায়তা ও বৃত্তি প্রদান'],
-            ['icon' => 'fa-tint', 'text' => 'রক্তদান কর্মসূচি'],
-            ['icon' => 'fa-snowflake', 'text' => 'শীতবস্ত্র বিতরণ'],
-            ['icon' => 'fa-house-tsunami', 'text' => 'দুর্যোগে ত্রাণ সহায়তা'],
-            ['icon' => 'fa-users', 'text' => 'সামাজিক সচেতনতা'],
-            ['icon' => 'fa-ban', 'text' => 'মাদকবিরোধী প্রচারণা'],
-            ['icon' => 'fa-child', 'text' => 'বাল্যবিবাহ প্রতিরোধ'],
-            ['icon' => 'fa-laptop-code', 'text' => 'প্রযুক্তি প্রশিক্ষণ'],
-            ['icon' => 'fa-handshake', 'text' => 'সরকারি উন্নয়ন সহযোগিতা'],
-            ['icon' => 'fa-scale-balanced', 'text' => 'ন্যায়বিচার সচেতনতা'],
-            ['icon' => 'fa-people-carry-box', 'text' => 'মানবিক সহায়তা'],
-            ['icon' => 'fa-heart-pulse', 'text' => 'জরুরি সেবা সমর্থন'],
-        ];
-    @endphp
-    <section class="py-20 bg-gradient-to-br from-gray-50 to-white">
-        <div class="max-w-7xl mx-auto px-4">
+    {{-- Our Activities / কার্যক্রম --}}
+    <section class="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <h2 class="text-3xl font-bold text-center mb-12">
-                আমাদের কার্যক্রম
-            </h2>
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">আমাদের কার্যক্রম</h2>
+                <p class="mt-4 text-gray-600 text-lg">সমাজের উন্নয়নে আমাদের বাস্তবমুখী পদক্ষেপসমূহ</p>
+                <div class="w-20 h-1 bg-red-600 mx-auto mt-6 rounded-full"></div>
+            </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+                @foreach ($activities as $activity)
+                    <a href="{{ route('activities.show', $activity->slug) }}"
+                        class="group bg-white p-7 rounded-3xl border border-gray-100 hover:border-red-200 
+                          hover:shadow-xl transition-all duration-300 flex gap-5">
 
-                @foreach ($activities as $item)
-                    <div class="flex gap-4 p-5 bg-white rounded-2xl shadow hover:shadow-lg transition">
-
-                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 text-red-600 rounded-full">
-                            <i class="fas {{ $item['icon'] }}"></i>
+                        <div
+                            class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-2xl 
+                                bg-red-50 text-red-600 text-3xl 
+                                group-hover:bg-red-600 group-hover:text-white 
+                                group-hover:scale-110 transition-all duration-300">
+                            <i class="fas {{ $activity->icon }}"></i>
                         </div>
 
-                        <p class="text-gray-700">
-                            {{ $item['text'] }}
+                        <p class="text-gray-700 font-medium leading-relaxed pt-1">
+                            {{ $activity->text }}
                         </p>
-
-                    </div>
+                    </a>
                 @endforeach
-
             </div>
         </div>
     </section>
+
     {{-- stats section --}}
     <section class="py-20 bg-red-600 text-white">
         <div class="max-w-7xl mx-auto px-4">

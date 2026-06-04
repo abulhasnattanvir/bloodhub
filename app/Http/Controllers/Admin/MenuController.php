@@ -82,20 +82,33 @@ class MenuController extends Controller
 
     public function sort(Request $request)
     {
-        $menus = $request->menus;
+        $menus = $request->input('menus', []);
 
-        foreach ($menus as $index => $menu) {
-
-            Menu::where('id', $menu['id'])->update([
-                'sort_order' => $index,
-                'parent_id'  => $menu['parent_id'] ?? null,
+        if (empty($menus)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No menu data received'
             ]);
         }
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Menu order updated successfully'
-        ]);
+        try {
+            foreach ($menus as $index => $menu) {
+                Menu::where('id', $menu['id'])->update([
+                    'sort_order' => $index + 1,           // Start from 1
+                    'parent_id'  => $menu['parent_id'] ?? null,
+                ]);
+            }
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Menu order updated successfully!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Error updating order: ' . $e->getMessage()
+            ]);
+        }
     }
 
     public function destroy(Menu $menu)

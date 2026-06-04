@@ -124,10 +124,10 @@ class DonorController extends Controller
         if ($donor->profile_photo) {
             Storage::disk('public')->delete($donor->profile_photo);
         }
-
-        $donor->delete();
-
+        $donor->forceDelete();
         return redirect()->route('admin.donors.index')
             ->with('success', 'Donor deleted successfully.');
     }
+
+    
 }

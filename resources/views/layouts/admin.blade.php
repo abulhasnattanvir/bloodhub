@@ -64,6 +64,10 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.blood-groups.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fas fa-tint w-5"></i> Blood Groups
                 </a>
+                <a href="{{ route('admin.goals.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.goals.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fas fa-tint w-5"></i> Goles
+                </a>
 
                 <div class="pt-6 mt-6 border-t">
                     <a href="{{ route('admin.pages.index') }}"
@@ -127,11 +131,16 @@
         <div class="flex-1 flex flex-col overflow-hidden">
 
             <!-- Top Header -->
-            <header class="bg-white border-b px-6 py-5 flex items-center justify-between">
+            <!-- Top Header -->
+            <header class="bg-white border-b shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-50">
                 <div class="flex items-center gap-4">
-                    <button @click="mobileSidebar = !mobileSidebar" class="md:hidden text-2xl text-gray-600">
+                    <!-- Mobile Menu Button -->
+                    <button @click="mobileSidebar = !mobileSidebar"
+                        class="md:hidden text-2xl text-gray-600 hover:text-gray-800 transition">
                         <i class="fas fa-bars"></i>
                     </button>
+
+                    <!-- Page Title -->
                     <h1 class="text-2xl font-semibold text-gray-800">
                         @isset($header)
                             {{ $header }}
@@ -141,16 +150,38 @@
                     </h1>
                 </div>
 
-                <div class="flex items-center gap-5">
-                    <button class="text-xl text-gray-600">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                    <a href="#" onclick="if(confirm('Logout?')) document.getElementById('logout-form').submit()"
-                        class="text-red-600 hover:text-red-700">
-                        <i class="fas fa-sign-out-alt"></i>
+                <div class="flex items-center gap-3">
+
+                    <!-- View Website Button -->
+                    <a href="{{ url('/') }}" target="_blank"
+                        class="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition text-sm font-medium">
+                        <i class="fas fa-globe"></i>
+                        <span class="hidden sm:inline">View Website</span>
                     </a>
+
+                    <!-- Notification -->
+                    <button
+                        class="relative p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-xl transition">
+                        <i class="fas fa-bell text-xl"></i>
+                        <!-- Notification Badge (Optional) -->
+                        <!-- <span class="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] flex items-center justify-center rounded-full">3</span> -->
+                    </button>
+
+                    <!-- Logout -->
+                    <a href="#"
+                        onclick="if(confirm('Are you sure you want to logout?')) document.getElementById('logout-form').submit()"
+                        class="flex items-center gap-2 px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition text-sm font-medium">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="hidden sm:inline">Logout</span>
+                    </a>
+
                 </div>
             </header>
+
+            <!-- Logout Form (Place this anywhere in your layout) -->
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
 
             <!-- Content -->
             <main class="flex-1 overflow-auto p-6 bg-gray-50">

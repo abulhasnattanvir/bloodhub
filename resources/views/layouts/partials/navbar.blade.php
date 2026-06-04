@@ -6,7 +6,7 @@
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center flex-shrink-0">
                 @if (setting('logo'))
-                    <img src="{{ asset('storage/' . setting('logo')) }}" class="h-10" alt="Logo">
+                    <img src="{{ asset('storage/' . setting('logo')) }}" width="180px" alt="Logo">
                 @else
                     <span class="text-white text-xl font-bold">
                         {{ setting('site_name', 'BloodHub') }}

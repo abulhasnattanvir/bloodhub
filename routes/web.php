@@ -9,12 +9,15 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Frontend\GoalController;
+use App\Http\Controllers\Admin\GoalController as AdminGoalController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\DonorListController;
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController as UserProfileController;
@@ -36,6 +39,7 @@ use Illuminate\Support\Facades\Route;
     // Frontend Routes
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/search', [SearchController::class, 'index'])->name('search');
+    Route::get('/blood', [BloodController::class, 'index'])->name('blood');
     Route::get('/donors', [DonorListController::class, 'index'])->name('donors.list');
     // Route::get('/donors/create', [DonorListController::class, 'create'])->name('donors.create');
     // Route::post('/donors', [DonorListController::class, 'store'])->name('donors.store');
@@ -71,12 +75,18 @@ use Illuminate\Support\Facades\Route;
     //donation contributors
     Route::get('/donation-contributors', [DonationController::class, 'contributors'])->name('donation.contributors');
 
+//goals
+Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
+Route::get('/goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
+
     // USER PROFILE (Breeze)
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+
 
 
 //Admin Routes
@@ -142,6 +152,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         //Menu Setting
         Route::resource('menus', MenuController::class);
         Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
+
+        //Goals
+        Route::resource('goals', AdminGoalController::class);
         
     });
 

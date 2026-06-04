@@ -24,7 +24,6 @@ return [
     */
 
     'home' => 'Home',
-    'search_donors' => 'Search Donors',
     'donor_list' => 'Donor List',
     'about' => 'About',
     'contact' => 'Contact',

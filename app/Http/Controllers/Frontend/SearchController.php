@@ -15,6 +15,8 @@ class SearchController extends Controller
     public function index(Request $request)
     {
         $query = Donor::with('bloodGroup');
+        $totalDonors = Donor::count();
+        $availableDonors = Donor::where('availability_status', 'available')->count();
 
         // Search by name, phone, or email (like admin system)
         if ($request->filled('search')) {
@@ -37,6 +39,6 @@ class SearchController extends Controller
         // Get blood groups for filter
         $bloodGroups = BloodGroup::all();
 
-        return view('frontend.search', compact('donors', 'bloodGroups', 'request'));
+        return view('frontend.search', compact('donors', 'bloodGroups', 'request', 'totalDonors', 'availableDonors',));
     }
 }

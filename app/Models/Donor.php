@@ -37,4 +37,5 @@ class Donor extends Model
     {
         return $this->belongsTo(BloodGroup::class);
     }
+
 }

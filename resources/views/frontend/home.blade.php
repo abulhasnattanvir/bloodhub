@@ -53,8 +53,8 @@
     </style>
 
     <!-- =========================
-                     HERO SLIDER SECTION
-                ========================= -->
+                                                                                         HERO SLIDER SECTION
+                                                                                    ========================= -->
 
     {{-- <section class="hero-slider-section relative overflow-hidden">
 
@@ -227,378 +227,170 @@
     </section> --}}
 
     <!-- =========================
-             HERO SLIDER (DYNAMIC)
-        ========================= -->
-
-    <section class="hero-slider-section relative overflow-hidden">
-
+                                                                                 HERO SLIDER (DYNAMIC)
+                                                                            ========================= -->
+    <section class="hero-slider-section relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
         <div class="hero-shape hero-shape-2"></div>
 
-        <div class="max-w-7xl mx-auto px-4 relative z-10">
+        @if ($sliders->count())
+            <div class="swiper heroSlider max-w-7xl mx-auto px-4 lg:px-6 rounded-3xl overflow-hidden shadow-2xl">
+                <div class="swiper-wrapper">
+                    @foreach ($sliders as $slider)
+                        <div class="swiper-slide">
+                            <div class="grid lg:grid-cols-2 items-center gap-10 lg:gap-16 bg-white">
 
-            @if ($sliders->count())
-                <div class="swiper heroSlider hero-glass rounded-[35px] overflow-hidden">
+                                <!-- Left Content -->
+                                <div class="p-8 lg:p-16 order-2 lg:order-1">
+                                    @if ($slider->icon)
+                                        <span
+                                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-50 text-red-600 text-sm font-medium mb-6">
+                                            <i class="{{ $slider->icon }}"></i>
+                                            {{ $slider->highlight_text }}
+                                        </span>
+                                    @endif
 
-                    <div class="swiper-wrapper">
+                                    <h1 class="text-4xl lg:text-5xl font-bold leading-tight text-gray-900 mb-6">
+                                        {!! $slider->title !!}
+                                    </h1>
 
-                        @foreach ($sliders as $slider)
-                            <div class="swiper-slide">
+                                    @if ($slider->description)
+                                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                                            {{ $slider->description }}
+                                        </p>
+                                    @endif
 
-                                <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
+                                    @if ($slider->button_text)
+                                        <a href="{{ $slider->button_link }}"
+                                            class="inline-block bg-gradient-to-r from-red-600 to-rose-600 text-white font-semibold px-9 py-4 rounded-2xl hover:shadow-lg hover:scale-105 transition-all duration-300">
+                                            {{ $slider->button_text }}
+                                        </a>
+                                    @endif
+                                </div>
 
-                                    <!-- LEFT CONTENT -->
-                                    <div>
-
-                                        @if ($slider->icon)
-                                            <span
-                                                class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-red-100 text-red-600 mb-6">
-                                                <i class="{{ $slider->icon }}"></i>
-                                                {{ $slider->highlight_text }}
-                                            </span>
-                                        @endif
-
-                                        <h1 class="hero-title mb-6">
-                                            {!! $slider->title !!}
-                                        </h1>
-
-                                        @if ($slider->description)
-                                            <p class="hero-text mb-8">
-                                                {{ $slider->description }}
-                                            </p>
-                                        @endif
-
-                                        @if ($slider->button_text)
-                                            <a href="{{ $slider->button_link }}"
-                                                class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold inline-block">
-
-                                                {{ $slider->button_text }}
-                                            </a>
-                                        @endif
-
-                                    </div>
-
-                                    <!-- RIGHT IMAGE -->
-                                    <div class="relative">
-
-                                        <img src="{{ asset('storage/' . $slider->image) }}"
-                                            class="hero-image w-full max-w-xl mx-auto" alt="slider image">
-
-                                    </div>
-
+                                <!-- Right Image -->
+                                <div class="relative order-1 lg:order-2">
+                                    <img src="{{ asset('storage/' . $slider->image) }}"
+                                        class="w-full h-full object-cover lg:rounded-r-3xl" alt="{{ $slider->title }}">
                                 </div>
 
                             </div>
-                        @endforeach
-
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="swiper-pagination !bottom-5"></div>
-
-                </div>
-            @else
-                <!-- fallback -->
-                <div class="text-center py-20">
-                    <h2 class="text-2xl font-bold text-gray-500">
-                        No Slider Found
-                    </h2>
-                </div>
-            @endif
-
-        </div>
-    </section>
-
-
-    <!-- HERO -->
-    <section class="relative overflow-hidden hero-gradient py-24">
-
-        <div class="max-w-7xl mx-auto px-4">
-
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-                <!-- Left -->
-                <div>
-
-                    <span
-                        class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-red-100 text-red-600 font-semibold mb-6">
-                        <i class="fas fa-heartbeat"></i>
-                        {{ __('app.emergency_blood_support') }}
-                    </span>
-
-                    <h1 class="text-5xl lg:text-6xl font-extrabold leading-tight text-gray-900 mb-6">
-
-                        {{ __('app.save_lives') }} <br>
-                        <span class="text-red-600">
-                            {{ __('app.every_drop') }}
-                        </span>
-
-                    </h1>
-
-                    <p class="text-lg text-gray-600 leading-relaxed mb-8 max-w-xl">
-
-                        {{ __('app.hero_description') }}
-
-                    </p>
-
-                    <div class="flex flex-wrap gap-4">
-
-                        <a href="{{ route('search') }}"
-                            class="hero-btn px-8 py-4 rounded-2xl text-white font-bold shadow-xl">
-
-                            <i class="fas fa-search mr-2"></i>
-                            {{ __('app.search_donors') }}
-                        </a>
-
-                        <a href="{{ route('donors.list') }}"
-                            class="px-8 py-4 rounded-2xl border border-red-200 bg-white hover:bg-red-50 transition font-semibold text-gray-700">
-
-                            <i class="fas fa-users mr-2"></i>
-                            {{ __('app.view_donor_btn') }}
-                        </a>
-
-                    </div>
-
-                </div>
-
-                <!-- Right -->
-                <div class="relative">
-
-                    <div class="glass-card rounded-[30px] p-10 shadow-2xl">
-
-                        <div class="grid grid-cols-2 gap-6">
-
-                            <div class="text-center p-6 rounded-2xl bg-red-50">
-                                <i class="fas fa-users text-4xl text-red-500 mb-4"></i>
-
-                                <h2 class="text-4xl font-extrabold text-gray-900">
-                                    {{ $totalDonors }}
-                                </h2>
-
-                                <p class="text-gray-600 mt-2">
-                                    {{ __('app.total_donors') }}
-                                </p>
-                            </div>
-
-                            <div class="text-center p-6 rounded-2xl bg-green-50">
-                                <i class="fas fa-heart-pulse text-4xl text-green-500 mb-4"></i>
-
-                                <h2 class="text-4xl font-extrabold text-gray-900">
-                                    {{ $availableDonors }}
-                                </h2>
-
-                                <p class="text-gray-600 mt-2">
-                                    {{ __('app.available_donors') }}
-                                </p>
-                            </div>
-
-                            <div class="text-center p-6 rounded-2xl bg-blue-50">
-                                <i class="fas fa-shield-heart text-4xl text-blue-500 mb-4"></i>
-
-                                <h2 class="text-4xl font-extrabold text-gray-900">
-                                    85%
-                                </h2>
-
-                                <p class="text-gray-600 mt-2">
-                                    {{ __('app.match_success') }}
-                                </p>
-                            </div>
-
-                            <div class="text-center p-6 rounded-2xl bg-yellow-50">
-                                <i class="fas fa-clock text-4xl text-yellow-500 mb-4"></i>
-
-                                <h2 class="text-4xl font-extrabold text-gray-900">
-                                    24/7
-                                </h2>
-
-                                <p class="text-gray-600 mt-2">
-                                    {{ __('app.emergency_support') }}
-                                </p>
-                            </div>
-
                         </div>
-
-                    </div>
-
+                    @endforeach
                 </div>
 
+                <!-- Pagination -->
+                <div class="swiper-pagination !bottom-6"></div>
             </div>
-
-        </div>
-
+        @else
+            <div class="text-center py-20 bg-gray-100 rounded-3xl">
+                <h2 class="text-2xl font-bold text-gray-400">No Slider Found</h2>
+            </div>
+        @endif
     </section>
 
-    <!-- RECENT DONORS -->
-    <section class="py-20 bg-white">
 
-        <div class="max-w-7xl mx-auto px-4">
+    {{-- Mission and Goals --}}
+    <section class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <div class="text-center mb-14">
-
-                <span class="inline-block px-4 py-2 rounded-full bg-red-100 text-red-600 font-semibold mb-4">
-                    {{ __('app.recent_donors') }}
-                </span>
-
-                <h2 class="text-4xl font-extrabold text-gray-900 mb-4">
-                    {{ __('app.meet_our_heroes') }}
-                </h2>
-
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    {{ __('app.heroes_description') }}
-                </p>
-
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">আমাদের লক্ষ্য ও উদ্দেশ্য</h2>
+                <p class="mt-4 text-gray-600 text-lg">সমাজের উন্নয়নে আমাদের অঙ্গীকার</p>
+                <div class="w-20 h-1 bg-red-600 mx-auto mt-6 rounded-full"></div>
             </div>
 
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                @foreach ($goals as $goal)
+                    <a href="{{ route('goals.show', $goal->id) }}"
+                        class="group block p-8 bg-white border border-gray-100 rounded-3xl 
+                          hover:border-red-200 hover:shadow-xl transition-all duration-300">
 
-                @foreach ($recentDonors as $donor)
-                    <div class="glass-card rounded-3xl p-6 text-center shadow-lg">
-
-                        <div class="flex justify-center mb-5">
-
-                            @if ($donor->profile_photo)
-                                <img src="{{ Storage::url($donor->profile_photo) }}" class="donor-image" alt="Donor">
-                            @else
-                                <div class="donor-image bg-gray-100 flex items-center justify-center">
-                                    <i class="fas fa-user text-3xl text-gray-400"></i>
-                                </div>
-                            @endif
-
+                        <div
+                            class="w-20 h-20 flex items-center justify-center rounded-2xl 
+                                bg-red-50 text-red-600 text-4xl mb-6 
+                                group-hover:bg-red-600 group-hover:text-white 
+                                group-hover:scale-110 transition-all duration-300">
+                            <i class="fas {{ $goal->icon }}"></i>
                         </div>
 
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">
-                            {{ $donor->full_name }}
-                        </h3>
-
-                        <span
-                            class="blood-badge
-                        {{ str_contains($donor->bloodGroup->name, 'A') ? 'bg-red-100 text-red-600' : '' }}
-                        {{ str_contains($donor->bloodGroup->name, 'B') ? 'bg-green-100 text-green-600' : '' }}
-                        {{ str_contains($donor->bloodGroup->name, 'O') ? 'bg-yellow-100 text-yellow-700' : '' }}
-                        {{ str_contains($donor->bloodGroup->name, 'AB') ? 'bg-blue-100 text-blue-600' : '' }}
-                    ">
-                            {{ $donor->bloodGroup->name }}
-                        </span>
-
-                        <p class="text-gray-500 mt-4 text-sm">
-                            <i class="fas fa-phone-alt mr-2"></i>
-                            {{ $donor->phone_number }}
+                        <p class="text-gray-700 font-medium text-[17px] leading-relaxed">
+                            {{ $goal->text }}
                         </p>
-
-                        <div class="mt-5">
-
-                            @if ($donor->availability_status === 'available')
-                                <span class="px-4 py-2 rounded-full bg-green-100 text-green-700 text-sm font-semibold">
-                                    Available
-                                </span>
-                            @else
-                                <span class="px-4 py-2 rounded-full bg-gray-100 text-gray-600 text-sm font-semibold">
-                                    Not Available
-                                </span>
-                            @endif
-
-                        </div>
-
-                    </div>
+                    </a>
                 @endforeach
-
             </div>
-
         </div>
-
     </section>
 
-    <section class="py-16 bg-white dark:bg-gray-900">
+    {{-- Full impact --}}
+    @php
+        $activities = [
+            ['icon' => 'fa-book-open', 'text' => 'শিক্ষা সহায়তা ও বৃত্তি প্রদান'],
+            ['icon' => 'fa-tint', 'text' => 'রক্তদান কর্মসূচি'],
+            ['icon' => 'fa-snowflake', 'text' => 'শীতবস্ত্র বিতরণ'],
+            ['icon' => 'fa-house-tsunami', 'text' => 'দুর্যোগে ত্রাণ সহায়তা'],
+            ['icon' => 'fa-users', 'text' => 'সামাজিক সচেতনতা'],
+            ['icon' => 'fa-ban', 'text' => 'মাদকবিরোধী প্রচারণা'],
+            ['icon' => 'fa-child', 'text' => 'বাল্যবিবাহ প্রতিরোধ'],
+            ['icon' => 'fa-laptop-code', 'text' => 'প্রযুক্তি প্রশিক্ষণ'],
+            ['icon' => 'fa-handshake', 'text' => 'সরকারি উন্নয়ন সহযোগিতা'],
+            ['icon' => 'fa-scale-balanced', 'text' => 'ন্যায়বিচার সচেতনতা'],
+            ['icon' => 'fa-people-carry-box', 'text' => 'মানবিক সহায়তা'],
+            ['icon' => 'fa-heart-pulse', 'text' => 'জরুরি সেবা সমর্থন'],
+        ];
+    @endphp
+    <section class="py-20 bg-gradient-to-br from-gray-50 to-white">
         <div class="max-w-7xl mx-auto px-4">
 
-            <h2 class="text-3xl font-bold text-center text-red-600 mb-10">
-                {{ __('app.donors_by_blood_group') }}
+            <h2 class="text-3xl font-bold text-center mb-12">
+                আমাদের কার্যক্রম
             </h2>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 text-center">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                @foreach ($bloodGroups ?? [] as $group)
-                    <div class="p-4 rounded-xl shadow bg-red-50 dark:bg-gray-800">
-                        <h3 class="text-xl font-bold text-red-600">
-                            {{ $group->name }}
-                        </h3>
-                        <p class="text-gray-600 dark:text-gray-300">
-                            {{ $group->donors_count ?? 0 }}
+                @foreach ($activities as $item)
+                    <div class="flex gap-4 p-5 bg-white rounded-2xl shadow hover:shadow-lg transition">
+
+                        <div class="w-10 h-10 flex items-center justify-center bg-red-100 text-red-600 rounded-full">
+                            <i class="fas {{ $item['icon'] }}"></i>
+                        </div>
+
+                        <p class="text-gray-700">
+                            {{ $item['text'] }}
                         </p>
+
                     </div>
                 @endforeach
 
             </div>
         </div>
     </section>
+    {{-- stats section --}}
+    <section class="py-20 bg-red-600 text-white">
+        <div class="max-w-7xl mx-auto px-4">
 
-    <section class="py-16 bg-gray-50 dark:bg-gray-800">
-        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
 
-            <h2 class="text-3xl font-bold text-red-600 mb-3">
-                {{ __('app.why_donation_matter') }}
-            </h2>
-
-            <p class="text-gray-600 dark:text-gray-300 mb-10">
-                {{ __('app.donation_can_save') }}
-            </p>
-
-            <div class="grid md:grid-cols-4 gap-6">
-
-                <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow">
-                    <i class="fas fa-heart text-red-500 text-3xl mb-3"></i>
-                    <h3 class="font-bold">{{ __('app.strong_community') }}</h3>
-                    <p class="text-sm text-gray-500">{{ __('app.saving_network') }}</p>
+                <div>
+                    <h3 class="text-4xl font-bold">{{ $totalDonors ?? 0 }}</h3>
+                    <p class="mt-2">মোট রক্তদাতা</p>
                 </div>
 
-                <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow">
-                    <i class="fas fa-heartbeat text-red-500 text-3xl mb-3"></i>
-                    <h3 class="font-bold">{{ __('app.health_benefits') }}</h3>
-                    <p class="text-sm text-gray-500">{{ __('app.blood_circulation') }}</p>
+                <div>
+                    <h3 class="text-4xl font-bold">{{ $availableDonors ?? 0 }}</h3>
+                    <p class="mt-2">উপলব্ধ রক্তদাতা</p>
                 </div>
 
-                <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow">
-                    <i class="fas fa-bullseye text-red-500 text-3xl mb-3"></i>
-                    <h3 class="font-bold">{{ __('app.life_saving') }}</h3>
-                    <p class="text-sm text-gray-500">{{ __('app.donation_lives') }}</p>
+                <div>
+                    <h3 class="text-4xl font-bold">12+</h3>
+                    <p class="mt-2">সামাজিক কার্যক্রম</p>
                 </div>
 
-                <div class="p-6 bg-white dark:bg-gray-900 rounded-xl shadow">
-                    <i class="fas fa-globe text-red-500 text-3xl mb-3"></i>
-                    <h3 class="font-bold">{{ __('app.global_impact') }}</h3>
-                    <p class="text-sm text-gray-500">{{ __('app.help_people_worldwide') }}</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="py-16 bg-red-600 text-white">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-
-            <h2 class="text-3xl font-bold mb-10">{{ __('app.guidelines') }}</h2>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-                <div class="bg-white/10 p-6 rounded-xl">
-                    <h3 class="text-2xl font-bold">{{ __('app.age') }}</h3>
-                    <p>{{ __('app.requirement') }}</p>
-                </div>
-
-                <div class="bg-white/10 p-6 rounded-xl">
-                    <h3 class="text-2xl font-bold">{{ __('app.kg') }}</h3>
-                    <p>{{ __('app.minimum_weight') }}</p>
-                </div>
-
-                <div class="bg-white/10 p-6 rounded-xl">
-                    <h3 class="text-2xl font-bold">{{ __('app.month') }}</h3>
-                    <p>{{ __('app.between_donation') }}</p>
-                </div>
-
-                <div class="bg-white/10 p-6 rounded-xl">
-                    <h3 class="text-2xl font-bold"> {{ __('app.mililiter') }} </h3>
-                    <p>{{ __('app.per_donation') }}</p>
+                <div>
+                    <h3 class="text-4xl font-bold">100%</h3>
+                    <p class="mt-2">মানবিক সেবা</p>
                 </div>
 
             </div>

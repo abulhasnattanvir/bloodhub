@@ -1,10 +1,9 @@
 @extends('layouts.frontend')
 
 @section('content')
-
     <!-- =========================
-            SEARCH HERO DASHBOARD
-        ========================= -->
+                                SEARCH HERO DASHBOARD
+                            ========================= -->
     <section class="bg-gradient-to-r from-red-50 to-white py-10">
         <div class="max-w-7xl mx-auto px-4">
 
@@ -56,8 +55,8 @@
     </section>
 
     <!-- =========================
-            RESULTS SECTION (CARDS)
-        ========================= -->
+                                RESULTS SECTION (CARDS)
+                            ========================= -->
     <section class="py-10">
         <div class="max-w-7xl mx-auto px-4">
 

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Donor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -22,4 +23,6 @@ class BloodGroup extends Model
     {
         return $this->hasMany(Donor::class);
     }
+
+
 }

@@ -7,6 +7,7 @@ use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\Donor;
 use App\Models\BloodGroup;
+use App\Models\Faq;
 use App\Models\Slider;
 use App\Models\Goal;
 
@@ -31,6 +32,10 @@ class HomeController extends Controller
 
         $activities = Activity::latest()->get();
 
+        $faqs = Faq::where('status', 1)
+            ->orderBy('position')
+            ->get();
+
         return view('frontend.home', compact(
             'totalDonors',
             'availableDonors',
@@ -38,7 +43,8 @@ class HomeController extends Controller
             'bloodGroups',
             'sliders',
             'goals',
-            'activities'
+            'activities',
+            'faqs'
         ));
     }
 }

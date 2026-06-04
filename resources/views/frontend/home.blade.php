@@ -53,8 +53,8 @@
     </style>
 
     <!-- =========================
-                                                                                                     HERO SLIDER SECTION
-                                                                                                ========================= -->
+                                                                                                                     HERO SLIDER SECTION
+                                                                                                                ========================= -->
 
     {{-- <section class="hero-slider-section relative overflow-hidden">
 
@@ -227,8 +227,8 @@
     </section> --}}
 
     <!-- =========================
-                                                                                             HERO SLIDER (DYNAMIC)
-                                                                                        ========================= -->
+                                                                                                             HERO SLIDER (DYNAMIC)
+                                                                                                        ========================= -->
     <section class="hero-slider-section relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
@@ -387,100 +387,21 @@
         </div>
     </section>
 
-    <!-- FAQ SECTION -->
-    <section class="py-20 bg-white dark:bg-[#121212] transition">
+    <div class="space-y-4" id="faq">
+        @foreach ($faqs as $faq)
+            <div class="border rounded-xl bg-white dark:bg-[#1e1e1e] dark:border-gray-700 overflow-hidden">
+                <button
+                    class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 dark:text-white">
+                    <span>{{ $faq->question }}</span>
+                    <span class="icon text-xl">+</span>
+                </button>
 
-        <div class="max-w-5xl mx-auto px-4">
-
-            <div class="text-center mb-14">
-                <span class="inline-block px-4 py-2 rounded-full bg-red-100 text-red-600 font-semibold mb-4">
-                    {{ __('app.faq') }}
-                </span>
-
-                <h2 class="text-4xl font-extrabold text-gray-900 dark:text-white mb-4">
-                    {{ __('app.frequently_asked_questions') }}
-                </h2>
-
-                <p class="text-gray-600 dark:text-gray-300">
-                    {{ __('app.quick_answers_common_questions') }}
-                </p>
+                <div class="faq-content hidden px-5 pb-5 text-gray-600 dark:text-gray-300">
+                    {!! nl2br(e($faq->answer)) !!}
+                </div>
             </div>
-
-            <!-- FAQ ITEMS -->
-            <div class="space-y-4" id="faq">
-
-                <!-- ITEM 1 -->
-                <div class="border rounded-xl bg-white dark:bg-[#1e1e1e] dark:border-gray-700 overflow-hidden">
-
-                    <button
-                        class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 dark:text-white">
-
-                        <span>{{ __('app.q1') }}</span>
-
-                        <span class="icon text-xl">+</span>
-
-                    </button>
-
-                    <div class="faq-content hidden px-5 pb-5 text-gray-600 dark:text-gray-300">
-                        {{ __('app.a1') }}
-                    </div>
-                </div>
-
-                <!-- ITEM 2 -->
-                <div class="border rounded-xl bg-white dark:bg-[#1e1e1e] dark:border-gray-700 overflow-hidden">
-
-                    <button
-                        class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 dark:text-white">
-
-                        <span> {{ __('app.q2') }} </span>
-
-                        <span class="icon text-xl">+</span>
-
-                    </button>
-
-                    <div class="faq-content hidden px-5 pb-5 text-gray-600 dark:text-gray-300">
-                        {{ __('app.a2') }}
-                    </div>
-                </div>
-
-                <!-- ITEM 3 -->
-                <div class="border rounded-xl bg-white dark:bg-[#1e1e1e] dark:border-gray-700 overflow-hidden">
-
-                    <button
-                        class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 dark:text-white">
-
-                        <span>{{ __('app.q3') }}</span>
-
-                        <span class="icon text-xl">+</span>
-
-                    </button>
-
-                    <div class="faq-content hidden px-5 pb-5 text-gray-600 dark:text-gray-300">
-                        {{ __('app.a3') }}
-                    </div>
-                </div>
-
-                <!-- ITEM 4 -->
-                <div class="border rounded-xl bg-white dark:bg-[#1e1e1e] dark:border-gray-700 overflow-hidden">
-
-                    <button
-                        class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 dark:text-white">
-
-                        <span>{{ __('app.q4') }}</span>
-
-                        <span class="icon text-xl">+</span>
-
-                    </button>
-
-                    <div class="faq-content hidden px-5 pb-5 text-gray-600 dark:text-gray-300">
-                        {{ __('app.a4') }}
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
+        @endforeach
+    </div>
 @endsection
 
 @push('scripts')

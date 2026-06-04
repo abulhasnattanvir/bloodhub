@@ -66,11 +66,15 @@
                 </a>
                 <a href="{{ route('admin.goals.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.goals.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fas fa-tint w-5"></i> Goles
+                    <i class="fa-solid fa-crosshairs"></i> Goles
                 </a>
                 <a href="{{ route('admin.activities.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.activities.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fas fa-tint w-5"></i> Goles
+                    <i class="fa-solid fa-fire"></i> Activities
+                </a>
+                <a href="{{ route('admin.faqs.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.faqs.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-circle-question"></i> Faqs
                 </a>
 
                 <div class="pt-6 mt-6 border-t">

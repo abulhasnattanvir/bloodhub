@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\DonorListController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ActivityController;
 use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
@@ -165,6 +166,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
         //activaities
         Route::resource('activities', AdminActivityController::class);
+
+        //faq
+        Route::resource('faqs', FaqController::class);
 
         
     });

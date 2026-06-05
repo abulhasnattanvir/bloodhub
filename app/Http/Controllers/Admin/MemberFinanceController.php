@@ -34,9 +34,9 @@ class MemberFinanceController extends Controller
     {
         $subscriptions = MemberSubscription::where('member_id', $member->id)
             ->latest()
-            ->get();
+            ->paginate(10); // ✅ pagination added
 
-        $totalDue = $subscriptions
+        $totalDue = MemberSubscription::where('member_id', $member->id)
             ->where('status', 'unpaid')
             ->sum('expected_amount');
 

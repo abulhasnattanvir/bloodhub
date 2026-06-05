@@ -9,6 +9,7 @@ class Payment extends Model
     protected $fillable = [
         'member_id',
         'amount',
+        'months_covered',
         'month',
         'method',
         'note',

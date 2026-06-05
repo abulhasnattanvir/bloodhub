@@ -172,6 +172,7 @@ class MemberController extends Controller
             'gender' => 'required|in:male,female,other',
             'profession' => 'nullable|string|max:100',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'fee_applicable' => 'nullable|boolean',
         ]);
 
         // OLD PHOTO DELETE + NEW UPLOAD
@@ -200,6 +201,7 @@ class MemberController extends Controller
             'address' => $request->address,
             'status' => $request->status,
             'photo' => $member->photo,
+            'fee_applicable' => $request->fee_applicable ? 1 : 0,
         ]);
 
         return redirect()->route('admin.members.index')->with('success', 'Member updated successfully');

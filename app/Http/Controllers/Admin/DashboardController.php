@@ -48,6 +48,9 @@ class DashboardController extends Controller
         $paidThisMonth = Payment::whereMonth('paid_at',now()->month)->sum('amount');
 
         $unpaidMembers = MemberSubscription::where('status', 'unpaid')
+            ->whereHas('member', function ($q) {
+                $q->where('fee_applicable', 1);
+            })
             ->distinct('member_id')
             ->count();
 

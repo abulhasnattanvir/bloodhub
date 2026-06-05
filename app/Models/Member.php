@@ -12,6 +12,7 @@ class Member extends Model
         'phone',
         'gender',
         'profession',
+        'fee_applicable',
         'blood_group',
         'address',
         'city',
@@ -27,5 +28,12 @@ class Member extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function hasUnpaidSubscription()
+    {
+        return $this->subscriptions()
+            ->where('status', 'unpaid')
+            ->exists();
     }
 }

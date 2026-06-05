@@ -96,17 +96,17 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.activities.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-fire"></i> Activities
                 </a>
-                <a href="{{ route('admin.faqs.index') }}"
-                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.faqs.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-circle-question"></i> Faqs
-                </a>
                 <a href="{{ route('admin.finance.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.finance.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-circle-question"></i> Finance
+                    <i class="fa-solid fa-dollar-sign"></i> Finance
                 </a>
                 <a href="{{ route('admin.fees.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.fees.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-circle-question"></i> Fee Structures
+                    <i class="fa-solid fa-money-bill"></i> Fee Structures
+                </a>
+                <a href="{{ route('admin.faqs.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.faqs.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-circle-question"></i> Faqs
                 </a>
 
 

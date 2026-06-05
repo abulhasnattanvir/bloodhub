@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('member_id')->constrained()->onDelete('cascade');
 
             $table->integer('amount');
-            $table->string('month');
+            $table->string('month')->nullable();
 
             $table->string('method')->nullable(); // cash, bkash etc
             $table->text('note')->nullable();

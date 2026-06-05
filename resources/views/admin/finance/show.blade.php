@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="max-w-7xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="max-w-8xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
 
             <!-- Header -->
             <div class="px-8 py-6 border-b bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
@@ -53,14 +53,18 @@
                                 <th class="px-6 py-4 text-left font-semibold text-gray-700">Month</th>
                                 <th class="px-6 py-4 text-left font-semibold text-gray-700">Amount</th>
                                 <th class="px-6 py-4 text-center font-semibold text-gray-700">Status</th>
-                                <th class="px-6 py-4 text-right font-semibold text-gray-700">Action</th>
+                                <th class="px-6 py-4 text-center font-semibold text-gray-700">
+                                    Progress
+                                </th>
+                                {{-- <th class="px-6 py-4 text-right font-semibold text-gray-700">Action</th> --}}
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             @foreach ($subscriptions as $subscription)
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-6 py-5 font-medium text-gray-800">
-                                        {{ $subscription->month }}
+                                        {{-- {{ $subscription->month }} --}}
+                                        {{ \Carbon\Carbon::parse($subscription->month)->format('F Y') }}
                                     </td>
                                     <td class="px-6 py-5 text-gray-700 font-medium">
                                         {{ number_format($subscription->expected_amount) }} BDT
@@ -80,24 +84,40 @@
                                             </span>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-5 text-right">
-                                        @if ($subscription->status !== 'paid')
-                                            <form method="POST" action="{{ route('admin.payments.store') }}">
-                                                @csrf
-                                                <input type="hidden" name="subscription_id"
-                                                    value="{{ $subscription->id }}">
-                                                <input type="hidden" name="amount"
-                                                    value="{{ $subscription->expected_amount }}">
+                                    <td class="px-6 py-5 text-center text-sm text-gray-700">
+                                        @php
+                                            $paid = $member->subscriptions->where('status', 'paid')->count();
+                                            $total = $member->subscriptions->count();
+                                        @endphp
 
-                                                <button onclick="return confirm('Mark this payment as paid?')"
-                                                    class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl font-medium transition active:scale-95">
-                                                    <span>Mark as Paid</span>
-                                                </button>
-                                            </form>
-                                        @else
-                                            <span class="text-gray-400 text-sm">—</span>
-                                        @endif
+                                        <span class="font-semibold">
+                                            {{ $paid }} / {{ $total }} months
+                                        </span>
                                     </td>
+                                    {{-- <td class="px-6 py-5 text-right">
+
+                                        @if ($member->fee_applicable)
+                                            @if ($subscription->status !== 'paid')
+                                                <form method="POST" action="{{ route('admin.payments.store') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="subscription_id"
+                                                        value="{{ $subscription->id }}">
+                                                    <input type="hidden" name="amount"
+                                                        value="{{ $subscription->expected_amount }}">
+
+                                                    <button onclick="return confirm('Mark this payment as paid?')"
+                                                        class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl">
+                                                        Mark as Paid
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span class="text-gray-400 text-sm">—</span>
+                                            @endif
+                                        @else
+                                            <span class="text-gray-300 text-sm">Not Applicable</span>
+                                        @endif
+
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
@@ -112,35 +132,123 @@
             </div>
         </div>
     </div>
-    <!-- Advance Payment Form -->
-    <div class="p-8 border-b bg-white">
 
-        <h2 class="text-xl font-semibold mb-4 text-gray-800">
-            Make Payment (Advance Support)
-        </h2>
 
-        <form method="POST" action="{{ route('admin.payments.store') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
 
-            @csrf
+    @if ($member->fee_applicable)
 
-            <!-- Member ID -->
-            <input type="hidden" name="member_id" value="{{ $member->id }}">
+        @php
+            $feeStructure = \App\Models\FeeStructure::where('profession', $member->profession)
+                ->where('status', 1)
+                ->first();
 
-            <!-- Amount -->
-            <input type="number" name="amount" placeholder="Amount (e.g. 300)" class="border rounded-xl p-3 w-full">
+            $monthlyFee = $feeStructure?->monthly_fee ?? 0;
+        @endphp
 
-            <!-- Months Covered -->
-            <input type="number" name="months_covered" placeholder="Months (e.g. 3)" class="border rounded-xl p-3 w-full">
+        <div class="max-w-8xl mx-auto mt-10 p-8 rounded-2xl bg-white shadow-sm">
 
-            <!-- Method -->
-            <input type="text" name="method" placeholder="Method (cash/bkash)" class="border rounded-xl p-3 w-full">
+            {{-- Success --}}
+            @if (session('success'))
+                <div class="mb-4 p-4 rounded-xl bg-green-100 border border-green-200 text-green-700">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-            <!-- Submit -->
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium">
-                Pay Now
-            </button>
+            {{-- Error --}}
+            @if (session('error'))
+                <div class="mb-4 p-4 rounded-xl bg-red-100 border border-red-200 text-red-700">
+                    {{ session('error') }}
+                </div>
+            @endif
 
-        </form>
+            {{-- Validation --}}
+            @if ($errors->any())
+                <div class="mb-4 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700">
+                    <ul class="list-disc ml-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    </div>
+            <div class="mb-5">
+                <h2 class="text-xl font-semibold text-gray-800">
+                    Advance Payment
+                </h2>
+
+                <p class="text-gray-500 mt-1">
+                    Monthly Fee:
+                    <span class="font-semibold text-blue-600">
+                        {{ number_format($monthlyFee) }} BDT
+                    </span>
+                </p>
+            </div>
+
+            <form method="POST" action="{{ route('admin.payments.store') }}"
+                class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                @csrf
+
+                <input type="hidden" name="member_id" value="{{ $member->id }}">
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-700">
+                        Payment Amount
+                    </label>
+
+                    <input type="number" required min="{{ $monthlyFee }}" step="{{ $monthlyFee }}" name="amount"
+                        id="amount" placeholder="Enter amount" class="border rounded-xl p-3 w-full">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-700">
+                        Payment Method
+                    </label>
+
+                    <input type="text" required name="method" placeholder="Cash / Bkash / Bank"
+                        class="border rounded-xl p-3 w-full">
+                </div>
+
+                <div class="flex items-end">
+                    <button type="submit"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-medium">
+                        Pay Now
+                    </button>
+                </div>
+
+            </form>
+
+            {{-- Live Months Preview --}}
+            <div class="mt-5 p-4 bg-blue-50 rounded-xl">
+                <p class="text-gray-700">
+                    This payment will cover:
+                    <span id="monthsPreview" class="font-bold text-blue-700">
+                        0
+                    </span>
+                    month(s)
+                </p>
+            </div>
+
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+
+                const amountInput = document.getElementById('amount');
+                const preview = document.getElementById('monthsPreview');
+                const monthlyFee = {{ $monthlyFee }};
+
+                amountInput.addEventListener('input', function() {
+
+                    const amount = parseFloat(this.value) || 0;
+
+                    const months = Math.floor(amount / monthlyFee);
+
+                    preview.textContent = months;
+                });
+            });
+        </script>
+
+    @endif
 @endsection

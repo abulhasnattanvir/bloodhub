@@ -220,6 +220,21 @@
                         class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400">{{ old('address', $member->address) }}</textarea>
 
                 </div>
+                {{-- Fee Applicable --}}
+                <div class="flex items-center mt-6 md:mt-0">
+                    {{-- hidden fallback (ensures 0 is sent when unchecked) --}}
+                    <input type="hidden" required name="fee_applicable" value="0">
+
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" name="fee_applicable" value="1"
+                            class="w-5 h-5 text-red-600 border-gray-300 rounded focus:ring-red-500"
+                            {{ old('fee_applicable', $member->fee_applicable) == 1 ? 'checked' : '' }}>
+
+                        <span class="text-gray-700 font-medium">
+                            Fee Applicable
+                        </span>
+                    </label>
+                </div>
 
             </div>
 

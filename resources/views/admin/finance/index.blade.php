@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-8xl mx-auto">
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
 
             <!-- Header -->
@@ -31,7 +31,9 @@
                             <th class="px-6 py-4 text-center font-semibold text-gray-700">Status</th>
                             <th class="px-6 py-4 text-left font-semibold text-gray-700">Total Paid </th>
                             <th class="px-6 py-4 text-left font-semibold text-gray-700">Active Since</th>
-                            <th class="px-6 py-4 text-right font-semibold text-gray-700">Action</th>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700">Fee Status</th>
+                            <th class="px-6 py-5 text-center font-semibold text-gray-700">Payment</th>
+                            <th class="px-6 py-5 text-center font-semibold text-gray-700">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -65,6 +67,39 @@
 
                                 <td class="px-6 py-5 text-gray-600">
                                     {{ $member->start_date ? \Carbon\Carbon::parse($member->start_date)->format('Y-m') : '—' }}
+                                </td>
+
+                                <td class="px-6 py-5 text-center">
+                                    @if ($member->fee_applicable)
+                                        <span
+                                            class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl bg-red-100 text-red-700">
+                                            Paid
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl bg-green-100 text-green-700">
+                                            Free
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <td class="px-6 py-5 text-center">
+                                    @if ($member->fee_applicable == 0)
+                                        <span
+                                            class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl bg-blue-100 text-blue-700">
+                                            Free
+                                        </span>
+                                    @elseif ($member->hasUnpaidSubscription())
+                                        <span
+                                            class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl bg-red-100 text-red-700">
+                                            Pending
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl bg-green-100 text-green-700">
+                                            Paid
+                                        </span>
+                                    @endif
                                 </td>
 
                                 <td class="px-6 py-5 text-right">

@@ -93,8 +93,12 @@
                                 <th class="px-6 py-5 text-left text-xs font-semibold text-gray-500 uppercase">Blood Group
                                 </th>
                                 <th class="px-6 py-5 text-left text-xs font-semibold text-gray-500 uppercase">City</th>
+                                <th class="px-6 py-5 text-center text-xs font-semibold text-gray-500 uppercase">
+                                    Fee Status
+                                </th>
                                 <th class="px-6 py-5 text-center text-xs font-semibold text-gray-500 uppercase">Status</th>
                                 <th class="px-6 py-5 text-center text-xs font-semibold text-gray-500 uppercase">Actions</th>
+
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -122,6 +126,19 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-5 text-gray-700">{{ $member->city }}</td>
+                                    <td class="px-6 py-5 text-center">
+                                        @if ($member->fee_applicable)
+                                            <span
+                                                class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl bg-red-100 text-red-700">
+                                                Paid
+                                            </span>
+                                        @else
+                                            <span
+                                                class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl bg-green-100 text-green-700">
+                                                Free
+                                            </span>
+                                        @endif
+                                    </td>
                                     <td class="px-6 py-5 text-center">
                                         <span
                                             class="inline-flex px-4 py-1.5 text-xs font-semibold rounded-2xl
@@ -194,58 +211,88 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-xl p-6 mt-6">
+    <div class="max-w-10xl mx-auto px-4 sm:px-6 lg:px-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
 
-        <h3 class="text-xl font-semibold mb-4">
-            Payment History
-        </h3>
+        {{-- Header --}}
+        <div class="flex items-center justify-between mb-5">
+            <h3 class="text-xl font-bold text-gray-800">
+                Payment History
+            </h3>
 
-        <table class="w-full">
+            <span class="text-sm text-gray-500">
+                Total Records: {{ isset($member) ? $member->subscriptions->count() : 0 }}
+            </span>
+        </div>
 
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Month</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
+        {{-- Table --}}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-100">
 
-            <tbody>
-
-                @forelse($member->subscriptions as $subscription)
+                {{-- Head --}}
+                <thead class="bg-gray-50">
                     <tr>
-                        <td>{{ $member->name }}</td>
-
-                        <td>{{ $subscription->month }}</td>
-
-                        <td>
-                            ৳{{ number_format($subscription->expected_amount, 2) }}
-                        </td>
-
-                        <td>
-                            @if ($subscription->status == 'paid')
-                                <span class="text-green-600 font-medium">
-                                    Paid
-                                </span>
-                            @else
-                                <span class="text-red-600 font-medium">
-                                    Due
-                                </span>
-                            @endif
-                        </td>
+                        <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Member
+                        </th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Month
+                        </th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500 uppercase">
+                            Amount
+                        </th>
+                        <th class="px-5 py-3 text-center text-xs font-semibold text-gray-500 uppercase">
+                            Status
+                        </th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="text-center py-4">
-                            No payment records found.
-                        </td>
-                    </tr>
-                @endforelse
+                </thead>
 
-            </tbody>
+                {{-- Body --}}
+                <tbody class="divide-y divide-gray-100">
 
-        </table>
+                    @forelse(optional(isset($member))->subscriptions ?? [] as $subscription)
+                        <tr class="hover:bg-gray-50 transition">
+
+                            <td class="px-5 py-4 font-medium text-gray-900">
+                                {{ $member->name ?? '-' }}
+                            </td>
+
+                            <td class="px-5 py-4 text-gray-700">
+                                <span class="inline-flex px-3 py-1 bg-blue-50 text-blue-700 rounded-xl text-sm">
+                                    {{ \Carbon\Carbon::parse($subscription->month)->format('F Y') }}
+                                </span>
+                            </td>
+
+                            <td class="px-5 py-4 text-gray-800 font-semibold">
+                                ৳{{ number_format($subscription->expected_amount, 2) }}
+                            </td>
+
+                            <td class="px-5 py-4 text-center">
+                                @if ($subscription->status == 'paid')
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-700">
+                                        Paid
+                                    </span>
+                                @else
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-700">
+                                        Due
+                                    </span>
+                                @endif
+                            </td>
+
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center py-10 text-gray-500">
+                                <i class="fas fa-receipt text-4xl text-gray-200 mb-2"></i>
+                                <p>No payment records found</p>
+                            </td>
+                        </tr>
+                    @endforelse
+
+                </tbody>
+            </table>
+        </div>
 
     </div>
 @endsection

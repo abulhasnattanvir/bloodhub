@@ -193,4 +193,59 @@
             @endif
         </div>
     </div>
+
+    <div class="bg-white rounded-xl p-6 mt-6">
+
+        <h3 class="text-xl font-semibold mb-4">
+            Payment History
+        </h3>
+
+        <table class="w-full">
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Month</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @forelse($member->subscriptions as $subscription)
+                    <tr>
+                        <td>{{ $member->name }}</td>
+
+                        <td>{{ $subscription->month }}</td>
+
+                        <td>
+                            ৳{{ number_format($subscription->expected_amount, 2) }}
+                        </td>
+
+                        <td>
+                            @if ($subscription->status == 'paid')
+                                <span class="text-green-600 font-medium">
+                                    Paid
+                                </span>
+                            @else
+                                <span class="text-red-600 font-medium">
+                                    Due
+                                </span>
+                            @endif
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="4" class="text-center py-4">
+                            No payment records found.
+                        </td>
+                    </tr>
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
 @endsection

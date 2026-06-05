@@ -15,7 +15,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 10px;
+        }
 
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: linear-gradient(180deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #dc2626, #991b1b);
+            border-radius: 12px;
+            border: 2px solid #f8f9fa;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #ef4444, #b91c1c);
+        }
+    </style>
     <!-- Alpine.js -->
 </head>
 
@@ -31,15 +50,20 @@
         <aside class="w-72 bg-white border-r shadow-xl hidden md:flex flex-col h-full">
 
             <!-- Logo -->
-            <div class="p-6 border-b flex items-center gap-3 bg-red-600 text-white">
-                <div class="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center">
-                    <i class="fas fa-tint text-3xl"></i>
-                </div>
-                <span class="font-bold text-2xl">BloodHub</span>
+            <div class="p-6 border-b flex items-center justify-center gap-3 bg-red-600 text-white text-center">
+                <a href="{{ route('home') }}" class="flex items-center flex-shrink-0">
+                    @if (setting('logo'))
+                        <img src="{{ asset('storage/' . setting('logo')) }}" width="150px" alt="Logo">
+                    @else
+                        <span class="text-white text-xl font-bold">
+                            {{ setting('site_name', 'TawakkulSoft') }}
+                        </span>
+                    @endif
+                </a>
             </div>
 
             <!-- Menu -->
-            <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <nav class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar">
                 <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fas fa-home w-5"></i> Dashboard
@@ -76,6 +100,17 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.faqs.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-circle-question"></i> Faqs
                 </a>
+                <a href="{{ route('admin.finance.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.finance.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-circle-question"></i> Finance
+                </a>
+                <a href="{{ route('admin.fees.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.fees.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-circle-question"></i> Fee Structures
+                </a>
+
+
+
 
                 <div class="pt-6 mt-6 border-t">
                     <a href="{{ route('admin.pages.index') }}"

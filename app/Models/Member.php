@@ -18,4 +18,14 @@ class Member extends Model
         'status',
         'photo',
     ];
+
+    public function subscriptions()
+    {
+        return $this->hasMany(MemberSubscription::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

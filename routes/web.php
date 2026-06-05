@@ -20,9 +20,12 @@ use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ActivityController;
 use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\FeeStructureController;
+use App\Http\Controllers\Admin\MemberFinanceController;
 use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController as UserProfileController;
 use App\Http\Controllers\SliderController;
 use App\Models\FooterSetting;
@@ -170,6 +173,27 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         //faq
         Route::resource('faqs', FaqController::class);
 
+        Route::get('/finance', [MemberFinanceController::class, 'index'])
+            ->name('finance.index');
+        Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])
+        ->name('finance.markPaid');
+        Route::get(
+            '/finance',
+            [MemberFinanceController::class, 'index']
+        )->name('finance.index');
+
+        Route::get(
+            '/finance/member/{member}',
+            [MemberFinanceController::class, 'show']
+        )->name('finance.show');
+
+        Route::post(
+            '/payments',
+            [PaymentController::class, 'store']
+        )->name('payments.store');
+
+
+        Route::resource('fees',FeeStructureController::class);
         
     });
 

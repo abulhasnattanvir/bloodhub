@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FeeStructureController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\MemberFinanceController;
 use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
@@ -100,6 +101,9 @@ use Illuminate\Support\Facades\Route;
 
     // Contact Form Submit
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
+    //Frontend
+    Route::get('/gallery', [AboutController::class, 'gallery'])->name('gallery');
 
 
 
@@ -196,6 +200,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
         //Fees
         Route::resource('fees',FeeStructureController::class);
+
+        //gallery
+        Route::resource('gallery', GalleryController::class)->names('gallery');
         
     });
 

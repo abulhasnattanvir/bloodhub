@@ -115,7 +115,7 @@
                             <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                             <div>
                                 <h4 class="font-bold">{{ __('app.email') }}</h4>
-                                <p class="text-gray-600">{{ $contact->email ?? 'info@blooddonor.example.com' }}</p>
+                                <p class="text-gray-600">{{ $contact->email ?? 'tawakkulsoftinfo@gmail.com' }}</p>
                             </div>
                         </div>
 
@@ -123,7 +123,7 @@
                             <div class="contact-icon"><i class="fas fa-phone"></i></div>
                             <div>
                                 <h4 class="font-bold">{{ __('app.phone') }}</h4>
-                                <p class="text-gray-600">{{ $contact->phone ?? '+880 1234-567890' }}</p>
+                                <p class="text-gray-600">{{ $contact->phone ?? '+880 01972918629' }}</p>
                             </div>
                         </div>
 
@@ -131,7 +131,8 @@
                             <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div>
                                 <h4 class="font-bold">{{ __('app.address') }}</h4>
-                                <p class="text-gray-600">{{ $contact->address ?? '123 Blood Donor Street...' }}</p>
+                                <p class="text-gray-600">
+                                    {{ $contact->address ?? 'Noakhali Sadar, Z1441, Noakhali, R4G2+7J Noakhali' }}</p>
                             </div>
                         </div>
                     </div>

@@ -70,3 +70,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+// FAQ
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.faq-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('.icon');
+
+            // Close all others
+            document.querySelectorAll('.faq-content').forEach(item => {
+                if (item !== content) {
+                    item.classList.add('max-h-0');
+                    const otherIcon = item.previousElementSibling.querySelector('.icon');
+                    if (otherIcon) otherIcon.textContent = '+';
+                }
+            });
+
+            // Toggle current
+            if (content.classList.contains('max-h-0')) {
+                content.classList.remove('max-h-0');
+                icon.textContent = '−';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('max-h-0');
+                icon.textContent = '+';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        });
+    });
+});

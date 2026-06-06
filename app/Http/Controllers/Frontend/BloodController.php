@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Donor;
 use App\Models\BloodGroup;
+use App\Models\Faq;
+
 class BloodController extends Controller
 {
     public function index()
@@ -16,12 +18,14 @@ class BloodController extends Controller
 
         // FIXED LINE
         $bloodGroups = BloodGroup::withCount('donors')->get();
+        $faqs = Faq::latest()->get();
 
         return view('frontend.blood', compact(
             'totalDonors',
             'availableDonors',
             'recentDonors',
             'bloodGroups',
+            'faqs'
         ));
     }
 }

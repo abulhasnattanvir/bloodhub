@@ -186,10 +186,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/contact/edit', [ContactSettingController::class, 'edit'])->name('contact.edit');
         Route::put('/contact/update', [ContactSettingController::class, 'update'])->name('contact.update');
 
-        //Contact Messages
-        Route::get('/contact/messages', [ContactMessageController::class, 'index'])->name('contact.messages');
-        Route::get('/contact/messages/{id}', [ContactMessageController::class, 'show'])->name('contact.messages.show');
-        Route::patch('/admin/contact/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('contact.messages.mark-read');
+        //Messages
+        Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
+        Route::get('/messages/{id}', [ContactMessageController::class, 'show'])->name('messages.show');
+        Route::patch('/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.mark-read');
+        Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
 
         //Finance
         Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index');

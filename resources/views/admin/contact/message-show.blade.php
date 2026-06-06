@@ -12,14 +12,13 @@
                 </div>
 
                 <div class="flex gap-3">
-                    <a href="{{ route('admin.contact.messages') }}"
+                    <a href="{{ route('admin.messages.index') }}"
                         class="px-5 py-3 bg-gray-100 hover:bg-gray-200 rounded-2xl font-medium">
                         ← Back to All Messages
                     </a>
 
                     @if ($message->status == 'new')
-                        <form action="{{ route('admin.contact.messages.mark-read', $message->id) }}" method="POST"
-                            class="inline">
+                        <form action="{{ route('admin.messages.mark-read', $message->id) }}" method="POST" class="inline">
                             @csrf
                             @method('PATCH')
                             <button type="submit"

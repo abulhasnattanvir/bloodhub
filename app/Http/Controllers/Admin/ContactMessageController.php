@@ -29,4 +29,14 @@ class ContactMessageController extends Controller
         $message->markAsRead();
         return back()->with('success', 'Message marked as read.');
     }
+
+    public function destroy($id)
+    {
+        $message = ContactMessages::findOrFail($id);
+        $message->delete();
+
+        return back()->with('success', 'Message deleted successfully.');
+    }
+
+
 }

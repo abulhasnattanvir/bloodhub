@@ -53,8 +53,8 @@
     </style>
 
     <!-- =========================
-                                                                                                                     HERO SLIDER SECTION
-                                                                                                                ========================= -->
+                                                                                                                             HERO SLIDER SECTION
+                                                                                                                        ========================= -->
 
     {{-- <section class="hero-slider-section relative overflow-hidden">
 
@@ -227,8 +227,8 @@
     </section> --}}
 
     <!-- =========================
-                                                                                                             HERO SLIDER (DYNAMIC)
-                                                                                                        ========================= -->
+                                                                                                                     HERO SLIDER (DYNAMIC)
+                                                                                                                ========================= -->
     <section class="hero-slider-section relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
@@ -387,49 +387,5 @@
         </div>
     </section>
 
-    <div class="space-y-4" id="faq">
-        @foreach ($faqs as $faq)
-            <div class="border rounded-xl bg-white dark:bg-[#1e1e1e] dark:border-gray-700 overflow-hidden">
-                <button
-                    class="faq-btn w-full flex justify-between items-center p-5 text-left font-semibold text-gray-800 dark:text-white">
-                    <span>{{ $faq->question }}</span>
-                    <span class="icon text-xl">+</span>
-                </button>
 
-                <div class="faq-content hidden px-5 pb-5 text-gray-600 dark:text-gray-300">
-                    {!! nl2br(e($faq->answer)) !!}
-                </div>
-            </div>
-        @endforeach
-    </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const buttons = document.querySelectorAll(".faq-btn");
-
-            buttons.forEach((btn) => {
-                btn.addEventListener("click", function() {
-                    const content = this.nextElementSibling;
-                    const icon = this.querySelector(".icon");
-
-                    content.classList.toggle("hidden");
-
-                    if (content.classList.contains("hidden")) {
-                        icon.textContent = "+";
-                    } else {
-                        icon.textContent = "−";
-                    }
-
-                    buttons.forEach((otherBtn) => {
-                        if (otherBtn !== btn) {
-                            otherBtn.nextElementSibling.classList.add("hidden");
-                            otherBtn.querySelector(".icon").textContent = "+";
-                        }
-                    });
-                });
-            });
-        });
-    </script>
-@endpush

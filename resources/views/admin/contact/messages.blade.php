@@ -32,9 +32,17 @@
                                         class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Read</span>
                                 @endif
                             </td>
-                            <td class="px-6 py-4 text-center">
-                                <a href="{{ route('admin.contact.messages.show', $msg->id) }}"
-                                    class="text-red-600 hover:underline">View</a>
+                            <td class="px-6 py-4 text-center flex gap-5 justify-center">
+                                <a href="{{ route('admin.messages.show', $msg->id) }}"
+                                    class="hover:underline text-green-600"><i class="fa-solid fa-eye"></i></a> |
+
+                                <form action="{{ route('admin.messages.destroy', $msg->id) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to delete this message?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger text-red-600"> <i
+                                            class="fas fa-trash"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

@@ -104,9 +104,9 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.fees.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-money-bill"></i> Fee Structures
                 </a>
-                <a href="{{ route('admin.contact.messages') }}"
-                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.contact.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-regular fa-message"></i> Message
+                <a href="{{ route('admin.messages.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.messages.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-regular fa-message"></i> Messages
                 </a>
                 <a href="{{ route('admin.gallery.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.gallery.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
@@ -123,11 +123,11 @@
                 <div class="pt-6 mt-6 border-t">
                     <a href="{{ route('admin.pages.index') }}"
                         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.pages.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                        <i class="fa-solid fa-pager mr-3"></i> Page
+                        <i class="fa-solid fa-pager mr-3"></i>Page
                     </a>
 
                     <a href="{{ route('admin.contact.edit') }}"
-                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.pages.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.contact.edit') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                         <i class="fa-solid fa-address-book"></i>Contact Settings
                     </a>
 

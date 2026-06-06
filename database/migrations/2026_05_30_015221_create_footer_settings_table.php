@@ -31,7 +31,17 @@ return new class extends Migration
             // SUBSCRIBE SETTINGS
             $table->string('subscribe_title')->nullable();
             $table->text('subscribe_text')->nullable();
+            $table->text('subscribe_placeholder')->nullable();
+            $table->text('subscribe_button_text')->nullable();
             $table->timestamps();
+            
+            //FOOTER COPYRIGHT
+            $table->text('copyright_text')->nullable();
+
+            //Developer Info
+            $table->text('developer_info')->nullable();
+            $table->text('developer_url')->nullable();
+            
         });
     }
 

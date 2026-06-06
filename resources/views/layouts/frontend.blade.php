@@ -12,7 +12,8 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
+    <!-- Alpine (must be BEFORE usage if needed globally) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.js" defer></script>
     <!-- Vite (IMPORTANT: keep JS + CSS together) -->
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/main.js'])
 
@@ -36,8 +37,7 @@
 
     @include('layouts.partials.footer')
 
-    <!-- Alpine (must be BEFORE usage if needed globally) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.js" defer></script>
+
     <!-- Swiper -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- SortableJS -->

@@ -81,9 +81,11 @@
         }
     </style>
 
-    <section class="relative py-16 overflow-hidden">
+    @php
+        $contact = \App\Models\ContactSetting::first();
+    @endphp
 
-        <!-- Background -->
+    <section class="relative py-16 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-red-100"></div>
 
         <div class="relative max-w-7xl mx-auto px-4">
@@ -93,160 +95,98 @@
                 <span class="inline-block px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm font-semibold mb-4">
                     {{ __('app.contact') }}
                 </span>
-
                 <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
-                    {{ __('app.contact') }}
+                    {{ $contact->page_title ?? __('app.contact') }}
                 </h1>
-
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    {{ __('app.have_questions_text') }}
+                    {{ $contact->page_subtitle ?? __('app.have_questions_text') }}
                 </p>
             </div>
 
-            <!-- Main Grid -->
             <div class="grid lg:grid-cols-2 gap-10 mb-10">
 
                 <!-- Contact Info -->
                 <div class="contact-card p-8">
-
-                    <h2 class="text-3xl font-bold mb-4 text-gray-800">
-                        {{ __('app.get_in_touch') }}
-                    </h2>
-
-                    <p class="text-gray-600 mb-8 leading-relaxed">
-                        {{ __('app.whether_you_are_text') }}
-                    </p>
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ __('app.get_in_touch') }}</h2>
+                    <p class="text-gray-600 mb-8">{{ $contact->get_in_touch_text ?? __('app.whether_you_are_text') }}</p>
 
                     <div class="space-y-5">
-
-                        <!-- Email -->
                         <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                             <div>
-                                <h4 class="font-bold text-gray-800">
-                                    {{ __('app.email') }}
-                                </h4>
-
-                                <p class="text-gray-600">
-                                    info@blooddonor.example.com
-                                </p>
+                                <h4 class="font-bold">{{ __('app.email') }}</h4>
+                                <p class="text-gray-600">{{ $contact->email ?? 'info@blooddonor.example.com' }}</p>
                             </div>
                         </div>
 
-                        <!-- Phone -->
                         <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
                             <div>
-                                <h4 class="font-bold text-gray-800">
-                                    {{ __('app.phone') }}
-                                </h4>
-
-                                <p class="text-gray-600">
-                                    +1 (555) 123-4567
-                                </p>
+                                <h4 class="font-bold">{{ __('app.phone') }}</h4>
+                                <p class="text-gray-600">{{ $contact->phone ?? '+880 1234-567890' }}</p>
                             </div>
                         </div>
 
-                        <!-- Address -->
                         <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div>
-                                <h4 class="font-bold text-gray-800">
-                                    {{ __('app.address') }}
-                                </h4>
-
-                                <p class="text-gray-600">
-                                    123 Blood Donor Street, City, State 12345
-                                </p>
+                                <h4 class="font-bold">{{ __('app.address') }}</h4>
+                                <p class="text-gray-600">{{ $contact->address ?? '123 Blood Donor Street...' }}</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
                 <!-- Contact Form -->
                 <div class="contact-card p-8">
-
                     <h2 class="text-3xl font-bold mb-6 text-gray-800">
-                        {{ __('app.send_us_a_message') }}
+                        {{ $contact->form_title ?? __('app.send_us_a_message') }}
                     </h2>
 
-                    <form id="contactForm" class="space-y-5">
-
-                        <div>
-                            <label class="block text-sm font-semibold mb-2 text-gray-700">
-                                {{ __('app.name') }}
-                            </label>
-
-                            <input type="text" class="contact-input" placeholder="{{ __('app.enter_your_name') }}">
+                    @if (session('success'))
+                        <div class="max-w-7xl mx-auto px-4 mt-6">
+                            <div
+                                class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl flex items-center gap-3">
+                                <i class="fas fa-check-circle text-xl"></i>
+                                <p class="font-medium">{{ session('success') }}</p>
+                            </div>
                         </div>
+                    @endif
 
+                    <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
+                        @csrf
                         <div>
-                            <label class="block text-sm font-semibold mb-2 text-gray-700">
-                                {{ __('app.email_address') }}
-                            </label>
-
-                            <input type="email" class="contact-input" placeholder="{{ __('app.enter_your_email') }}">
+                            <label class="block text-sm font-semibold mb-2">{{ __('app.name') }}</label>
+                            <input type="text" name="name" class="contact-input" required>
                         </div>
-
                         <div>
-                            <label class="block text-sm font-semibold mb-2 text-gray-700">
-                                {{ __('app.subject') }}
-                            </label>
-
-                            <input type="text" class="contact-input" placeholder="{{ __('app.enter_subject') }}">
+                            <label class="block text-sm font-semibold mb-2">{{ __('app.email_address') }}</label>
+                            <input type="email" name="email" class="contact-input" required>
                         </div>
-
                         <div>
-                            <label class="block text-sm font-semibold mb-2 text-gray-700">
-                                {{ __('app.message') }}
-                            </label>
-
-                            <textarea rows="6" class="contact-input resize-none" placeholder="{{ __('app.enter_your_message') }}"></textarea>
+                            <label class="block text-sm font-semibold mb-2">{{ __('app.subject') }}</label>
+                            <input type="text" name="subject" class="contact-input" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">{{ __('app.message') }}</label>
+                            <textarea name="message" rows="6" class="contact-input resize-none" required></textarea>
                         </div>
 
                         <button type="submit" class="contact-btn">
-                            <i class="fas fa-paper-plane mr-2"></i>
-                            {{ __('app.send_message') }}
+                            <i class="fas fa-paper-plane mr-2"></i> {{ __('app.send_message') }}
                         </button>
-
                     </form>
                 </div>
-
             </div>
 
             <!-- Map -->
             <div class="contact-card p-6">
-
                 <div class="flex items-center justify-between mb-5">
-                    <h2 class="text-3xl font-bold text-gray-800">
-                        {{ __('app.our_location') }}
-                    </h2>
-
-                    <span class="px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm">
-                        {{ __('app.live_location') }}
-                    </span>
+                    <h2 class="text-3xl font-bold text-gray-800">{{ __('app.our_location') }}</h2>
                 </div>
-
-                <div class="map-container flex items-center justify-center">
-
-                    <div class="text-center">
-                        <i class="fas fa-map-marked-alt text-6xl text-red-500 mb-4"></i>
-
-                        <p class="text-lg text-gray-600">
-                            {{ __('app.map_would_appear_here') }}
-                        </p>
-                    </div>
-
+                <div class="map-container">
+                    {!! $contact->map_embed ??
+                        '<div class="h-full flex items-center justify-center text-gray-500">Map Embed Code Here</div>' !!}
                 </div>
             </div>
 

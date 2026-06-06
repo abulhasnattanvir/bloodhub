@@ -19,6 +19,8 @@ use App\Http\Controllers\Frontend\DonorListController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ActivityController;
 use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FeeStructureController;
 use App\Http\Controllers\Admin\MemberFinanceController;
@@ -62,7 +64,6 @@ use Illuminate\Support\Facades\Route;
     })->name('lang.switch');
 
     
-
     //Member
     Route::get('/become-member', [MemberController::class, 'create'])->name('member.create');
     Route::post('/become-member', [MemberController::class, 'store'])->name('member.store');
@@ -71,14 +72,14 @@ use Illuminate\Support\Facades\Route;
     //Council
     Route::get('/council', [CouncilController::class, 'frontend'])->name('council.frontend');
 
-    //page
+    //Page
     Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
 
-    //manual payment
+    //Manual payment
     Route::get('/donation', [DonationController::class, 'create'])->name('donation.create');
     Route::post('/donation', [DonationController::class, 'store'])->name('donation.store');
 
-    //donation contributors
+    //Donation contributors
     Route::get('/donation-contributors', [DonationController::class, 'contributors'])->name('donation.contributors');
 
 
@@ -86,9 +87,9 @@ use Illuminate\Support\Facades\Route;
     Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
     Route::get('/activities/{activity:slug}', [ActivityController::class, 'show'])->name('activities.show');
 
-//goals
-Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
-Route::get('/goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
+    //Goals
+    Route::get('/goals', [GoalController::class, 'index'])->name('goals.index');
+    Route::get('/goals/{goal}', [GoalController::class, 'show'])->name('goals.show');
 
     // USER PROFILE (Breeze)
     Route::middleware('auth')->group(function () {
@@ -96,6 +97,9 @@ Route::get('/goals/{goal}', [GoalController::class, 'show'])->name('goals.show')
         Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+    // Contact Form Submit
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
 
@@ -135,8 +139,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 
         //Footer Setting
-        Route::get('/footer-settings', [FooterSettingController::class, 'edit'])->name('footer.edit');
-        Route::post('/footer-settings', [FooterSettingController::class, 'update'])->name('footer.update');
+        Route::get('/footer/edit', [FooterSettingController::class, 'edit'])->name('footer.edit');
+        Route::put('/footer/update', [FooterSettingController::class, 'update'])->name('footer.update');
+        Route::post('/newsletter/subscribe', [FooterSettingController::class, 'subscribe'])->name('newsletter.subscribe');
 
         //Member
         Route::get('/members', [MemberController::class, 'index'])->name('members.index');
@@ -170,29 +175,26 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         //activaities
         Route::resource('activities', AdminActivityController::class);
 
-        //faq
+        //Faq
         Route::resource('faqs', FaqController::class);
 
-        Route::get('/finance', [MemberFinanceController::class, 'index'])
-            ->name('finance.index');
-        Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])
-        ->name('finance.markPaid');
-        Route::get(
-            '/finance',
-            [MemberFinanceController::class, 'index']
-        )->name('finance.index');
+        //Contact settings
+        Route::get('/contact/edit', [ContactSettingController::class, 'edit'])->name('contact.edit');
+        Route::put('/contact/update', [ContactSettingController::class, 'update'])->name('contact.update');
 
-        Route::get(
-            '/finance/member/{member}',
-            [MemberFinanceController::class, 'show']
-        )->name('finance.show');
+        //Contact Messages
+        Route::get('/contact/messages', [ContactMessageController::class, 'index'])->name('contact.messages');
+        Route::get('/contact/messages/{id}', [ContactMessageController::class, 'show'])->name('contact.messages.show');
+        Route::patch('/admin/contact/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('contact.messages.mark-read');
 
-        Route::post(
-            '/payments',
-            [PaymentController::class, 'store']
-        )->name('payments.store');
+        //Finance
+        Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index');
+        Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid');
+        Route::get('/finance',[MemberFinanceController::class, 'index'])->name('finance.index');
+        Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show');
+        Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store');
 
-
+        //Fees
         Route::resource('fees',FeeStructureController::class);
         
     });

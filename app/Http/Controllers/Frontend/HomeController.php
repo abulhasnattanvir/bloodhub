@@ -36,8 +36,8 @@ class HomeController extends Controller
         $faqs = Faq::where('status', 1)
             ->orderBy('position')
             ->get();
-        $greenInitiatives = GreenInitiative::latest()->take(6)->get();
-        $videos = Video::latest()->take(6)->get();
+        $greenInitiatives = GreenInitiative::latest()->take(3)->get();
+        $videos = Video::latest()->take(3)->get();
 
         return view('frontend.home', compact(
             'totalDonors',

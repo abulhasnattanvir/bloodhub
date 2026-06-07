@@ -1,5 +1,4 @@
-<nav class="bg-red-600 shadow-lg sticky top-0 z-50">
-
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-green-100 transition-all">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex items-center justify-between h-16">
 
@@ -23,11 +22,11 @@
 
                             <!-- PARENT LINK -->
                             <a href="{{ url($menu->url) }}"
-                                class="px-4 py-2 rounded-lg flex items-center gap-2 whitespace-nowrap transition
-          {{ $menu->isActive() ? 'bg-red-700 text-white' : 'text-white hover:bg-red-700' }}">
-
-                                {{ $menu->title }}
-                                <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+                                class="px-4 py-2 rounded-lg flex items-center gap-2 whitespace-nowrap transition {{ $menu->isActive()
+                                    ? 'bg-green-600 text-white shadow'
+                                    : 'text-gray-700 hover:bg-green-50 hover:text-green-700' }}">
+                                {{ $menu->title }} <i
+                                    class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
                             </a>
 
                             <!-- DROPDOWN -->
@@ -37,8 +36,8 @@
 
                                 @foreach ($menu->children as $child)
                                     <a href="{{ url($child->url) }}"
-                                        class="block px-4 py-3 transition hover:bg-red-50
-                              {{ $child->isActive() ? 'bg-red-700 text-white' : 'text-gray-700' }}">
+                                        class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 transition
+{{ $child->isActive() ? 'bg-green-600 text-white' : '' }}">
                                         {{ $child->title }}
                                     </a>
                                 @endforeach
@@ -48,7 +47,7 @@
                         <!-- Simple Link -->
                         <a href="{{ url($menu->url) }}"
                             class="px-4 py-2 rounded-lg whitespace-nowrap transition
-                  {{ $menu->isActive() ? 'bg-red-700 text-white' : 'text-white hover:bg-red-700' }}">
+                  {{ $menu->isActive() ? 'bg-red-700 text-white' : 'text-black hover:bg-red-700 hover:text-white' }}">
                             {{ $menu->title }}
                         </a>
                     @endif

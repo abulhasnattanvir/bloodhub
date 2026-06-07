@@ -53,8 +53,8 @@
     </style>
 
     <!-- =========================
-                                                                                                                             HERO SLIDER SECTION
-                                                                                                                        ========================= -->
+                                                                                                                                                                                                                                 HERO SLIDER SECTION
+                                                                                                                                                                                                                            ========================= -->
 
     {{-- <section class="hero-slider-section relative overflow-hidden">
 
@@ -227,9 +227,9 @@
     </section> --}}
 
     <!-- =========================
-                                                                                                                     HERO SLIDER (DYNAMIC)
-                                                                                                                ========================= -->
-    <section class="hero-slider-section relative py-16 lg:py-20 overflow-hidden">
+                                                                                                                                                                                                                         HERO SLIDER (DYNAMIC)
+                                                                                                                                                                                                                    ========================= -->
+    <section class="hero-slider-section pt-15 relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
         <div class="hero-shape hero-shape-2"></div>
@@ -387,5 +387,110 @@
         </div>
     </section>
 
+    {{-- Dynamic Green Initiative Section --}}
+    <section class="py-16 md:py-24 bg-emerald-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <span
+                    class="inline-flex items-center gap-2 px-6 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">
+                    <i class="fas fa-leaf"></i> পরিবেশ সুরক্ষা
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">সবুজ উদ্যোগ</h2>
+                <p class="mt-4 text-gray-600 text-lg max-w-2xl mx-auto">
+                    আমরা পরিবেশ রক্ষা ও সবুজায়নের জন্য নিয়মিত কাজ করে যাচ্ছি
+                </p>
+                <div class="w-20 h-1 bg-emerald-600 mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            @if ($greenInitiatives->count() > 0)
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach ($greenInitiatives as $item)
+                        <div
+                            class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+                            <div class="h-56 bg-emerald-100 relative overflow-hidden">
+                                @if ($item->image)
+                                    <img src="{{ asset('storage/' . $item->image) }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        alt="{{ $item->title }}">
+                                @else
+                                    <div
+                                        class="w-full h-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center">
+                                        <i class="fas fa-tree text-7xl text-white/80"></i>
+                                    </div>
+                                @endif>
+                            </div>
+                            <div class="p-7">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-3">{{ $item->title }}</h3>
+                                <p class="text-gray-600 leading-relaxed line-clamp-4">{{ $item->description }}</p>
+
+                                @if ($item->date || $item->location)
+                                    <div class="mt-4 pt-4 border-t text-xs text-gray-500 flex gap-4">
+                                        @if ($item->date)
+                                            <span><i class="fas fa-calendar"></i>
+                                                {{ $item->date->format('d M, Y') }}</span>
+                                        @endif
+                                        @if ($item->location)
+                                            <span><i class="fas fa-map-marker-alt"></i> {{ $item->location }}</span>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-16 bg-white rounded-3xl border border-dashed border-emerald-200">
+                    <i class="fas fa-leaf text-6xl text-emerald-200 mb-4"></i>
+                    <p class="text-gray-500">কোনো সবুজ উদ্যোগ এখনো যোগ করা হয়নি।</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
+    {{-- Dynamic Video Section --}}
+    <section class="py-16 md:py-24 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span
+                    class="inline-flex items-center gap-2 px-5 py-2 bg-red-600/20 text-red-400 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-video"></i> ভিডিও গ্যালারি
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold">আমাদের কার্যক্রমের ভিডিও</h2>
+            </div>
+
+            @if ($videos->count() > 0)
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach ($videos as $video)
+                        <div class="bg-gray-800 rounded-3xl overflow-hidden hover:shadow-2xl transition-all">
+                            <div class="relative aspect-video">
+                                @if (str_contains($video->url, 'youtube.com') || str_contains($video->url, 'youtu.be'))
+                                    <iframe src="{{ $video->embed_url }}" class="w-full h-full rounded-t-3xl"
+                                        frameborder="0" allowfullscreen
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        title="{{ $video->title }}">
+                                    </iframe>
+                                @else
+                                    <video controls class="w-full h-full rounded-t-3xl">
+                                        <source src="{{ asset('storage/' . $video->url) }}" type="video/mp4">
+                                    </video>
+                                @endif
+                            </div>
+                            <div class="p-5">
+                                <h3 class="font-semibold text-lg mb-1">{{ $video->title }}</h3>
+                                @if ($video->description)
+                                    <p class="text-gray-400 text-sm line-clamp-3">{{ $video->description }}</p>
+                                @endif
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-20">
+                    <i class="fas fa-video text-6xl text-gray-700 mb-4"></i>
+                    <p class="text-gray-400">কোনো ভিডিও এখনো যোগ করা হয়নি।</p>
+                </div>
+            @endif
+        </div>
+    </section>
 
 @endsection

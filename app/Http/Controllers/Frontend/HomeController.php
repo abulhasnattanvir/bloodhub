@@ -10,7 +10,8 @@ use App\Models\BloodGroup;
 use App\Models\Faq;
 use App\Models\Slider;
 use App\Models\Goal;
-
+use App\Models\GreenInitiative;
+use App\Models\Video;
 
 class HomeController extends Controller
 {
@@ -35,6 +36,8 @@ class HomeController extends Controller
         $faqs = Faq::where('status', 1)
             ->orderBy('position')
             ->get();
+        $greenInitiatives = GreenInitiative::latest()->take(6)->get();
+        $videos = Video::latest()->take(6)->get();
 
         return view('frontend.home', compact(
             'totalDonors',
@@ -44,7 +47,9 @@ class HomeController extends Controller
             'sliders',
             'goals',
             'activities',
-            'faqs'
+            'faqs',
+            'greenInitiatives',
+            'videos'
         ));
     }
 }

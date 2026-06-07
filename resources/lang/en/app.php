@@ -209,7 +209,7 @@ return [
     */
 
     'footer' => [
-        'about_bloodhub' => 'About BloodHub',
+        'about_ESW' => 'About ESW',
         'about_description' => 'We are dedicated to saving lives by connecting blood donors with those in need.',
         'quick_links' => 'Quick Links',
         'contact_us' => 'Contact Us',

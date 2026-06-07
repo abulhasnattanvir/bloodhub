@@ -1,8 +1,7 @@
 @php
     $footer = \App\Models\FooterSetting::first();
 @endphp
-
-<footer class="relative bg-gradient-to-br from-gray-900 via-red-950 to-black text-white pt-16 pb-8">
+<footer class="relative bg-gray-900 text-white pt-16 pb-8">
 
     <div class="relative max-w-7xl mx-auto px-4">
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">

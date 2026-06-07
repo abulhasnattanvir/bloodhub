@@ -40,7 +40,7 @@
                 </p>
 
                 <p class="text-sm text-gray-500 mt-1">
-                    Reference: BloodHub Donation
+                    Reference: ESW Donation
                 </p>
             </div>
 
@@ -55,7 +55,7 @@
                 </p>
 
                 <p class="text-sm text-gray-500 mt-1">
-                    Reference: BloodHub Donation
+                    Reference: ESW Donation
                 </p>
             </div>
 
@@ -66,7 +66,7 @@
                 </h2>
 
                 <p class="text-gray-700">
-                    🏦 Account Name: <span class="font-bold">BloodHub Org</span>
+                    🏦 Account Name: <span class="font-bold">ESW Org</span>
                 </p>
 
                 <p class="text-gray-700">

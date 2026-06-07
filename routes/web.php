@@ -24,7 +24,9 @@ use App\Http\Controllers\Admin\ContactSettingController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\FeeStructureController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\GreenInitiativeController;
 use App\Http\Controllers\Admin\MemberFinanceController;
+use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
@@ -204,7 +206,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
         //gallery
         Route::resource('gallery', GalleryController::class)->names('gallery');
-        
+
+        //green and video section
+        Route::resource('green', GreenInitiativeController::class)
+            ->parameters([
+                'green' => 'greenInitiative'
+            ]);
+        Route::resource('videos', VideoController::class);
+            
     });
 
 require __DIR__.'/auth.php';

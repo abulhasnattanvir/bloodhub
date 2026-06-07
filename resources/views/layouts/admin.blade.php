@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ setting('site_name', 'BloodHub Admin') }}</title>
+    <title>{{ setting('site_name', 'ESW Admin') }}</title>
 
     @if (setting('favicon'))
         <link rel="icon" href="{{ asset('storage/' . setting('favicon')) }}">
@@ -115,6 +115,14 @@
                 <a href="{{ route('admin.faqs.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.faqs.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-circle-question"></i> Faqs
+                </a>
+                <a href="{{ route('admin.videos.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.videos.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-photo-film"></i> Videos
+                </a>
+                <a href="{{ route('admin.green.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.green.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-circle-question"></i> Green
                 </a>
 
 
@@ -245,7 +253,7 @@
             </main>
 
             <footer class="bg-white border-t py-4 text-center text-sm text-gray-500">
-                © {{ date('Y') }} BloodHub Admin
+                © {{ date('Y') }} ESW Admin
             </footer>
         </div>
     </div>

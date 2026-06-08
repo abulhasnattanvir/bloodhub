@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use App\Models\Donor;
 use App\Models\BloodGroup;
@@ -33,11 +34,13 @@ class HomeController extends Controller
 
         $activities = Activity::latest()->get();
 
-        $faqs = Faq::where('status', 1)
+        $faqs = Faq::where('status',1)
             ->orderBy('position')
             ->get();
         $greenInitiatives = GreenInitiative::latest()->take(3)->get();
         $videos = Video::latest()->take(3)->get();
+
+        $posts = BlogPost::published()->latest('published_at')->take(3)->get();
 
         return view('frontend.home', compact(
             'totalDonors',
@@ -49,7 +52,8 @@ class HomeController extends Controller
             'activities',
             'faqs',
             'greenInitiatives',
-            'videos'
+            'videos',
+            'posts'
         ));
     }
 }

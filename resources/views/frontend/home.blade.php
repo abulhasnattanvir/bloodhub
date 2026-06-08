@@ -53,8 +53,8 @@
     </style>
 
     <!-- =========================
-                                                                                                                                                                                                                                 HERO SLIDER SECTION
-                                                                                                                                                                                                                            ========================= -->
+                                                                                                                                                                                                                                                 HERO SLIDER SECTION
+                                                                                                                                                                                                                                            ========================= -->
 
     {{-- <section class="hero-slider-section relative overflow-hidden">
 
@@ -227,8 +227,8 @@
     </section> --}}
 
     <!-- =========================
-                                                                                                                                                                                                                         HERO SLIDER (DYNAMIC)
-                                                                                                                                                                                                                    ========================= -->
+                                                                                                                                                                                                                                         HERO SLIDER (DYNAMIC)
+                                                                                                                                                                                                                                    ========================= -->
     <section class="hero-slider-section pt-15 relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
@@ -493,4 +493,109 @@
         </div>
     </section>
 
+    <div class="max-w-7xl mx-auto px-4 py-12">
+
+        <!-- Hero -->
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-4">Our Blog</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Insights, tutorials, and stories from our team.
+            </p>
+        </div>
+
+        <!-- Featured Post -->
+        @if ($posts->count() > 0)
+            @php $featured = $posts->first(); @endphp
+            <div class="mb-16">
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2 gap-8 items-center">
+                    @if ($featured->featured_image)
+                        <img src="{{ Storage::url($featured->featured_image) }}" alt="{{ $featured->title }}"
+                            class="w-full h-full object-cover md:h-[420px]">
+                    @else
+                        <div
+                            class="bg-gradient-to-br from-blue-500 to-indigo-600 h-[420px] flex items-center justify-center text-7xl">
+                            📝</div>
+                    @endif
+
+                    <div class="p-10">
+                        @if ($featured->category)
+                            <span
+                                class="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-medium mb-4">
+                                {{ $featured->category->name }}
+                            </span>
+                        @endif
+
+                        <h2 class="text-3xl font-semibold leading-tight mb-6">
+                            <a href="{{ route('blog.show', $featured->slug) }}"
+                                class="hover:text-blue-600 transition-colors">
+                                {{ $featured->title }}
+                            </a>
+                        </h2>
+
+                        <p class="text-gray-600 text-lg mb-8 line-clamp-4">{{ $featured->excerpt }}</p>
+
+                        <a href="{{ route('blog.show', $featured->slug) }}"
+                            class="inline-flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700">
+                            Read Full Article →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+        <!-- Latest Articles Header -->
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-3xl font-semibold">Latest Articles</h2>
+
+            <!-- Simple Archive Button -->
+            <a href="{{ route('blog.index') }}"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-2xl hover:bg-gray-800 transition font-medium">
+                <span>View All Archive</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </a>
+        </div>
+
+        <!-- Posts Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">
+            @foreach ($posts->skip(1) as $post)
+                <div
+                    class="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    @if ($post->featured_image)
+                        <img src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}"
+                            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500">
+                    @endif
+
+                    <div class="p-6">
+                        @if ($post->category)
+                            <span class="text-xs font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                                {{ $post->category->name }}
+                            </span>
+                        @endif
+
+                        <h3 class="font-semibold text-xl mt-4 mb-3 line-clamp-2">
+                            <a href="{{ route('blog.show', $post->slug) }}" class="hover:text-blue-600 transition">
+                                {{ $post->title }}
+                            </a>
+                        </h3>
+
+                        <p class="text-gray-600 line-clamp-3 mb-6">{{ $post->excerpt }}</p>
+
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-500">{{ $post->published_at?->format('M j, Y') }}</span>
+                            <a href="{{ route('blog.show', $post->slug) }}" class="text-blue-600 hover:underline">Read
+                                more →</a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- <!-- Pagination -->
+    <div class="mt-12 flex justify-center">
+        {{ $posts->links() }}
+    </div> --}}
+    </div>
 @endsection

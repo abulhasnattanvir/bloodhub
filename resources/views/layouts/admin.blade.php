@@ -124,6 +124,48 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.green.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-circle-question"></i> Green
                 </a>
+                {{-- <a href="{{ route('admin.blog.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.blog.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-circle-question"></i> Blog
+                </a> --}}
+
+                {{-- ================= BLOG WITH SUBMENU ================= --}}
+                <div x-data="{ open: {{ request()->routeIs('admin.blog.*', 'admin.blog.categories.*', 'admin.blog.tags.*') ? 'true' : 'false' }}" class="space-y-1">
+
+                    <button @click="open = !open"
+                        class="w-full flex items-center justify-between gap-3 px-5 py-3 rounded-2xl text-sm hover:bg-gray-100 transition-all"
+                        :class="{ 'bg-red-600 text-white': open }">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-blog w-5"></i>
+                            Blog
+                        </div>
+                        <i class="fas fa-chevron-right transition-transform duration-200"
+                            :class="{ 'rotate-90': open }"></i>
+                    </button>
+
+                    <!-- Submenu -->
+                    <div x-show="open" x-collapse class="pl-10 space-y-1">
+                        <a href="{{ route('admin.blog.index') }}"
+                            class="flex items-center gap-3 px-5 py-2.5 rounded-2xl text-sm {{ request()->routeIs('admin.blog.index', 'admin.blog.edit') ? 'bg-red-100 text-red-700 font-medium' : 'hover:bg-gray-100' }}">
+                            <i class="fa-solid fa-list-ul w-4"></i> All Posts
+                        </a>
+
+                        <a href="{{ route('admin.blog.create') }}"
+                            class="flex items-center gap-3 px-5 py-2.5 rounded-2xl text-sm {{ request()->routeIs('admin.blog.create') ? 'bg-red-100 text-red-700 font-medium' : 'hover:bg-gray-100' }}">
+                            <i class="fa-solid fa-plus w-4"></i> Add New Post
+                        </a>
+
+                        <a href="{{ route('admin.blog.categories.index') }}"
+                            class="flex items-center gap-3 px-5 py-2.5 rounded-2xl text-sm {{ request()->routeIs('admin.blog.categories.*') ? 'bg-red-100 text-red-700 font-medium' : 'hover:bg-gray-100' }}">
+                            <i class="fa-solid fa-tags w-4"></i> Categories
+                        </a>
+
+                        <a href="{{ route('admin.blog.tags.index') }}"
+                            class="flex items-center gap-3 px-5 py-2.5 rounded-2xl text-sm {{ request()->routeIs('admin.blog.tags.*') ? 'bg-red-100 text-red-700 font-medium' : 'hover:bg-gray-100' }}">
+                            <i class="fa-solid fa-tag w-4"></i> Tags
+                        </a>
+                    </div>
+                </div>
 
 
 

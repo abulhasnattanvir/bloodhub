@@ -27,6 +27,9 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\GreenInitiativeController;
 use App\Http\Controllers\Admin\MemberFinanceController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BlogTagController;
 use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
@@ -106,6 +109,10 @@ use Illuminate\Support\Facades\Route;
 
     //Frontend
     Route::get('/gallery', [AboutController::class, 'gallery'])->name('gallery');
+
+    // Public Blog
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 
 
@@ -213,7 +220,27 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
                 'green' => 'greenInitiative'
             ]);
         Route::resource('videos', VideoController::class);
-            
+
+        //Blog
+        Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index');
+        Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
+        Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
+        Route::get('/blog/{post}/edit', [BlogController::class, 'edit'])->name('blog.edit');
+        Route::put('/blog/{post}', [BlogController::class, 'update'])->name('blog.update');
+        Route::delete('/blog/{post}', [BlogController::class, 'destroy'])->name('blog.destroy');
+
+        //Blog Category
+        Route::resource('blog/categories', BlogCategoryController::class)
+            ->names('blog.categories')
+            ->except(['show']);
+        Route::resource('blog/categories', BlogCategoryController::class)
+            ->names('blog.categories')
+            ->except(['show']);
+
+        // Admin Tag Routes
+        Route::resource('blog/tags', BlogTagController::class)
+            ->names('blog.tags')
+            ->except(['show']);
     });
 
 require __DIR__.'/auth.php';

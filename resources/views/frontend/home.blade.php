@@ -53,8 +53,8 @@
     </style>
 
     <!-- =========================
-                                                                                                                                                                                                                                                 HERO SLIDER SECTION
-                                                                                                                                                                                                                                            ========================= -->
+                                                                                                                                                                                                                                                     HERO SLIDER SECTION
+                                                                                                                                                                                                                                                ========================= -->
 
     {{-- <section class="hero-slider-section relative overflow-hidden">
 
@@ -227,8 +227,8 @@
     </section> --}}
 
     <!-- =========================
-                                                                                                                                                                                                                                         HERO SLIDER (DYNAMIC)
-                                                                                                                                                                                                                                    ========================= -->
+                                                                                                                                                                                                                                             HERO SLIDER (DYNAMIC)
+                                                                                                                                                                                                                                        ========================= -->
     <section class="hero-slider-section pt-15 relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
@@ -450,6 +450,7 @@
     {{-- Dynamic Video Section --}}
     <section class="py-16 md:py-24 bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
             <div class="text-center mb-12">
                 <span
                     class="inline-flex items-center gap-2 px-5 py-2 bg-red-600/20 text-red-400 rounded-full text-sm font-medium mb-4">
@@ -483,6 +484,15 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
+
+                <!-- Watch More Button -->
+                <div class="text-center mt-12">
+                    <a href="https://www.youtube.com/@YOUR_CHANNEL" target="_blank"
+                        class="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 transition-all duration-300 text-white font-semibold text-lg px-10 py-5 rounded-3xl shadow-lg shadow-red-900/50">
+                        <i class="fab fa-youtube text-2xl"></i>
+                        <span>ইউটিউবে আরও ভিডিও দেখুন</span>
+                    </a>
                 </div>
             @else
                 <div class="text-center py-20">

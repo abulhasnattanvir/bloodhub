@@ -55,7 +55,7 @@
             </div>
 
             <!-- Mobile Button -->
-            <button @click="open = true" class="md:hidden text-white text-2xl flex-shrink-0">
+            <button @click="open = true" class="md:hidden bg-black-600 text-2xl flex-shrink-0">
                 <i class="fas fa-bars"></i>
             </button>
 
@@ -78,8 +78,8 @@
         h-full bg-white
         shadow-2xl
         z-50
-        overflow-y-auto
-        md:hidden">
+        md:hidden
+        ">
 
         <!-- Header -->
         <div class="flex items-center justify-between p-4 border-b">
@@ -88,7 +88,7 @@
                 Menu
             </h3>
 
-            <button @click="open = false" class="text-gray-700 text-xl">
+            <button @click="open = false" class="text-gray-700 bg-black-600 text-xl">
 
                 <i class="fas fa-times"></i>
 
@@ -97,14 +97,14 @@
         </div>
 
         <!-- Menu Items -->
-        <div class="p-3">
+        <div class="p-3 bg-white">
 
             @foreach ($menus as $menu)
                 <div x-data="{ submenu: false }" class="border-b border-gray-100">
 
                     @if ($menu->children->count())
                         <button @click="submenu = !submenu"
-                            class="w-full flex items-center justify-between py-3 px-2 rounded-lg hover:bg-gray-100">
+                            class="w-full flex items-center justify-between py-3 px-2 rounded-lg bg-black-600 hover:bg-gray-100">
 
                             <span>
                                 {{ $menu->title }}

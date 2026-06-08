@@ -11,15 +11,15 @@
                         <i class="fas fa-video text-2xl"></i>
                     </div>
                     <div>
-                        <h2 class="text-3xl font-bold text-gray-900">ভিডিও গ্যালারি</h2>
-                        <p class="text-gray-600 mt-1">সব ভিডিওসমূহের তালিকা</p>
+                        <h2 class="text-3xl font-bold text-gray-900">Video Gallery</h2>
+                        <p class="text-gray-600 mt-1">List all Videos</p>
                     </div>
                 </div>
 
                 <a href="{{ route('admin.videos.create') }}"
                     class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-2xl transition-all duration-200 shadow-lg shadow-red-500/30 hover:shadow-xl hover:-translate-y-0.5">
                     <i class="fas fa-plus"></i>
-                    নতুন ভিডিও যোগ করুন
+                    Add New Video
                 </a>
             </div>
 
@@ -28,23 +28,23 @@
 
                 <div class="overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-900">
+                        <thead class="bg-green-900">
                             <tr>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider w-24">
-                                    থাম্বনেইল</th>
+                                    Thumbnail</th>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    টাইটেল</th>
+                                    Title</th>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    ক্যাটাগরি</th>
+                                    Category</th>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    ভিডিও লিংক</th>
+                                    Video Link</th>
                                 <th
                                     class="px-6 py-5 text-center text-xs font-semibold text-gray-300 uppercase tracking-wider w-40">
-                                    অ্যাকশন</th>
+                                    Action</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-100">
@@ -104,7 +104,7 @@
 
                                             <form action="{{ route('admin.videos.destroy', $video) }}" method="POST"
                                                 class="d-inline"
-                                                onsubmit="return confirm('আপনি কি এই ভিডিওটি মুছে ফেলতে চান?')">
+                                                onsubmit="return confirm('Do you want to delete this video?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
@@ -120,7 +120,7 @@
                                     <td colspan="5" class="px-6 py-16 text-center">
                                         <div class="flex flex-col items-center">
                                             <i class="fas fa-video text-6xl text-gray-300 mb-4"></i>
-                                            <p class="text-gray-500 text-lg">কোনো ভিডিও পাওয়া যায়নি</p>
+                                            <p class="text-gray-500 text-lg">No video found</p>
                                         </div>
                                     </td>
                                 </tr>

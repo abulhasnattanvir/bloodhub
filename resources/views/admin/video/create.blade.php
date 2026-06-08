@@ -11,15 +11,15 @@
                         <i class="fas fa-video text-2xl"></i>
                     </div>
                     <div>
-                        <h2 class="text-3xl font-bold text-gray-900">নতুন ভিডিও যোগ করুন</h2>
-                        <p class="text-gray-600 mt-1">ভিডিও গ্যালারিতে নতুন ভিডিও যোগ করুন</p>
+                        <h2 class="text-3xl font-bold text-gray-900">Add New Video</h2>
+                        <p class="text-gray-600 mt-1">Add new videos to the video gallery</p>
                     </div>
                 </div>
 
                 <a href="{{ route('admin.videos.index') }}"
                     class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-300 hover:border-gray-400 rounded-2xl text-gray-700 font-medium transition-all">
                     <i class="fas fa-arrow-left"></i>
-                    ফিরে যান
+                    Go Back
                 </a>
             </div>
 
@@ -31,7 +31,7 @@
 
                     <!-- Title -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">ভিডিও টাইটেল <span
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Video Title <span
                                 class="text-red-500">*</span></label>
                         <input type="text" name="title" value="{{ old('title') }}" required
                             class="w-full px-6 py-4 border @error('title') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-red-500 focus:ring-4 focus:ring-red-100 transition-all">
@@ -42,12 +42,13 @@
 
                     <!-- Video URL -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">ভিডিও লিংক (YouTube / Direct) <span
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Video Link (YouTube / Direct) <span
                                 class="text-red-500">*</span></label>
                         <input type="url" name="url" value="{{ old('url') }}"
                             placeholder="https://youtu.be/xxxxxxxxx অথবা https://example.com/video.mp4" required
                             class="w-full px-6 py-4 border @error('url') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-red-500 focus:ring-4 focus:ring-red-100 transition-all">
-                        <small class="block mt-2 text-gray-500">YouTube লিংক দিলে স্বয়ংক্রিয়ভাবে থাম্বনেইল দেখাবে।</small>
+                        <small class="block mt-2 text-gray-500">YouTube will automatically show thumbnails when you provide
+                            a link.</small>
                         @error('url')
                             <p class="mt-2 text-red-600 text-sm">{{ $message }}</p>
                         @enderror
@@ -55,7 +56,7 @@
 
                     <!-- Category -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">ক্যাটাগরি</label>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
                         <input type="text" name="category" value="{{ old('category') }}"
                             placeholder="রক্তদান, বৃক্ষরোপণ, শিক্ষা, দুর্যোগ সাহায্য ইত্যাদি"
                             class="w-full px-6 py-4 border @error('category') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-red-500 focus:ring-4 focus:ring-red-100 transition-all">
@@ -66,7 +67,7 @@
 
                     <!-- Description -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">বিবরণ</label>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Details</label>
                         <textarea name="description" rows="5"
                             class="w-full px-6 py-4 border @error('description') border-red-500 @else border-gray-300 @enderror rounded-3xl focus:outline-none focus:border-red-500 focus:ring-4 focus:ring-red-100 transition-all resize-y">{{ old('description') }}</textarea>
                         @error('description')
@@ -78,12 +79,12 @@
                     <div class="pt-6 flex flex-col sm:flex-row gap-4">
                         <button type="submit"
                             class="flex-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold py-4 rounded-2xl text-lg transition-all duration-200 shadow-lg shadow-red-500/30 hover:shadow-xl">
-                            সংরক্ষণ করুন
+                            Save
                         </button>
 
                         <a href="{{ route('admin.videos.index') }}"
                             class="flex-1 text-center py-4 border border-gray-300 hover:bg-gray-50 font-medium rounded-2xl text-gray-700 transition-all">
-                            বাতিল করুন
+                            Remove
                         </a>
                     </div>
                 </form>

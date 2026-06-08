@@ -90,7 +90,7 @@
                 </a>
                 <a href="{{ route('admin.goals.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.goals.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-crosshairs"></i> Goles
+                    <i class="fa-solid fa-crosshairs"></i> Goals
                 </a>
                 <a href="{{ route('admin.activities.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.activities.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
@@ -112,26 +112,17 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.gallery.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-photo-film"></i> Gallery
                 </a>
-                <a href="{{ route('admin.faqs.index') }}"
-                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.faqs.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-circle-question"></i> Faqs
-                </a>
                 <a href="{{ route('admin.videos.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.videos.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-photo-film"></i> Videos
                 </a>
                 <a href="{{ route('admin.green.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.green.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-circle-question"></i> Green
+                    <i class="fa-solid fa-leaf"></i> Green
                 </a>
-                {{-- <a href="{{ route('admin.blog.index') }}"
-                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.blog.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-circle-question"></i> Blog
-                </a> --}}
 
                 {{-- ================= BLOG WITH SUBMENU ================= --}}
                 <div x-data="{ open: {{ request()->routeIs('admin.blog.*', 'admin.blog.categories.*', 'admin.blog.tags.*') ? 'true' : 'false' }}" class="space-y-1">
-
                     <button @click="open = !open"
                         class="w-full flex items-center justify-between gap-3 px-5 py-3 rounded-2xl text-sm hover:bg-gray-100 transition-all"
                         :class="{ 'bg-red-600 text-white': open }">
@@ -142,7 +133,6 @@
                         <i class="fas fa-chevron-right transition-transform duration-200"
                             :class="{ 'rotate-90': open }"></i>
                     </button>
-
                     <!-- Submenu -->
                     <div x-show="open" x-collapse class="pl-10 space-y-1">
                         <a href="{{ route('admin.blog.index') }}"
@@ -166,7 +156,10 @@
                         </a>
                     </div>
                 </div>
-
+                <a href="{{ route('admin.faqs.index') }}"
+                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.faqs.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                    <i class="fa-solid fa-circle-question"></i> Faqs
+                </a>
 
 
 

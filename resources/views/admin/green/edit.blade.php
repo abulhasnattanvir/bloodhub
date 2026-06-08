@@ -6,14 +6,14 @@
 
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900">সবুজ উদ্যোগ সম্পাদনা</h2>
-                    <p class="text-gray-600 mt-1">তথ্য আপডেট করুন</p>
+                    <h2 class="text-3xl font-bold text-gray-900">Update Green Initiatives</h2>
+                    <p class="text-gray-600 mt-1">Update Your Info</p>
                 </div>
 
                 <a href="{{ route('admin.green.index') }}"
                     class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-300 hover:border-gray-400 rounded-2xl text-gray-700 font-medium transition-all">
                     <i class="fas fa-arrow-left"></i>
-                    ফিরে যান
+                    Go Back
                 </a>
             </div>
 
@@ -26,7 +26,7 @@
 
                     <!-- Title -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">টাইটেল <span
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Title <span
                                 class="text-red-500">*</span></label>
                         <input type="text" name="title" value="{{ old('title', $greenInitiative->title ?? '') }}"
                             required
@@ -38,7 +38,7 @@
 
                     <!-- Description -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">বিবরণ <span
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Details <span
                                 class="text-red-500">*</span></label>
                         <textarea name="description" rows="6" required
                             class="w-full px-6 py-4 border @error('description') border-red-500 @else border-gray-300 @enderror rounded-3xl focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 resize-y">
@@ -51,11 +51,11 @@
 
                     <!-- Image -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">ছবি</label>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Photo</label>
 
                         @if ($greenInitiative->image)
                             <div class="mb-6">
-                                <p class="text-sm font-medium text-gray-600 mb-3">বর্তমান ছবি:</p>
+                                <p class="text-sm font-medium text-gray-600 mb-3">Current Picture:</p>
                                 <img src="{{ asset('storage/' . $greenInitiative->image) }}"
                                     class="w-56 h-56 object-cover rounded-2xl shadow border border-gray-200"
                                     onerror="this.style.display='none'">
@@ -69,7 +69,7 @@
                             </div>
                             <div id="upload-placeholder" class="flex flex-col items-center justify-center py-8 text-center">
                                 <i class="fas fa-cloud-upload-alt text-6xl text-gray-400 mb-4"></i>
-                                <p class="text-gray-700 font-medium">নতুন ছবি আপলোড করুন (ঐচ্ছিক)</p>
+                                <p class="text-gray-700 font-medium">Upload new photo (optional)</p>
                                 <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG (max 2MB)</p>
                             </div>
                             <input type="file" name="image" id="image-input" accept="image/*" class="hidden"
@@ -84,7 +84,7 @@
                     <!-- Date & Location -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">তারিখ</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Date</label>
                             <input type="date" name="date"
                                 value="{{ old('date', $greenInitiative->date?->format('Y-m-d') ?? '') }}"
                                 class="w-full px-6 py-4 border @error('date') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100">
@@ -94,7 +94,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">স্থান</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Location</label>
                             <input type="text" name="location"
                                 value="{{ old('location', $greenInitiative->location ?? '') }}"
                                 class="w-full px-6 py-4 border @error('location') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100">
@@ -107,7 +107,7 @@
                     <div class="pt-4">
                         <button type="submit"
                             class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 rounded-2xl text-lg transition-all">
-                            আপডেট করুন
+                            Update
                         </button>
                     </div>
                 </form>

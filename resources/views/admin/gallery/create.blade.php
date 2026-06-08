@@ -22,9 +22,9 @@
 
                     <!-- Category Select -->
                     <div>
-                        <label class="block mb-2 font-medium">ক্যাটেগরি</label>
+                        <label class="block mb-2 font-medium">Category</label>
                         <select name="category" class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500">
-                            <option value="">-- ক্যাটেগরি নির্বাচন করুন --</option>
+                            <option value="">-- Select Category --</option>
                             <option value="শিক্ষা ও বৃত্তি" {{ old('category') == 'শিক্ষা ও বৃত্তি' ? 'selected' : '' }}>
                                 শিক্ষা ও বৃত্তি</option>
                             <option value="রক্তদান" {{ old('category') == 'রক্তদান' ? 'selected' : '' }}>রক্তদান</option>

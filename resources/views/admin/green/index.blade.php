@@ -7,14 +7,14 @@
             <!-- Header -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900">সবুজ উদ্যোগ</h2>
-                    <p class="text-gray-600 mt-1">সবুজ উদ্যোগসমূহের তালিকা</p>
+                    <h2 class="text-3xl font-bold text-gray-900">Green Initiatives</h2>
+                    <p class="text-gray-600 mt-1">List of Green Initiatives</p>
                 </div>
 
                 <a href="{{ route('admin.green.create') }}"
                     class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-2xl transition-all duration-200 shadow-lg shadow-green-500/30 hover:shadow-xl hover:-translate-y-0.5">
                     <i class="fas fa-plus"></i>
-                    নতুন যোগ করুন
+                    Add New
                 </a>
             </div>
 
@@ -24,23 +24,23 @@
                 <!-- Table -->
                 <div class="overflow-x-auto">
                     <table class="w-full min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-900">
+                        <thead class="bg-green-900">
                             <tr>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    ছবি</th>
+                                    Photo</th>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    টাইটেল</th>
+                                    Title</th>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    তারিখ</th>
+                                    Date</th>
                                 <th
                                     class="px-6 py-5 text-left text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    স্থান</th>
+                                    Location</th>
                                 <th
                                     class="px-6 py-5 text-center text-xs font-semibold text-gray-300 uppercase tracking-wider">
-                                    অ্যাকশন</th>
+                                    Action</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-100">

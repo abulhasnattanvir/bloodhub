@@ -35,8 +35,7 @@
                         transition-all duration-200 z-50">
                                 @foreach ($menu->children as $child)
                                     <a href="{{ url($child->url) }}"
-                                        class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 transition
-{{ $child->isActive() ? 'bg-green-600 text-white' : '' }}">
+                                        class="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 transition {{ $child->isActive() ? 'bg-green-600 text-white' : '' }}">
                                         {{ $child->title }}
                                     </a>
                                 @endforeach

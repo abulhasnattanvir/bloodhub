@@ -3,11 +3,11 @@
 @section('content')
     <div class="p-6">
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">আমাদের কার্যক্রম</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Our Activites</h1>
             <a href="{{ route('admin.activities.create') }}"
                 class="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-2xl flex items-center gap-2 transition">
                 <i class="fas fa-plus"></i>
-                নতুন কার্যক্রম যোগ করুন
+                Add New Activities
             </a>
         </div>
 
@@ -15,10 +15,10 @@
             <table class="w-full">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-4 text-left w-16">আইকন</th>
-                        <th class="px-6 py-4 text-left">কার্যক্রমের নাম</th>
-                        <th class="px-6 py-4 text-left">স্লাগ</th>
-                        <th class="px-6 py-4 text-center">অ্যাকশন</th>
+                        <th class="px-6 py-4 text-left w-16">Icon</th>
+                        <th class="px-6 py-4 text-left">Activities Name</th>
+                        <th class="px-6 py-4 text-left">Slug</th>
+                        <th class="px-6 py-4 text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y">
@@ -44,7 +44,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            onclick="return confirm('আপনি কি এই কার্যক্রমটি মুছে ফেলতে চান?')"
+                                            onclick="return confirm('Do you want to delete this activity?')"
                                             class="text-red-600 hover:text-red-700">
                                             <i class="fas fa-trash"></i>
                                         </button>

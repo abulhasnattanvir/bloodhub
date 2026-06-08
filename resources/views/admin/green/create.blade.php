@@ -7,14 +7,14 @@
             <!-- Header -->
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h2 class="text-3xl font-bold text-gray-900">নতুন সবুজ উদ্যোগ যোগ করুন</h2>
-                    <p class="text-gray-600 mt-1">নতুন উদ্যোগের বিস্তারিত তথ্য দিন</p>
+                    <h2 class="text-3xl font-bold text-gray-900">Add new green initiatives</h2>
+                    <p class="text-gray-600 mt-1">Provide detailed information about the new initiative.</p>
                 </div>
 
                 <a href="{{ route('admin.green.index') }}"
                     class="inline-flex items-center gap-2 px-5 py-3 bg-white border border-gray-300 hover:border-gray-400 rounded-2xl text-gray-700 font-medium transition-all hover:shadow">
                     <i class="fas fa-arrow-left"></i>
-                    ফিরে যান
+                    Go Back
                 </a>
             </div>
 
@@ -27,7 +27,7 @@
 
                     <!-- Title -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">টাইটেল <span
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Title <span
                                 class="text-red-500">*</span></label>
                         <input type="text" name="title" value="{{ old('title') }}" required
                             class="w-full px-6 py-4 border @error('title') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all">
@@ -38,7 +38,7 @@
 
                     <!-- Description -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">বিবরণ <span
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Details <span
                                 class="text-red-500">*</span></label>
                         <textarea name="description" rows="6" required
                             class="w-full px-6 py-4 border @error('description') border-red-500 @else border-gray-300 @enderror rounded-3xl focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all resize-y">{{ old('description') }}</textarea>
@@ -49,7 +49,7 @@
 
                     <!-- Image Upload -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">ছবি <span
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Picure <span
                                 class="text-red-500">*</span></label>
 
                         <label
@@ -60,8 +60,8 @@
 
                             <div id="upload-placeholder" class="flex flex-col items-center justify-center py-8 text-center">
                                 <i class="fas fa-cloud-upload-alt text-6xl text-gray-400 mb-4"></i>
-                                <p class="text-gray-700 font-medium">ছবি আপলোড করুন</p>
-                                <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG (সর্বোচ্চ ৫MB)</p>
+                                <p class="text-gray-700 font-medium">Upload You Photo</p>
+                                <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG (Max ৫MB)</p>
                             </div>
 
                             <input type="file" name="image" id="image-input" accept="image/*" class="hidden"
@@ -76,7 +76,7 @@
                     <!-- Date & Location -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">তারিখ</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Date</label>
                             <input type="date" name="date" value="{{ old('date') }}"
                                 class="w-full px-6 py-4 border @error('date') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all">
                             @error('date')
@@ -85,7 +85,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">স্থান / লোকেশন</label>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Place / Location</label>
                             <input type="text" name="location" value="{{ old('location') }}"
                                 class="w-full px-6 py-4 border @error('location') border-red-500 @else border-gray-300 @enderror rounded-2xl focus:outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all">
                             @error('location')
@@ -98,7 +98,7 @@
                     <div class="pt-4">
                         <button type="submit"
                             class="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold py-4 rounded-2xl text-lg transition-all duration-200 shadow-lg shadow-green-500/30 hover:shadow-xl hover:-translate-y-0.5">
-                            সংরক্ষণ করুন
+                            Save
                         </button>
                     </div>
                 </form>

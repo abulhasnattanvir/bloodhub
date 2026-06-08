@@ -31,7 +31,7 @@
 
                             <!-- DROPDOWN -->
                             <div
-                                class="absolute left-0 top-full mt-2 min-w-[220px] rounded-xl shadow-xl opacity-0 invisible bg-red group-hover:opacity-100 group-hover:visible
+                                class="absolute bg-white left-0 top-full mt-2 min-w-[220px] rounded-xl shadow-xl opacity-0 invisible bg-red group-hover:opacity-100 group-hover:visible
                         transition-all duration-200 z-50">
                                 @foreach ($menu->children as $child)
                                     <a href="{{ url($child->url) }}"

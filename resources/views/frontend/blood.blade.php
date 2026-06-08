@@ -146,7 +146,8 @@
                         <div class="flex justify-center mb-5">
 
                             @if ($donor->profile_photo)
-                                <img src="{{ Storage::url($donor->profile_photo) }}" class="donor-image" alt="Donor">
+                                <img src="{{ Storage::url($donor->profile_photo) }}" style="height: 180px"
+                                    class="donor-image" alt="Donor">
                             @else
                                 <div class="donor-image bg-gray-100 flex items-center justify-center">
                                     <i class="fas fa-user text-3xl text-gray-400"></i>

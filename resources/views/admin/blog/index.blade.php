@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="max-w-7xl mx-auto px-4 py-8">
+    <div class="max-w-10xl mx-auto px-4 py-8">
         <div class="flex justify-between items-center mb-8">
             <h1 class="text-3xl font-bold">Blog Posts</h1>
             <a href="{{ route('admin.blog.create') }}"

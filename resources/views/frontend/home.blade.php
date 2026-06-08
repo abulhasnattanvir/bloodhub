@@ -52,183 +52,6 @@
         }
     </style>
 
-    <!-- =========================
-                                                                                                                                                                                                                                                     HERO SLIDER SECTION
-                                                                                                                                                                                                                                                ========================= -->
-
-    {{-- <section class="hero-slider-section relative overflow-hidden">
-
-        <div class="hero-shape hero-shape-1"></div>
-        <div class="hero-shape hero-shape-2"></div>
-
-        <div class="max-w-7xl mx-auto px-4 relative z-10">
-
-            <div class="swiper heroSlider hero-glass rounded-[35px] overflow-hidden">
-
-                <div class="swiper-wrapper">
-
-                    <!-- ================= SLIDE 1 ================= -->
-                    <div class="swiper-slide">
-                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
-
-                            <div>
-                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
-                                    <i class="fas fa-heartbeat"></i> মানব সেবা-ই আমাদের স্বপ্ন
-                                </span>
-
-                                <h1 class="hero-title mb-6">
-                                    রক্ত দিন <span class="text-red-600">জীবন বাঁচান</span>
-                                </h1>
-
-                                <p class="hero-text mb-8">
-                                    জরুরি রক্ত প্রয়োজন হলে দ্রুত ডোনার খুঁজুন এবং জীবন বাঁচাতে পাশে থাকুন।
-                                </p>
-
-                                <div class="flex gap-4 flex-wrap">
-                                    <a href="{{ route('search') }}"
-                                        class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
-                                        ডোনার খুঁজুন
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div>
-                                <img src="{{ asset('images/slide1.png') }}" class="hero-image mx-auto w-full max-w-lg">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- ================= SLIDE 2 ================= -->
-                    <div class="swiper-slide">
-                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
-
-                            <div>
-                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
-                                    <i class="fas fa-users"></i> স্বেচ্ছায় রক্তদান
-                                </span>
-
-                                <h1 class="hero-title mb-6">
-                                    হাজারো <span class="text-red-600">ডোনার একসাথে</span>
-                                </h1>
-
-                                <p class="hero-text mb-8">
-                                    আমাদের কমিউনিটিতে যুক্ত হয়ে প্রতিদিন মানুষকে সাহায্য করুন।
-                                </p>
-
-                                <a href="{{ route('donors.list') }}"
-                                    class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
-                                    ডোনার তালিকা
-                                </a>
-                            </div>
-
-                            <div>
-                                <img src="{{ asset('images/slide2.png') }}" class="hero-image mx-auto w-full max-w-lg">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- ================= SLIDE 3 ================= -->
-                    <div class="swiper-slide">
-                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
-
-                            <div>
-                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
-                                    <i class="fas fa-hand-holding-heart"></i> মানবিক সহায়তা
-                                </span>
-
-                                <h1 class="hero-title mb-6">
-                                    দরিদ্রদের পাশে <span class="text-red-600">আমরা আছি</span>
-                                </h1>
-
-                                <p class="hero-text mb-8">
-                                    শীতবস্ত্র, খাদ্য ও জরুরি সহায়তা দিয়ে আমরা মানুষের পাশে দাঁড়াই।
-                                </p>
-
-                                <a href="#" class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
-                                    আরো জানুন
-                                </a>
-                            </div>
-
-                            <div>
-                                <img src="{{ asset('images/slide3.png') }}" class="hero-image mx-auto w-full max-w-lg">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- ================= SLIDE 4 ================= -->
-                    <div class="swiper-slide">
-                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
-
-                            <div>
-                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
-                                    <i class="fas fa-graduation-cap"></i> শিক্ষা সহায়তা
-                                </span>
-
-                                <h1 class="hero-title mb-6">
-                                    শিক্ষার আলো <span class="text-red-600">সবার জন্য</span>
-                                </h1>
-
-                                <p class="hero-text mb-8">
-                                    দরিদ্র ও মেধাবী শিক্ষার্থীদের জন্য আমরা বিনামূল্যে সহায়তা দিই।
-                                </p>
-
-                                <a href="#" class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
-                                    আরও দেখুন
-                                </a>
-                            </div>
-
-                            <div>
-                                <img src="{{ asset('images/slide4.png') }}" class="hero-image mx-auto w-full max-w-lg">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- ================= SLIDE 5 ================= -->
-                    <div class="swiper-slide">
-                        <div class="grid lg:grid-cols-2 items-center gap-12 p-10 lg:p-16">
-
-                            <div>
-                                <span class="hero-badge px-5 py-2 rounded-full inline-flex gap-2 mb-6">
-                                    <i class="fas fa-shield-heart"></i> দুর্যোগ সহায়তা
-                                </span>
-
-                                <h1 class="hero-title mb-6">
-                                    বিপদে <span class="text-red-600">আমরা পাশে</span>
-                                </h1>
-
-                                <p class="hero-text mb-8">
-                                    বন্যা, ঘূর্ণিঝড় ও দুর্যোগে ক্ষতিগ্রস্ত মানুষের পাশে আমরা দাঁড়াই।
-                                </p>
-
-                                <a href="#" class="hero-btn-primary px-8 py-4 rounded-2xl text-white font-bold">
-                                    সহযোগিতা করুন
-                                </a>
-                            </div>
-
-                            <div>
-                                <img src="{{ asset('images/slide5.png') }}" class="hero-image mx-auto w-full max-w-lg">
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- pagination -->
-                <div class="swiper-pagination !bottom-5"></div>
-
-            </div>
-
-        </div>
-    </section> --}}
-
-    <!-- =========================
-                                                                                                                                                                                                                                             HERO SLIDER (DYNAMIC)
-                                                                                                                                                                                                                                        ========================= -->
     <section class="hero-slider-section pt-15 relative py-16 lg:py-20 overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
@@ -507,9 +330,9 @@
 
         <!-- Hero -->
         <div class="text-center mb-16">
-            <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-4">Our Blog</h1>
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">সংবাদ ও কার্যক্রম</h2>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Insights, tutorials, and stories from our team.
+                আমাদের সংগঠনের সর্বশেষ সংবাদ, সচেতনতামূলক লেখা, কার্যক্রমের আপডেট এবং অনুপ্রেরণামূলক গল্প পড়ুন।
             </p>
         </div>
 
@@ -555,12 +378,11 @@
 
         <!-- Latest Articles Header -->
         <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-semibold">Latest Articles</h2>
-
+            <h2 class="text-3xl font-semibold">সাম্প্রতিক লেখা</h2>
             <!-- Simple Archive Button -->
             <a href="{{ route('blog.index') }}"
                 class="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-2xl hover:bg-gray-800 transition font-medium">
-                <span>View All Archive</span>
+                <span>সমস্ত আর্কাইভ দেখুন</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -602,10 +424,5 @@
                 </div>
             @endforeach
         </div>
-
-        {{-- <!-- Pagination -->
-    <div class="mt-12 flex justify-center">
-        {{ $posts->links() }}
-    </div> --}}
     </div>
 @endsection

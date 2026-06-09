@@ -10,8 +10,8 @@
             <div>
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="inline-block mb-6">
-                    @if (setting('logo'))
-                        <img src="{{ asset('storage/' . setting('logo')) }}" class="h-10" alt="Logo">
+                    @if (setting('flogo'))
+                        <img src="{{ asset('storage/' . setting('flogo')) }}" style="width: 150px;" alt="Logo">
                     @else
                         <h2 class="text-3xl font-bold">{{ setting('site_name') }}</h2>
                     @endif

@@ -86,7 +86,7 @@
                             <div class="grid md:grid-cols-2 gap-8">
                                 <!-- Logo -->
                                 <div>
-                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Logo</label>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Header Logo</label>
                                     @if (!empty($settings['logo']))
                                         <div class="mb-3">
                                             <img src="{{ asset('storage/' . $settings['logo']) }}"
@@ -94,6 +94,19 @@
                                         </div>
                                     @endif
                                     <input type="file" name="logo"
+                                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
+                                </div>
+
+                                <!--Main Logo -->
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Footer Logo</label>
+                                    @if (!empty($settings['flogo']))
+                                        <div class="mb-3">
+                                            <img src="{{ asset('storage/' . $settings['flogo']) }}"
+                                                class="h-20 w-auto border border-gray-100 rounded-2xl p-1">
+                                        </div>
+                                    @endif
+                                    <input type="file" name="flogo"
                                         class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
                                 </div>
 

@@ -34,6 +34,18 @@ class SettingController extends Controller
                 continue;
             }
 
+            // FOOTER LOGO UPLOAD
+            if ($key === 'flogo' && $request->hasFile('flogo')) {
+                $path = $request->file('flogo')->store('settings', 'public');
+
+                Setting::updateOrCreate(
+                    ['key' => 'flogo'],
+                    ['value' => $path]
+                );
+
+                continue;
+            }
+
             // FAVICON UPLOAD
             if ($key === 'favicon' && $request->hasFile('favicon')) {
                 $path = $request->file('favicon')->store('settings', 'public');

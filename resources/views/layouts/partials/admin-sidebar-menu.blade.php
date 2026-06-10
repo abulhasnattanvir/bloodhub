@@ -9,14 +9,18 @@
     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.donors.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
     <i class="fas fa-users w-5"></i> Donors
 </a>
-<a href="{{ route('admin.members.index') }}"
-    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.members.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-    <i class="fas fa-user-friends w-5"></i> Members
-</a>
-<a href="{{ route('admin.council.index') }}"
-    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.council.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-    <i class="fas fa-user-tie w-5"></i> Council
-</a>
+@can('member.view')
+    <a href="{{ route('admin.members.index') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.members.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fas fa-user-friends w-5"></i> Members
+    </a>
+@endcan
+@can('council.view')
+    <a href="{{ route('admin.council.index') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.council.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fas fa-user-tie w-5"></i> Council
+    </a>
+@endcan
 @can('donation.view')
     <a href="{{ route('admin.donations.index') }}"
         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.donations.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
@@ -27,14 +31,18 @@
     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.blood-groups.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
     <i class="fas fa-tint w-5"></i> Blood Groups
 </a>
-<a href="{{ route('admin.goals.index') }}"
-    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.goals.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-    <i class="fa-solid fa-crosshairs"></i> Goals
-</a>
-<a href="{{ route('admin.activities.index') }}"
-    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.activities.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-    <i class="fa-solid fa-fire"></i> Activities
-</a>
+@can('goal.view')
+    <a href="{{ route('admin.goals.index') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.goals.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fa-solid fa-crosshairs"></i> Goals
+    </a>
+@endcan
+@can('activity.view')
+    <a href="{{ route('admin.activities.index') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.activities.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fa-solid fa-fire"></i> Activities
+    </a>
+@endcan
 @can('finance.view')
     <a href="{{ route('admin.finance.index') }}"
         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.finance.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">

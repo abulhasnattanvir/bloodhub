@@ -143,8 +143,10 @@ Route::prefix('admin')
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         });
             
-        //Blood groups
+        //Donor Groups
         Route::resource('/donors', DonorController::class)->middleware('permission:dashboard.view');
+        
+        //Blood groups
         Route::resource('/blood-groups', BloodGroupController::class)->middleware('permission:dashboard.view');
             
             //Setting
@@ -157,7 +159,6 @@ Route::prefix('admin')
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         
-
         //Page
         Route::middleware(['permission:page.view'])->group(function () {
             Route::get('/pages', [PageController::class, 'index'])->name('pages.index');

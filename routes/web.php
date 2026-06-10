@@ -42,6 +42,7 @@ use App\Http\Controllers\ProfileController as UserProfileController;
 use App\Http\Controllers\SliderController;
 use App\Models\FooterSetting;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\Rules\Can;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,7 +140,7 @@ Route::prefix('admin')
 
         //Dashboard
         Route::middleware(['permission:dashboard.view'])->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         });
         
         //Blood groups
@@ -155,18 +156,22 @@ Route::prefix('admin')
         Route::patch('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
 
         //Page
-        Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
-        Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
-        Route::post('/pages/store', [PageController::class, 'store'])->name('pages.store');
-        Route::get('/pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
-        Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
-        Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+        Route::middleware(['permission:page.view'])->group(function () {
+            Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
+            Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
+            Route::post('/pages/store', [PageController::class, 'store'])->name('pages.store');
+            Route::get('/pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
+            Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
+            Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+        });
 
         //Footer Setting
-        Route::get('/footer/edit', [FooterSettingController::class, 'edit'])->name('footer.edit');
-        Route::put('/footer/update', [FooterSettingController::class, 'update'])->name('footer.update');
-        Route::post('/newsletter/subscribe', [FooterSettingController::class, 'subscribe'])->name('newsletter.subscribe');
-
+        Route::middleware(['permission:footer.edit'])->group(function () {
+            Route::get('/footer/edit', [FooterSettingController::class, 'edit'])->name('footer.edit');
+            Route::put('/footer/update', [FooterSettingController::class, 'update'])->name('footer.update');
+            Route::post('/newsletter/subscribe', [FooterSettingController::class, 'subscribe'])->name('newsletter.subscribe');
+        });
+        
         //Member
         Route::get('/members', [MemberController::class, 'index'])->name('members.index');
         Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
@@ -190,10 +195,12 @@ Route::prefix('admin')
             Route::post('/donations/{id}/reject', [DonationController::class, 'reject'])->name('donations.reject');
             Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
         });
-        
+
         //Menu Setting
-        Route::resource('menus', MenuController::class);
-        Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
+        Route::middleware(['permission:contact.edit'])->group(function () {
+            Route::resource('menus', MenuController::class);
+            Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
+        });
 
         //Goals
         Route::resource('goals', AdminGoalController::class);
@@ -252,10 +259,12 @@ Route::prefix('admin')
             ->except(['show']);
 
         //Roll Management
-        Route::resource('roles', RoleController::class);
-        Route::post('/roles/{role}/permissions',[RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
+        Route::middleware(['permission:role.view'])->group(function () {
+            Route::resource('roles', RoleController::class);
+            Route::post('/roles/{role}/permissions',[RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
+        });
 
-        //User Roll Set
+        //User Permission Set
         Route::get('/usersrole', [UserRoleController::class, 'index'])->name('usersrole.index');
         Route::get('/usersrole/{user}/edit', [UserRoleController::class, 'edit'])->name('usersrole.edit');
         Route::post('/usersrole/{user}/role', [UserRoleController::class, 'assignRole'])->name('usersrole.role.assign');

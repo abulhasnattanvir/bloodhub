@@ -125,30 +125,37 @@
         User Permissions
     </a>
 
-    <a href="{{ route('admin.pages.index') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.pages.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fa-solid fa-pager mr-3"></i>Page
-    </a>
-
-    <a href="{{ route('admin.contact.edit') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.contact.edit') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fa-solid fa-address-book"></i>Contact Settings
-    </a>
+    @can('page.view')
+        <a href="{{ route('admin.pages.index') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.pages.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fa-solid fa-pager mr-3"></i>Page
+        </a>
+    @endcan
+    @can('contact.edit')
+        <a href="{{ route('admin.contact.edit') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.contact.edit') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fa-solid fa-address-book"></i>Contact Settings
+        </a>
+    @endcan
     @can('settings.view')
         <a href="{{ route('admin.settings.index') }}"
             class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.settings.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
             <i class="fas fa-cogs w-5"></i> Site Settings
         </a>
     @endcan
-    <a href="{{ route('admin.footer.edit') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.footer.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fas fa-cog w-5"></i> Footer Settings
-    </a>
-    <a href="{{ route('admin.menus.index') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.menus.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fas fa-bars mr-3"></i>
-        Menu Manager
-    </a>
+    @can('footer.edit')
+        <a href="{{ route('admin.footer.edit') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.footer.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fas fa-cog w-5"></i> Footer Settings
+        </a>
+    @endcan
+    @can('menu.view')
+        <a href="{{ route('admin.menus.index') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.menus.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fas fa-bars mr-3"></i>
+            Menu Manager
+        </a>
+    @endcan
     @can('slider.view')
         <a href="{{ route('admin.sliders.index') }}"
             class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.sliders.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">

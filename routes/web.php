@@ -142,18 +142,21 @@ Route::prefix('admin')
         Route::middleware(['permission:dashboard.view'])->group(function () {
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         });
-        
+            
         //Blood groups
         Route::resource('/donors', DonorController::class)->middleware('permission:dashboard.view');
         Route::resource('/blood-groups', BloodGroupController::class)->middleware('permission:dashboard.view');
+            
+            //Setting
+        Route::middleware(['permission:settings.view'])->group(function () {
+            Route::get('/settings', [SettingController::class, 'index'])->name('settings.index')->middleware('permission:dashboard.view');
+            Route::post('/settings', [SettingController::class, 'update'])->name('settings.update')->middleware('permission:dashboard.view');
+        });
 
-        //Setting
-        Route::get('/settings', [SettingController::class, 'index'])->name('settings.index')->middleware('permission:dashboard.view');
-        Route::post('/settings', [SettingController::class, 'update'])->name('settings.update')->middleware('permission:dashboard.view');
-    
         //Admin profile routes
-        Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        
 
         //Page
         Route::middleware(['permission:page.view'])->group(function () {
@@ -171,22 +174,26 @@ Route::prefix('admin')
             Route::put('/footer/update', [FooterSettingController::class, 'update'])->name('footer.update');
             Route::post('/newsletter/subscribe', [FooterSettingController::class, 'subscribe'])->name('newsletter.subscribe');
         });
-        
+
         //Member
-        Route::get('/members', [MemberController::class, 'index'])->name('members.index');
-        Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
-        Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
-        Route::post('/members/{id}/approve', [MemberController::class, 'approve'])->name('members.approve');
-        Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
-        Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
+        Route::middleware(['permission:member.view'])->group(function () {
+            Route::get('/members', [MemberController::class, 'index'])->name('members.index');
+            Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
+            Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
+            Route::post('/members/{id}/approve', [MemberController::class, 'approve'])->name('members.approve');
+            Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
+            Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
+        });
 
         //Council
-        Route::get('/council', [CouncilController::class, 'index'])->name('council.index');
-        Route::get('/council/create', [CouncilController::class, 'create'])->name('council.create');
-        Route::post('/council', [CouncilController::class, 'store'])->name('council.store');
-        Route::get('/council/{id}/edit', [CouncilController::class, 'edit'])->name('council.edit');
-        Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
-        Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
+        Route::middleware(['permission:council.view'])->group(function () {
+            Route::get('/council', [CouncilController::class, 'index'])->name('council.index');
+            Route::get('/council/create', [CouncilController::class, 'create'])->name('council.create');
+            Route::post('/council', [CouncilController::class, 'store'])->name('council.store');
+            Route::get('/council/{id}/edit', [CouncilController::class, 'edit'])->name('council.edit');
+            Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
+            Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
+        });
 
         //Donation Payment 
         Route::middleware(['permission:donation.view'])->group(function () {
@@ -197,66 +204,90 @@ Route::prefix('admin')
         });
 
         //Menu Setting
-        Route::middleware(['permission:contact.edit'])->group(function () {
+        Route::middleware(['permission:menu.view'])->group(function () {
             Route::resource('menus', MenuController::class);
             Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
         });
 
         //Goals
-        Route::resource('goals', AdminGoalController::class);
+        Route::middleware(['permission:goal.view'])->group(function () {
+            Route::resource('goals', AdminGoalController::class);
+        });
 
         //activaities
-        Route::resource('activities', AdminActivityController::class);
+        Route::middleware(['permission:activity.view'])->group(function () {
+            Route::resource('activities', AdminActivityController::class);
+        });
 
         //Faq
-        Route::resource('faqs', FaqController::class);
+        Route::middleware(['permission:faq.view'])->group(function () {
+            Route::resource('faqs', FaqController::class);
+        });
 
         //Contact settings
-        Route::get('/contact/edit', [ContactSettingController::class, 'edit'])->name('contact.edit');
-        Route::put('/contact/update', [ContactSettingController::class, 'update'])->name('contact.update');
+        Route::middleware(['permission:contact.edit'])->group(function () {
+            Route::get('/contact/edit', [ContactSettingController::class, 'edit'])->name('contact.edit');
+            Route::put('/contact/update', [ContactSettingController::class, 'update'])->name('contact.update');
+        });
 
         //Messages
-        Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
-        Route::get('/messages/{id}', [ContactMessageController::class, 'show'])->name('messages.show');
-        Route::patch('/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.mark-read');
-        Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
+        Route::middleware(['permission:message.view'])->group(function () {
+            Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
+            Route::get('/messages/{id}', [ContactMessageController::class, 'show'])->name('messages.show');
+            Route::patch('/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.mark-read');
+            Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
+        });
 
         //Finance
-        Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index')->middleware('role:Admin|Manager');
-        Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid')->middleware('role:Admin|Manager');
-        Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show')->middleware('role:Admin|Manager');
-        Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store')->middleware('role:Admin|Manager');
+        Route::middleware(['permission:finance.view'])->group(function () {
+            Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index')->middleware('role:Admin|Manager');
+            Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid')->middleware('role:Admin|Manager');
+            Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show')->middleware('role:Admin|Manager');
+            Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store')->middleware('role:Admin|Manager');
+        });
 
         //Fees
-        Route::resource('fees',FeeStructureController::class);
-
+        Route::middleware(['permission:fee.view'])->group(function () {
+            Route::resource('fees',FeeStructureController::class);
+        });
+        
         //gallery
-        Route::resource('gallery', GalleryController::class)->names('gallery')->middleware('permission:dashboard.view');
+        Route::middleware(['permission:gallery.view'])->group(function () {
+            Route::resource('gallery', GalleryController::class)->names('gallery')->middleware('permission:dashboard.view');
+        });
 
         //green and video section
-        Route::resource('green', GreenInitiativeController::class)
-            ->parameters([
-                'green' => 'greenInitiative'
-            ]);
-        Route::resource('videos', VideoController::class);
+        Route::middleware(['permission:green.view'])->group(function () {
+            Route::resource('green', GreenInitiativeController::class)
+                ->parameters([
+                    'green' => 'greenInitiative'
+                ]);
+        });
 
+        Route::middleware(['permission:video.view'])->group(function () {
+            Route::resource('videos', VideoController::class);
+        });
+        
         //Blog
-        Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index')->middleware('permission:dashboard.view');
-        Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
-        Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
-        Route::get('/blog/{post}/edit', [BlogController::class, 'edit'])->name('blog.edit');
-        Route::put('/blog/{post}', [BlogController::class, 'update'])->name('blog.update');
-        Route::delete('/blog/{post}', [BlogController::class, 'destroy'])->name('blog.destroy');
+        Route::middleware(['permission:blog.view'])->group(function () {
+            
+            Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index')->middleware('permission:dashboard.view');
+            Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
+            Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
+            Route::get('/blog/{post}/edit', [BlogController::class, 'edit'])->name('blog.edit');
+            Route::put('/blog/{post}', [BlogController::class, 'update'])->name('blog.update');
+            Route::delete('/blog/{post}', [BlogController::class, 'destroy'])->name('blog.destroy');
 
-        //Blog Category
-        Route::resource('blog/categories', BlogCategoryController::class)
-            ->names('blog.categories')
-            ->except(['show']);
+            //Blog Category
+            Route::resource('blog/categories', BlogCategoryController::class)
+                ->names('blog.categories')
+                ->except(['show']);
 
-        // Admin Tag Routes
-        Route::resource('blog/tags', BlogTagController::class)
+            // Admin Tag Routes
+            Route::resource('blog/tags', BlogTagController::class)
             ->names('blog.tags')
             ->except(['show']);
+        });
 
         //User Control
         Route::middleware(['permission:users.view'])->group(function () {

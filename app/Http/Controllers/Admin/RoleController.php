@@ -13,13 +13,13 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::with('permissions')->get();
-        return view('admin.roles.index', compact('roles'));
+        return view('admin.usermodule.index', compact('roles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
-        return view('admin.roles.create', compact('permissions'));
+        return view('admin.usermodule.create', compact('permissions'));
     }
 
     public function store(Request $request)
@@ -32,16 +32,17 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->permissions ?? []);
 
-        return redirect()->route('admin.roles.index')
+        return redirect()->route('admin.usermodule.index')
             ->with('success', 'Role created successfully');
     }
 
     public function edit(Role $role)
     {
+        // dd($role);
         $permissions = Permission::orderBy('name')->get();
         $rolePermissions = $role->permissions->pluck('name')->toArray();
 
-        return view('admin.roles.edit', compact('role', 'permissions', 'rolePermissions'));
+        return view('admin.usermodule.edit', compact('role', 'permissions', 'rolePermissions'));
     }
 
     public function update(Request $request, Role $role)
@@ -54,7 +55,7 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->permissions ?? []);
 
-        return redirect()->route('admin.roles.index')
+        return redirect()->route('admin.usermodule.index')
             ->with('success', 'Role updated successfully');
     }
 
@@ -62,7 +63,7 @@ class RoleController extends Controller
     {
         $role->delete();
 
-        return redirect()->route('admin.roles.index')
+        return redirect()->route('admin.usermodule.index')
             ->with('success', 'Role deleted successfully');
     }
 
@@ -81,48 +82,4 @@ class RoleController extends Controller
             'message' => 'Permissions updated successfully'
         ]);
     }
-
-
-
-
-
-    // public function index()
-    // {
-    //     $roles = Role::with('permissions')->get();
-
-    //     return view('admin.roles.index', compact('roles'));
-    // }
-
-    // public function edit(Role $role)
-    // {
-    //     $permissions = Permission::orderBy('name')->get();
-
-    //     $rolePermissions = $role->permissions
-    //         ->pluck('name')
-    //         ->toArray();
-
-    //     return view(
-    //         'admin.roles.edit',
-    //         compact(
-    //             'role',
-    //             'permissions',
-    //             'rolePermissions'
-    //         )
-    //     );
-    // }
-    
-    // public function syncPermissions(Request $request, Role $role)
-    // {
-    //     $request->validate([
-    //         'permissions' => 'nullable|array',
-    //         'permissions.*' => 'exists:permissions,name',
-    //     ]);
-
-    //     $role->syncPermissions($request->permissions ?? []);
-
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'message' => 'Permissions updated successfully',
-    //     ]);
-    // }
 }

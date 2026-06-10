@@ -105,25 +105,31 @@
 
 <div class="pt-6 mt-6 border-t">
     <!-- User Management -->
-    <a href="{{ route('admin.users.index') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.users.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fa-solid fa-users mr-3"></i>
-        User Management
-    </a>
+    @can('users.view')
+        <a href="{{ route('admin.users.index') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.users.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fa-solid fa-users mr-3"></i>
+            User Management
+        </a>
+    @endcan
 
     <!-- Role Assignment -->
-    <a href="{{ route('admin.usersrole.index') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.usersrole.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fa-solid fa-user-tag mr-3"></i>
-        Role Assignment
-    </a>
+    @can('userrole.index')
+        <a href="{{ route('admin.userrole.index') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.userrole.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fa-solid fa-user-tag mr-3"></i>
+            Role Assignment
+        </a>
+    @endcan
 
-    <!-- Roles & Permissions -->
-    <a href="{{ route('admin.roles.index') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.roles.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fa-solid fa-shield-halved mr-3"></i>
-        User Permissions
-    </a>
+    <!-- User Modual Set -->
+    @can('usermodule.view')
+        <a href="{{ route('admin.usermodule.index') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.usermodule.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fa-solid fa-shield-halved mr-3"></i>
+            User Modual
+        </a>
+    @endcan
 
     @can('page.view')
         <a href="{{ route('admin.pages.index') }}"

@@ -71,7 +71,7 @@
                                 </td>
 
                                 <td class="px-6 py-5 whitespace-nowrap text-right">
-                                    <a href="{{ route('admin.usersrole.edit', $user) }}"
+                                    <a href="{{ route('admin.userrole.edit', $user) }}"
                                         class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-sm">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-2" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">

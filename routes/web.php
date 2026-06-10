@@ -258,19 +258,26 @@ Route::prefix('admin')
             ->names('blog.tags')
             ->except(['show']);
 
-        //Roll Management
-        Route::middleware(['permission:role.view'])->group(function () {
-            Route::resource('roles', RoleController::class);
-            Route::post('/roles/{role}/permissions',[RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
+        //User Control
+        Route::middleware(['permission:users.view'])->group(function () {
+            Route::resource('users', UserController::class);
         });
 
-        //User Permission Set
-        Route::get('/usersrole', [UserRoleController::class, 'index'])->name('usersrole.index');
-        Route::get('/usersrole/{user}/edit', [UserRoleController::class, 'edit'])->name('usersrole.edit');
-        Route::post('/usersrole/{user}/role', [UserRoleController::class, 'assignRole'])->name('usersrole.role.assign');
+        //User Role Setup
+        Route::middleware(['permission:userrole.index'])->group(function () {
+            Route::get('/userrole', [UserRoleController::class, 'index'])->name('userrole.index');
+            Route::get('/userrole/{user}/edit', [UserRoleController::class, 'edit'])->name('userrole.edit');
+            Route::post('/userrole/{user}/role', [UserRoleController::class, 'assignRole'])->name('userrole.role.assign');
+        });
 
-        //User Control
-        Route::resource('users', UserController::class);
+        //User Module Assignment
+        Route::middleware(['permission:usermodule.view'])->group(function () {
+            Route::resource('usermodule', RoleController::class)
+                ->parameters([
+                    'usermodule' => 'role'
+                ]);
+            Route::post('/usermodule/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('usermodule.permissions.sync');
+        });
 
 });
 

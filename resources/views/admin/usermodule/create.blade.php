@@ -11,7 +11,7 @@
                     <h1 class="text-3xl font-bold text-gray-900">Create New Role</h1>
                     <p class="text-gray-600 mt-1">Define a new role and assign permissions</p>
                 </div>
-                <a href="{{ route('admin.roles.index') }}"
+                <a href="{{ route('admin.usermodule.index') }}"
                     class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors">
                     ← Back to Roles
                 </a>
@@ -20,7 +20,7 @@
             <!-- Form Card -->
             <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
 
-                <form method="POST" action="{{ route('admin.roles.store') }}">
+                <form method="POST" action="{{ route('admin.usermodule.store') }}">
                     @csrf
 
                     <div class="p-8">
@@ -76,7 +76,7 @@
                             Create Role
                         </button>
 
-                        <a href="{{ route('admin.roles.index') }}"
+                        <a href="{{ route('admin.usermodule.index') }}"
                             class="flex-1 text-center border border-gray-300 hover:bg-gray-50 font-semibold py-4 px-8 rounded-2xl transition-all">
                             Cancel
                         </a>

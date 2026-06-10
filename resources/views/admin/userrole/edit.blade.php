@@ -11,7 +11,7 @@
                     <h1 class="text-3xl font-bold text-gray-900">Assign Role</h1>
                     <p class="text-gray-600 mt-1">Update role for this user</p>
                 </div>
-                <a href="{{ route('admin.usersrole.index') }}"
+                <a href="{{ route('admin.userrole.index') }}"
                     class="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -82,7 +82,7 @@
                                 Update Role
                             </button>
 
-                            <a href="{{ route('admin.usersrole.index') }}"
+                            <a href="{{ route('admin.userrole.index') }}"
                                 class="flex-1 text-center border border-gray-300 hover:bg-gray-50 font-semibold py-4 px-6 rounded-2xl transition-all text-lg">
                                 Cancel
                             </a>
@@ -115,7 +115,7 @@
                 </svg>
             `;
 
-            fetch("{{ route('admin.usersrole.role.assign', $user->id) }}", {
+            fetch("{{ route('admin.userrole.role.assign', $user->id) }}", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

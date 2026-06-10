@@ -138,12 +138,23 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'blog-tag.edit']);
         Permission::create(['name' => 'blog-tag.delete']);
 
-        // Role & Permission Management
-        Permission::create(['name' => 'role.view']);
-        Permission::create(['name' => 'role.create']);
-        Permission::create(['name' => 'role.edit']);
-        Permission::create(['name' => 'role.delete']);
-        Permission::create(['name' => 'role.permission-sync']);
+        //User Modual
+        Permission::create(['name' => 'usermodule.view']);
+        Permission::create(['name' => 'usermodule.create']);
+        Permission::create(['name' => 'usermodule.edit']);
+        Permission::create(['name' => 'usermodule.delete']);
+        Permission::create(['name' => 'usermodule.permission-sync']);
+
+        // Role Management
+        Permission::create(['name' => 'userrole.index']);
+        Permission::create(['name' => 'userrole.edit']);
+        Permission::create(['name' => 'userrole.role.assign']);
+
+        //User
+        Permission::create(['name' => 'users.view']);
+        Permission::create(['name' => 'users.create']);
+        Permission::create(['name' => 'users.edit']);
+        Permission::create(['name' => 'users.delete']);
 
         // ==================== ROLES ====================
 

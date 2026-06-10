@@ -13,7 +13,7 @@ class UserRoleController extends Controller
     {
         $users = User::with('roles')->latest()->get();
 
-        return view('admin.usersrole.index', compact('users'));
+        return view('admin.userrole.index', compact('users'));
     }
 
     public function edit(User $user)
@@ -21,7 +21,7 @@ class UserRoleController extends Controller
         $roles = Role::all();
         $userRole = $user->roles->pluck('name')->first(); // single role system
 
-        return view('admin.usersrole.edit', compact('user', 'roles', 'userRole'));
+        return view('admin.userrole.edit', compact('user', 'roles', 'userRole'));
     }
 
     public function assignRole(Request $request, User $user)

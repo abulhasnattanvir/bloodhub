@@ -11,7 +11,7 @@
                 <p class="text-gray-600 mt-1">Create and manage user roles and their permissions</p>
             </div>
 
-            <a href="{{ route('admin.roles.create') }}"
+            <a href="{{ route('admin.usermodule.create') }}"
                 class="btn btn-primary flex items-center gap-2 px-5 py-3 rounded-xl shadow-sm hover:shadow-md transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -65,7 +65,7 @@
                                 </td>
 
                                 <td class="px-6 py-5 text-center whitespace-nowrap">
-                                    <a href="{{ route('admin.roles.edit', $role) }}"
+                                    <a href="{{ route('admin.usermodule.edit', $role) }}"
                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-amber-600 hover:text-amber-700 hover:bg-amber-50 rounded-xl transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">

@@ -178,7 +178,7 @@
                     </a>
 
                     <!-- Role Assignment -->
-                    <a href="{{ route('admin.usersrole.index') }}"
+                    <a href="{{ route('admin.usermodule.index') }}"
                         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.usersrole.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                         <i class="fa-solid fa-user-tag mr-3"></i>
                         Role Assignment

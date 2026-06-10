@@ -96,10 +96,12 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.activities.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-fire"></i> Activities
                 </a>
-                <a href="{{ route('admin.finance.index') }}"
-                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.finance.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-dollar-sign"></i> Finance
-                </a>
+                @can('finance.view')
+                    <a href="{{ route('admin.finance.index') }}"
+                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.finance.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                        <i class="fa-solid fa-dollar-sign"></i> Finance
+                    </a>
+                @endcan
                 <a href="{{ route('admin.fees.index') }}"
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.fees.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-money-bill"></i> Fee Structures
@@ -116,16 +118,18 @@
                     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.videos.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                     <i class="fa-solid fa-photo-film"></i> Videos
                 </a>
-                <a href="{{ route('admin.green.index') }}"
-                    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.green.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                    <i class="fa-solid fa-leaf"></i> Green
-                </a>
+                @can('gallery.view')
+                    <a href="{{ route('admin.green.index') }}"
+                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.green.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                        <i class="fa-solid fa-leaf"></i> Green
+                    </a>
+                @endcan
 
                 {{-- ================= BLOG WITH SUBMENU ================= --}}
                 <div x-data="{ open: {{ request()->routeIs('admin.blog.*', 'admin.blog.categories.*', 'admin.blog.tags.*') ? 'true' : 'false' }}" class="space-y-1">
                     <button @click="open = !open"
                         class="w-full flex items-center justify-between gap-3 px-5 py-3 rounded-2xl text-sm hover:bg-gray-100 transition-all"
-                        :class="{ 'bg-red-600 text-white': open }">
+                        :class="{ 'bg-green-200 text-black': open }">
                         <div class="flex items-center gap-3">
                             <i class="fa-solid fa-blog w-5"></i>
                             Blog
@@ -164,6 +168,21 @@
 
 
                 <div class="pt-6 mt-6 border-t">
+                    <a href="{{ route('admin.users.index') }}"
+                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.users.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                        <i class="fa-solid fa-pager mr-3"></i>User Management
+                    </a>
+
+                    <a href="{{ route('admin.roles.index') }}"
+                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.roles.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                        <i class="fa-solid fa-pager mr-3"></i>Roles Management
+                    </a>
+
+                    <a href="{{ route('admin.usersrole.index') }}"
+                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.usersrole.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                        <i class="fa-solid fa-pager mr-3"></i>Role Assignment
+                    </a>
+
                     <a href="{{ route('admin.pages.index') }}"
                         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.pages.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                         <i class="fa-solid fa-pager mr-3"></i>Page
@@ -173,11 +192,12 @@
                         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.contact.edit') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                         <i class="fa-solid fa-address-book"></i>Contact Settings
                     </a>
-
-                    <a href="{{ route('admin.settings.index') }}"
-                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.settings.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                        <i class="fas fa-cogs w-5"></i> Site Settings
-                    </a>
+                    @can('settings.view')
+                        <a href="{{ route('admin.settings.index') }}"
+                            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.settings.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                            <i class="fas fa-cogs w-5"></i> Site Settings
+                        </a>
+                    @endcan
                     <a href="{{ route('admin.footer.edit') }}"
                         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.footer.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
                         <i class="fas fa-cog w-5"></i> Footer Settings
@@ -187,10 +207,12 @@
                         <i class="fas fa-bars mr-3"></i>
                         Menu Manager
                     </a>
-                    <a href="{{ route('admin.sliders.index') }}"
-                        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.sliders.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-                        <i class="fas fa-sliders-h mr-3"></i> Sliders
-                    </a>
+                    @can('sliders.view')
+                        <a href="{{ route('admin.sliders.index') }}"
+                            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.sliders.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+                            <i class="fas fa-sliders-h mr-3"></i> Sliders
+                        </a>
+                    @endcan
                 </div>
             </nav>
 
@@ -224,12 +246,11 @@
                         </button>
                     </form>
                 </div>
+            </div>
         </aside>
 
         {{--  ================= MAIN AREA =================  --}}
         <div class="flex-1 flex flex-col overflow-hidden">
-
-            <!-- Top Header -->
             <!-- Top Header -->
             <header class="bg-white border-b shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-50">
                 <div class="flex items-center gap-4">

@@ -100,8 +100,8 @@
                 <a href="{{ route('page.show', 'terms-conditions') }}">Terms</a>
                 <a href="{{ route('page.show', 'support') }}">Support</a>
             </div>
-            <p>Developed & Maintained <a style="color:cadetblue;" href="{{ $footer->developer_url }}"
-                    target="_blank">{{ $footer->developer_info }}</a></p>
+            <p>Developed & Maintained <a style="color:cadetblue;" href="{{ isset($footer->developer_url) }}"
+                    target="_blank">{{ isset($footer->developer_url) }}</a></p>
         </div>
     </div>
 </footer>

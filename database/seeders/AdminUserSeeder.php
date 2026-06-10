@@ -13,14 +13,40 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user if it doesn't exist
+        // ADMIN
         if (!User::where('email', 'admin@example.com')->exists()) {
-            User::create([
+            $admin = User::create([
                 'name' => 'Administrator',
                 'email' => 'admin@example.com',
-                'password' => Hash::make('admin123'), // Change this in production!
+                'password' => Hash::make('admin123'),
                 'is_admin' => true,
             ]);
+
+            $admin->assignRole('Admin');
+        }
+
+        // MANAGER
+        if (!User::where('email', 'manager@example.com')->exists()) {
+            $manager = User::create([
+                'name' => 'Manager User',
+                'email' => 'manager@example.com',
+                'password' => Hash::make('manager123'),
+                'is_admin' => false,
+            ]);
+
+            $manager->assignRole('Manager');
+        }
+
+        // EDITOR
+        if (!User::where('email', 'editor@example.com')->exists()) {
+            $editor = User::create([
+                'name' => 'Editor User',
+                'email' => 'editor@example.com',
+                'password' => Hash::make('editor123'),
+                'is_admin' => false,
+            ]);
+
+            $editor->assignRole('Editor');
         }
     }
 }

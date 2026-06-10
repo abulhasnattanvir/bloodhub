@@ -27,6 +27,10 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\GreenInitiativeController;
 use App\Http\Controllers\Admin\MemberFinanceController;
 use App\Http\Controllers\Admin\VideoController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UserRoleController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogTagController;
@@ -118,26 +122,32 @@ use Illuminate\Support\Facades\Route;
 
 
 //Admin Routes
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['auth'])
+    ->group(function () {
 
         //Slider
-        Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
-        Route::get('/sliders/create', [SliderController::class, 'create'])->name('sliders.create');
-        Route::post('/sliders', [SliderController::class, 'store'])->name('sliders.store');
-        Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('sliders.edit');
-        Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
-        Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
+        Route::middleware(['permission:slider.view'])->group(function () {
+            Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
+            Route::get('/sliders/create', [SliderController::class, 'create'])->name('sliders.create');
+            Route::post('/sliders', [SliderController::class, 'store'])->name('sliders.store');
+            Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('sliders.edit');
+            Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
+            Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
+        });
 
         //Dashboard
+        // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('role:Admin|Manager');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         
         //Blood groups
-        Route::resource('/donors', DonorController::class);
-        Route::resource('/blood-groups', BloodGroupController::class);
+        Route::resource('/donors', DonorController::class)->middleware('permission:dashboard.view');
+        Route::resource('/blood-groups', BloodGroupController::class)->middleware('permission:dashboard.view');
 
         //Setting
-        Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-        Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings.index')->middleware('permission:dashboard.view');
+        Route::post('/settings', [SettingController::class, 'update'])->name('settings.update')->middleware('permission:dashboard.view');
     
         //Admin profile routes
         Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
@@ -202,17 +212,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
 
         //Finance
-        Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index');
-        Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid');
-        Route::get('/finance',[MemberFinanceController::class, 'index'])->name('finance.index');
-        Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show');
-        Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store');
+        Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index')->middleware('role:Admin|Manager');
+        Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid')->middleware('role:Admin|Manager');
+        Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show')->middleware('role:Admin|Manager');
+        Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store')->middleware('role:Admin|Manager');
 
         //Fees
         Route::resource('fees',FeeStructureController::class);
 
         //gallery
-        Route::resource('gallery', GalleryController::class)->names('gallery');
+        Route::resource('gallery', GalleryController::class)->names('gallery')->middleware('permission:dashboard.view');
 
         //green and video section
         Route::resource('green', GreenInitiativeController::class)
@@ -222,7 +231,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::resource('videos', VideoController::class);
 
         //Blog
-        Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index');
+        Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index')->middleware('permission:dashboard.view');
         Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
         Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
         Route::get('/blog/{post}/edit', [BlogController::class, 'edit'])->name('blog.edit');
@@ -233,14 +242,24 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::resource('blog/categories', BlogCategoryController::class)
             ->names('blog.categories')
             ->except(['show']);
-        Route::resource('blog/categories', BlogCategoryController::class)
-            ->names('blog.categories')
-            ->except(['show']);
 
         // Admin Tag Routes
         Route::resource('blog/tags', BlogTagController::class)
             ->names('blog.tags')
             ->except(['show']);
-    });
+
+        //Roll Management
+        Route::resource('roles', RoleController::class);
+        Route::post('/roles/{role}/permissions',[RoleController::class, 'syncPermissions'])->name('roles.permissions.sync');
+
+        //User Roll Set
+        Route::get('/usersrole', [UserRoleController::class, 'index'])->name('usersrole.index');
+        Route::get('/usersrole/{user}/edit', [UserRoleController::class, 'edit'])->name('usersrole.edit');
+        Route::post('/usersrole/{user}/role', [UserRoleController::class, 'assignRole'])->name('usersrole.role.assign');
+
+        //User Control
+        Route::resource('users', UserController::class);
+
+});
 
 require __DIR__.'/auth.php';

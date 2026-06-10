@@ -11,16 +11,35 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    // ->withMiddleware(function (Middleware $middleware): void {
+    //     $middleware->alias([
+    //         'admin' => \App\Http\Middleware\AdminMiddleware::class,
+    //     ]);
+
+    //     // ✅ ADD THIS (GLOBAL WEB MIDDLEWARE)
+    //     $middleware->web(append: [
+    //         \App\Http\Middleware\SetLocale::class,
+    //     ]);
+    // })
+
     ->withMiddleware(function (Middleware $middleware): void {
+
+        // Admin middleware
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+
+        // Spatie middleware (FIXED)
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
 
-        // ✅ ADD THIS (GLOBAL WEB MIDDLEWARE)
+        // Global web middleware
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);
     })
+    
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

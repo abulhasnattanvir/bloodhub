@@ -138,8 +138,9 @@ Route::prefix('admin')
         });
 
         //Dashboard
-        // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('role:Admin|Manager');
+        Route::middleware(['permission:dashboard.view'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        });
         
         //Blood groups
         Route::resource('/donors', DonorController::class)->middleware('permission:dashboard.view');
@@ -182,12 +183,14 @@ Route::prefix('admin')
         Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
         Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
 
-        //Manual Payment
-        Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
-        Route::post('/donations/{id}/approve', [DonationController::class, 'approve'])->name('donations.approve');
-        Route::post('/donations/{id}/reject', [DonationController::class, 'reject'])->name('donations.reject');
-        Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
-
+        //Donation Payment 
+        Route::middleware(['permission:donation.view'])->group(function () {
+            Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
+            Route::post('/donations/{id}/approve', [DonationController::class, 'approve'])->name('donations.approve');
+            Route::post('/donations/{id}/reject', [DonationController::class, 'reject'])->name('donations.reject');
+            Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
+        });
+        
         //Menu Setting
         Route::resource('menus', MenuController::class);
         Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');

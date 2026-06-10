@@ -1,7 +1,10 @@
-<a href="{{ route('admin.dashboard') }}"
-    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-    <i class="fas fa-home w-5"></i> Dashboard
-</a>
+@can('dashboard.view')
+    <a href="{{ route('admin.dashboard') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fas fa-home w-5"></i> Dashboard
+    </a>
+@endcan
+
 <a href="{{ route('admin.donors.index') }}"
     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.donors.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
     <i class="fas fa-users w-5"></i> Donors
@@ -14,10 +17,12 @@
     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.council.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
     <i class="fas fa-user-tie w-5"></i> Council
 </a>
-<a href="{{ route('admin.donations.index') }}"
-    class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.donations.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-    <i class="fas fa-hand-holding-dollar w-5"></i> Donations
-</a>
+@can('donation.view')
+    <a href="{{ route('admin.donations.index') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.donations.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fas fa-hand-holding-dollar w-5"></i> Donations
+    </a>
+@endcan
 <a href="{{ route('admin.blood-groups.index') }}"
     class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.blood-groups.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
     <i class="fas fa-tint w-5"></i> Blood Groups
@@ -144,7 +149,7 @@
         <i class="fas fa-bars mr-3"></i>
         Menu Manager
     </a>
-    @can('sliders.view')
+    @can('slider.view')
         <a href="{{ route('admin.sliders.index') }}"
             class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.sliders.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
             <i class="fas fa-sliders-h mr-3"></i> Sliders

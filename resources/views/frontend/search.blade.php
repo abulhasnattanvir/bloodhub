@@ -1,18 +1,16 @@
 @extends('layouts.frontend')
 
 @section('content')
-    <!-- =========================
-                                SEARCH HERO DASHBOARD
-                            ========================= -->
+    <!-- ========================= SEARCH HERO DASHBOARD ========================= -->
     <section class="bg-gradient-to-r from-red-50 to-white py-10">
         <div class="max-w-7xl mx-auto px-4">
 
             <h1 class="text-3xl font-bold text-gray-800 mb-2">
-                {{ __('app.search_donors') }}
+                রক্তদাতা খুঁজুন
             </h1>
 
             <p class="text-gray-500 mb-6">
-                Find blood donors instantly by filters or smart search
+                ফিল্টার বা স্মার্ট সার্চের মাধ্যমে দ্রুত রক্তদাতা খুঁজুন।
             </p>
 
             <!-- QUICK BLOOD FILTER BUTTONS -->
@@ -54,9 +52,7 @@
         </div>
     </section>
 
-    <!-- =========================
-                                RESULTS SECTION (CARDS)
-                            ========================= -->
+    <!-- ========================= RESULTS SECTION (CARDS) ========================= -->
     <section class="py-10">
         <div class="max-w-7xl mx-auto px-4">
 

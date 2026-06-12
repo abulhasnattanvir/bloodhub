@@ -107,7 +107,7 @@
             <p class="text-red-100 mb-8 text-lg">আপনিও এই মানব সেবামূলক যাত্রায় অংশগ্রহণ করুন</p>
 
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="{{ route('register') }}"
+                <a href="{{ route('member.create') }}"
                     class="px-10 py-4 bg-white text-red-600 font-bold rounded-2xl hover:bg-gray-100 transition">
                     সদস্য হোন
                 </a>

@@ -31,6 +31,8 @@ class MemberController extends Controller
         // VALIDATION
         $request->validate([
             'name' => 'required',
+            'faname' => 'required|string|max:255',
+            'age' => 'required|integer|min:1|max:150',
             'phone' => 'required|unique:members,phone|max:11|min:11',
             'gender' => 'required|in:male,female,other',
             'profession' => 'nullable|string|max:100',
@@ -49,6 +51,8 @@ class MemberController extends Controller
         // SAVE MEMBER
         Member::create([
             'name' => $request->name,
+            'faname' => $request->faname,
+            'age' => $request->age,
             'phone' => $request->phone,
             'gender' => $request->gender,
             'profession' => $request->profession,
@@ -169,6 +173,8 @@ class MemberController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'faname' => 'required|string|max:255',
+            'age' => 'required|integer|min:1|max:150',
             'gender' => 'required|in:male,female,other',
             'profession' => 'nullable|string|max:100',
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -192,6 +198,8 @@ class MemberController extends Controller
 
         $member->update([
             'name' => $request->name,
+            'faname' => $request->faname,
+            'age' => $request->age,
             'email' => $request->email,
             'phone' => $request->phone,
             'gender' => $request->gender,

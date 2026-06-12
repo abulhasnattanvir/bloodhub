@@ -18,7 +18,7 @@
                 </a>
 
                 <p class="text-gray-300 leading-relaxed mb-6">
-                    {{ $footer->about_text ?? 'Default about text...' }}
+                    {{ $footer->about_text ?? 'এখানে ডিফল্ট বিবরণ থাকবে...' }}
                 </p>
 
                 <!-- Social Links -->
@@ -36,7 +36,7 @@
 
             <!-- Quick Links -->
             <div>
-                <h3 class="text-xl font-bold mb-5">Quick Links</h3>
+                <h3 class="text-xl font-bold mb-5">গুরুত্বপূর্ণ লিংকসমূহ</h3>
                 <ul class="space-y-3">
                     @foreach ($footer->quick_links ?? [] as $link)
                         <li>
@@ -51,7 +51,7 @@
 
             <!-- Service Links -->
             <div>
-                <h3 class="text-xl font-bold mb-5">Services</h3>
+                <h3 class="text-xl font-bold mb-5">সেবাসমূহের তালিকা</h3>
                 <ul class="space-y-3">
                     @foreach ($footer->service_links ?? [] as $link)
                         <li>
@@ -67,11 +67,11 @@
             <!-- Newsletter -->
             <div>
                 <h3 class="text-xl font-bold mb-5">
-                    {{ $footer->subscribe_title ?? 'Stay Updated' }}
+                    {{ $footer->subscribe_title ?? 'সর্বশেষ তথ্য জানুন' }}
                 </h3>
 
                 <p class="text-gray-300 mb-5">
-                    {{ $footer->subscribe_text ?? 'Get the latest updates and news from us.' }}
+                    {{ $footer->subscribe_text ?? 'আমাদের কাছ থেকে সর্বশেষ আপডেট ও সংবাদ পান।' }}
                 </p>
 
                 <form action="{{ route('admin.newsletter.subscribe') }}" method="POST" class="space-y-4">
@@ -79,13 +79,13 @@
                     @csrf
 
                     <input type="email" name="email"
-                        placeholder="{{ $footer->subscribe_placeholder ?? 'Enter your email' }}"
+                        placeholder="{{ $footer->subscribe_placeholder ?? 'আপনার ইমেইল লিখুন' }}"
                         class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
                         required>
 
                     <button type="submit"
                         class="w-full bg-red-600 hover:bg-red-700 transition px-4 py-3 rounded-xl font-semibold shadow-lg">
-                        {{ $footer->subscribe_button_text ?? 'Subscribe Now' }}
+                        {{ $footer->subscribe_button_text ?? 'সাবস্ক্রাইব করুন' }}
                     </button>
                 </form>
             </div>
@@ -96,11 +96,11 @@
             <p>© {{ now()->year }} {{ setting('site_name') }}. {{ $footer->copyright_text ?? '' }}</p>
 
             <div class="flex gap-6">
-                <a href="{{ route('page.show', 'privacy-policy') }}">Privacy</a>
-                <a href="{{ route('page.show', 'terms-conditions') }}">Terms</a>
-                <a href="{{ route('page.show', 'support') }}">Support</a>
+                <a href="{{ route('page.show', 'privacy-policy') }}">গোপনীয়তা নীতি</a>
+                <a href="{{ route('page.show', 'terms-conditions') }}">শর্তাবলী</a>
+                <a href="{{ route('page.show', 'support') }}">সহায়তা</a>
             </div>
-            <p>Developed & Maintained <a style="color:cadetblue;" href="{{ isset($footer->developer_url) }}"
+            <p>উন্নয়ন এবং পরিচালনা <a style="color:cadetblue;" href="{{ isset($footer->developer_url) }}"
                     target="_blank">{{ isset($footer->developer_url) }}</a></p>
         </div>
     </div>

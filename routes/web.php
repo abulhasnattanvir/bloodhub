@@ -73,7 +73,6 @@ use Illuminate\Validation\Rules\Can;
         }
         return redirect()->back();
     })->name('lang.switch');
-
     
     //Member
     Route::get('/become-member', [MemberController::class, 'create'])->name('member.create');
@@ -92,7 +91,6 @@ use Illuminate\Validation\Rules\Can;
 
     //Donation contributors
     Route::get('/donation-contributors', [DonationController::class, 'contributors'])->name('donation.contributors');
-
 
     // Frontend Activities (Post Type Style)
     Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
@@ -149,7 +147,7 @@ Route::prefix('admin')
         //Blood groups
         Route::resource('/blood-groups', BloodGroupController::class)->middleware('permission:dashboard.view');
             
-            //Setting
+        //Setting
         Route::middleware(['permission:settings.view'])->group(function () {
             Route::get('/settings', [SettingController::class, 'index'])->name('settings.index')->middleware('permission:dashboard.view');
             Route::post('/settings', [SettingController::class, 'update'])->name('settings.update')->middleware('permission:dashboard.view');

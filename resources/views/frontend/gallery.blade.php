@@ -4,8 +4,8 @@
     <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-14">
-                <span class="inline-block px-5 py-2 bg-red-100 text-red-600 rounded-full font-semibold mb-4">EGSW
-                    Activities</span>
+                <span class="inline-block px-5 py-2 bg-red-100 text-red-600 rounded-full font-semibold mb-4"> ই এস ডব্লিউ
+                    কার্যক্রম</span>
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900">কার্যক্রমের গ্যালারি</h1>
                 <p class="text-gray-600 mt-3">আমাদের বিভিন্ন মানবিক কার্যক্রমের আলোকচিত্র</p>
             </div>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="col-span-full text-center py-12 text-gray-500">No images yet.</p>
+                    <p class="col-span-full text-center py-12 text-gray-500">এখনো কোনো ছবি নেই</p>
                 @endforelse
             </div>
 

@@ -6,10 +6,11 @@
         <!-- Hero Section -->
         <div class="text-center mb-16">
             <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-4 text-gray-900">
-                Our Blog
+                আমাদের ব্লগ
             </h1>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Insights, stories, and expertise to inspire and inform.
+                অনুপ্রেরণামূলক গল্প, তথ্যবহুল লেখা এবং বিশেষজ্ঞদের অভিজ্ঞতা—সব কিছু এখানে পাওয়া যাবে, যা আপনাকে জানাবে এবং
+                অনুপ্রাণিত করবে।
             </p>
         </div>
 
@@ -17,14 +18,14 @@
         <div class="bg-white rounded-3xl shadow-sm border p-6 mb-12">
             <div class="flex flex-col md:flex-row gap-4 items-center">
                 <div class="flex-1 w-full">
-                    <input type="text" id="search-input" placeholder="Search articles..."
+                    <input type="text" id="search-input" placeholder="আর্টিকেল খুঁজুন"
                         class="w-full border border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-2xl px-6 py-4 text-lg">
                 </div>
 
                 <div class="w-full md:w-72">
                     <select id="category-filter"
                         class="w-full border border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-2xl px-6 py-4">
-                        <option value="">All Categories</option>
+                        <option value="">সব ক্যাটাগরি</option>
                         @foreach (App\Models\BlogCategory::all() as $cat)
                             <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                         @endforeach
@@ -85,7 +86,7 @@
 
         <!-- All Posts -->
         <div class="mb-10">
-            <h2 class="text-3xl font-semibold text-gray-900">Latest Articles</h2>
+            <h2 class="text-3xl font-semibold text-gray-900">সর্বশেষ আর্টিকেল</h2>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="posts-grid">

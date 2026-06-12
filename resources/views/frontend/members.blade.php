@@ -8,10 +8,10 @@
             {{-- Header --}}
             <div class="text-center mb-6">
                 <h1 class="text-3xl md:text-4xl font-extrabold text-gray-800">
-                    Become a Blood Member
+                    আমাদের ই এস ডব্লিউ (ESW) সদস্যরা
                 </h1>
                 <p class="text-gray-500 mt-2">
-                    Join our lifesaving community and help save lives ❤️
+                    রক্তদাতা ও স্বেচ্ছাসেবকদের একটি শক্তিশালী নেটওয়ার্ক, যারা যেকোনো জরুরি মুহূর্তে সাহায্যের জন্য প্রস্তুত।
                 </p>
             </div>
 
@@ -28,7 +28,7 @@
                 <div class="bg-red-200 border border-red-400 text-red-800 p-4 mb-5 rounded-xl shadow">
                     ⚠️ {{ $errors->first('spam') }}
                     <div class="text-sm mt-1">
-                        Please wait a few seconds before submitting again.
+                        অনুগ্রহ করে কিছু সেকেন্ড অপেক্ষা করুন, তারপর আবার চেষ্টা করুন।
                     </div>
                 </div>
             @endif
@@ -43,7 +43,7 @@
 
                     {{-- NAME --}}
                     <div>
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Full Name"
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="পূর্ণ নাম"
                             class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
                         @error('name') border-red-500 @else border-gray-200 @enderror">
 
@@ -52,9 +52,31 @@
                         @enderror
                     </div>
 
+                    {{-- NAME --}}
+                    <div>
+                        <input type="text" name="faname" value="{{ old('faname') }}" placeholder="পিতার নাম"
+                            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
+                        @error('faname') border-red-500 @else border-gray-200 @enderror">
+
+                        @error('faname')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- NAME --}}
+                    <div>
+                        <input type="text" name="age" value="{{ old('age') }}" placeholder="বয়স"
+                            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
+                        @error('age') border-red-500 @else border-gray-200 @enderror">
+
+                        @error('age')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     {{-- PHONE --}}
                     <div>
-                        <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Phone Number"
+                        <input type="text" name="phone" value="{{ old('phone') }}" placeholder="ফোন নম্বর"
                             class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
                         @error('phone') border-red-500 @else border-gray-200 @enderror">
 
@@ -64,21 +86,21 @@
                     </div>
                     <div>
                         <select name="gender"
-                            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
-        @error('gender') border-red-500 @else border-gray-200 @enderror">
+                            class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none @error('gender') border-red-500 @else border-gray-200 @enderror">
 
-                            <option value="">Select Gender</option>
+                            <option value="">জেন্ডার নির্বাচন করুন</option>
 
                             <option value="male" {{ old('gender', $member->gender ?? '') == 'male' ? 'selected' : '' }}>
-                                Male
+                                পুরুষ
                             </option>
 
-                            <option value="female" {{ old('gender', $member->gender ?? '') == 'female' ? 'selected' : '' }}>
-                                Female
+                            <option value="female"
+                                {{ old('gender', $member->gender ?? '') == 'female' ? 'selected' : '' }}>
+                                নারী
                             </option>
 
                             <option value="other" {{ old('gender', $member->gender ?? '') == 'other' ? 'selected' : '' }}>
-                                Other
+                                অন্যান্য
                             </option>
 
                         </select>
@@ -94,19 +116,18 @@
                             class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
                         @error('profession') border-red-500 @else border-gray-200 @enderror">
 
-                            <option value="">Select Profession</option>
-
-                            <option value="Student">Student</option>
-                            <option value="Job Holder">Job Holder</option>
-                            <option value="Businessman">Businessman</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Doctor">Doctor</option>
-                            <option value="Engineer">Engineer</option>
-                            <option value="Freelancer">Freelancer</option>
-                            <option value="Government Service">Government Service</option>
-                            <option value="Private Service">Private Service</option>
-                            <option value="Housewife">Housewife</option>
-                            <option value="Other">Other</option>
+                            <option value="">পেশা নির্বাচন করুন</option>
+                            <option value="Student">শিক্ষার্থী</option>
+                            <option value="Job Holder">চাকরিজীবী</option>
+                            <option value="Businessman">ব্যবসায়ী</option>
+                            <option value="Teacher">শিক্ষক</option>
+                            <option value="Doctor">ডাক্তার</option>
+                            <option value="Engineer">প্রকৌশলী</option>
+                            <option value="Freelancer">ফ্রিল্যান্সার</option>
+                            <option value="Government Service">সরকারি চাকরিজীবী</option>
+                            <option value="Private Service">বেসরকারি চাকরিজীবী</option>
+                            <option value="Housewife">গৃহিণী</option>
+                            <option value="Other">অন্যান্য</option>
 
                         </select>
 
@@ -117,7 +138,7 @@
 
                     {{-- EMAIL --}}
                     <div>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email Address"
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="ইমেইল ঠিকানা"
                             class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
                         @error('email') border-red-500 @else border-gray-200 @enderror">
 
@@ -132,7 +153,7 @@
                             class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
                         @error('blood_group') border-red-500 @else border-gray-200 @enderror">
 
-                            <option value="">Select Blood Group</option>
+                            <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
                             @foreach (['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'] as $bg)
                                 <option value="{{ $bg }}" {{ old('blood_group') == $bg ? 'selected' : '' }}>
                                     {{ $bg }}
@@ -147,7 +168,7 @@
 
                     {{-- CITY --}}
                     <div>
-                        <input type="text" name="city" value="{{ old('city') }}" placeholder="City"
+                        <input type="text" name="city" value="{{ old('city') }}" placeholder="শহর"
                             class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
                         @error('city') border-red-500 @else border-gray-200 @enderror">
 
@@ -171,7 +192,7 @@
 
                 {{-- ADDRESS --}}
                 <div>
-                    <textarea name="address" rows="4" placeholder="Full Address"
+                    <textarea name="address" rows="4" placeholder="সম্পূর্ণ ঠিকানা"
                         class="w-full p-3 rounded-xl border focus:ring-2 focus:ring-red-400 outline-none
                     @error('address') border-red-500 @else border-gray-200 @enderror">{{ old('address') }}</textarea>
 
@@ -189,13 +210,13 @@
                 {{-- SUBMIT --}}
                 <button id="submitBtn" type="submit"
                     class="w-full bg-gradient-to-r from-red-600 to-red-500 text-white font-semibold py-3 rounded-xl shadow-lg hover:from-red-700 hover:to-red-600 transition">
-                    Submit Application
+                    আবেদন জমা দিন
                 </button>
 
             </form>
 
             <p class="text-center text-sm text-gray-400 mt-6">
-                Your information will be kept safe and used only for blood donation purposes.
+                আপনার তথ্য সম্পূর্ণ নিরাপদে রাখা হবে এবং শুধুমাত্র রক্তদান সংক্রান্ত উদ্দেশ্যে ব্যবহার করা হবে।
             </p>
 
         </div>

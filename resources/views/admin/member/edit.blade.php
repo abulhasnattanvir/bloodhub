@@ -85,6 +85,24 @@
                             class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400 focus:border-red-400">
                     </div>
 
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Father Name
+                        </label>
+
+                        <input type="text" name="faname" value="{{ old('name', $member->faname) }}"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400 focus:border-red-400">
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 font-medium text-gray-700">
+                            Age
+                        </label>
+
+                        <input type="text" name="age" value="{{ old('age', $member->age) }}"
+                            class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-red-400 focus:border-red-400">
+                    </div>
+
                     {{-- Phone --}}
                     <div>
                         <label class="block mb-2 font-medium text-gray-700">

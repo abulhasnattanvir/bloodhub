@@ -108,7 +108,7 @@
             </div>
         @else
             <div class="text-center py-20 bg-gray-100 rounded-3xl">
-                <h2 class="text-2xl font-bold text-gray-400">No Slider Found</h2>
+                <h2 class="text-2xl font-bold text-gray-400">🎞️ কোনো স্লাইডার পাওয়া যায়নি</h2>
             </div>
         @endif
     </section>

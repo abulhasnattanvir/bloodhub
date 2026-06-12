@@ -3,13 +3,13 @@
 @section('content')
 
     <!-- =========================
-         FILTER SECTION
-    ========================= -->
+             FILTER SECTION
+        ========================= -->
     <section class="py-10 bg-gradient-to-r from-red-50 to-white">
         <div class="max-w-7xl mx-auto px-4">
 
             <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                {{ __('app.donor_list') }}
+                রক্তদাতার তালিকা
             </h2>
 
             <div class="grid md:grid-cols-3 gap-4">
@@ -49,8 +49,8 @@
     </section>
 
     <!-- =========================
-         DESKTOP TABLE
-    ========================= -->
+             DESKTOP TABLE
+        ========================= -->
     <section class="py-10 hidden md:block">
         <div class="max-w-7xl mx-auto px-4">
 
@@ -161,8 +161,8 @@
     </section>
 
     <!-- =========================
-         MOBILE CARD VIEW
-    ========================= -->
+             MOBILE CARD VIEW
+        ========================= -->
     <section class="md:hidden py-6">
         <div class="max-w-7xl mx-auto px-4 space-y-4">
 
@@ -214,8 +214,8 @@
     </section>
 
     <!-- =========================
-         MODAL
-    ========================= -->
+             MODAL
+        ========================= -->
     <div id="donorModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
 
         <div class="bg-white w-full max-w-lg rounded-2xl p-6 relative shadow-2xl">

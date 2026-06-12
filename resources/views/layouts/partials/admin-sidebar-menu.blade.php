@@ -73,7 +73,7 @@
         <i class="fa-solid fa-photo-film"></i> Videos
     </a>
 @endcan
-@can('gallery.view')
+@can('green.view')
     <a href="{{ route('admin.green.index') }}"
         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.green.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
         <i class="fa-solid fa-leaf"></i> Green

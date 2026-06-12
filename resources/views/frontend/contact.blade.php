@@ -93,13 +93,13 @@
             <!-- Heading -->
             <div class="text-center mb-14">
                 <span class="inline-block px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm font-semibold mb-4">
-                    {{ __('app.contact') }}
+                    যোগাযোগ
                 </span>
                 <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
-                    {{ $contact->page_title ?? __('app.contact') }}
+                    {{ $contact->page_title ?? __('যোগাযোগ করুন') }}
                 </h1>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    {{ $contact->page_subtitle ?? __('app.have_questions_text') }}
+                    {{ $contact->page_subtitle ?? __('কোনো প্রশ্ন আছে বা সাহায্যের প্রয়োজন? আমাদের টিম সবসময় ডোনার ও রিসিপিয়েন্টদের সাহায্য করার জন্য প্রস্তুত—যেকোনো সময় আমাদের সাথে যোগাযোগ করতে পারেন।') }}
                 </p>
             </div>
 
@@ -107,14 +107,16 @@
 
                 <!-- Contact Info -->
                 <div class="contact-card p-8">
-                    <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ __('app.get_in_touch') }}</h2>
-                    <p class="text-gray-600 mb-8">{{ $contact->get_in_touch_text ?? __('app.whether_you_are_text') }}</p>
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">যোগাযোগ করুন</h2>
+                    <p class="text-gray-600 mb-8">
+                        {{ $contact->get_in_touch_text ?? __('আপনি যদি একজন রক্তদাতা, রক্তগ্রহণকারী, অথবা শুধুমাত্র তথ্য জানতে চান - যেকোনো প্রয়োজনে যেকোনো সময় আমাদের সাপোর্ট টিমের সাথে যোগাযোগ করতে পারেন।') }}
+                    </p>
 
                     <div class="space-y-5">
                         <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
                             <div class="contact-icon"><i class="fas fa-envelope"></i></div>
                             <div>
-                                <h4 class="font-bold">{{ __('app.email') }}</h4>
+                                <h4 class="font-bold">{{ __('ইমেইল') }}</h4>
                                 <p class="text-gray-600">{{ $contact->email ?? 'tawakkulsoftinfo@gmail.com' }}</p>
                             </div>
                         </div>
@@ -122,7 +124,7 @@
                         <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
                             <div class="contact-icon"><i class="fas fa-phone"></i></div>
                             <div>
-                                <h4 class="font-bold">{{ __('app.phone') }}</h4>
+                                <h4 class="font-bold">{{ __('ফোন') }}</h4>
                                 <p class="text-gray-600">{{ $contact->phone ?? '+880 01972918629' }}</p>
                             </div>
                         </div>
@@ -130,7 +132,7 @@
                         <div class="flex items-start gap-4 p-4 rounded-xl bg-red-50">
                             <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
                             <div>
-                                <h4 class="font-bold">{{ __('app.address') }}</h4>
+                                <h4 class="font-bold">{{ __('ঠিকানা') }}</h4>
                                 <p class="text-gray-600">
                                     {{ $contact->address ?? 'Noakhali Sadar, Z1441, Noakhali, R4G2+7J Noakhali' }}</p>
                             </div>
@@ -141,7 +143,7 @@
                 <!-- Contact Form -->
                 <div class="contact-card p-8">
                     <h2 class="text-3xl font-bold mb-6 text-gray-800">
-                        {{ $contact->form_title ?? __('app.send_us_a_message') }}
+                        {{ $contact->form_title ?? __('আমাদেরকে বার্তা পাঠান') }}
                     </h2>
 
                     @if (session('success'))
@@ -157,24 +159,24 @@
                     <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
                         @csrf
                         <div>
-                            <label class="block text-sm font-semibold mb-2">{{ __('app.name') }}</label>
+                            <label class="block text-sm font-semibold mb-2">আপনার নাম লিখুন</label>
                             <input type="text" name="name" class="contact-input" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-2">{{ __('app.email_address') }}</label>
+                            <label class="block text-sm font-semibold mb-2">আপনার ইমেইল ঠিকানা লিখুন</label>
                             <input type="email" name="email" class="contact-input" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-2">{{ __('app.subject') }}</label>
+                            <label class="block text-sm font-semibold mb-2">মেসেজের বিষয় লিখুন</label>
                             <input type="text" name="subject" class="contact-input" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold mb-2">{{ __('app.message') }}</label>
+                            <label class="block text-sm font-semibold mb-2">আপনার বার্তা লিখুন</label>
                             <textarea name="message" rows="6" class="contact-input resize-none" required></textarea>
                         </div>
 
                         <button type="submit" class="contact-btn">
-                            <i class="fas fa-paper-plane mr-2"></i> {{ __('app.send_message') }}
+                            <i class="fas fa-paper-plane mr-2"></i> বার্তা পাঠান
                         </button>
                     </form>
                 </div>
@@ -183,7 +185,7 @@
             <!-- Map -->
             <div class="contact-card p-6">
                 <div class="flex items-center justify-between mb-5">
-                    <h2 class="text-3xl font-bold text-gray-800">{{ __('app.our_location') }}</h2>
+                    <h2 class="text-3xl font-bold text-gray-800">আমাদের অবস্থান</h2>
                 </div>
                 <div class="map-container">
                     {!! $contact->map_embed ??

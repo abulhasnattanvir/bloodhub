@@ -21,6 +21,7 @@ class Donor extends Model
         'availability_status',
         'email',
         'notes',
+        'member_id',           // ← শুধু এটি যোগ করা হলো
     ];
 
     /**
@@ -28,6 +29,7 @@ class Donor extends Model
      */
     protected $casts = [
         'last_donation_date' => 'date',
+        'availability_status' => 'boolean',
     ];
 
     /**
@@ -36,6 +38,11 @@ class Donor extends Model
     public function bloodGroup(): BelongsTo
     {
         return $this->belongsTo(BloodGroup::class);
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
     }
 
 }

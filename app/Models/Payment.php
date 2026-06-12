@@ -20,4 +20,9 @@ class Payment extends Model
     {
         return $this->belongsTo(Member::class);
     }
+
+    public function donor()
+    {
+        return $this->hasOne(Donor::class);
+    }
 }

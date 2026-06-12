@@ -161,6 +161,27 @@
                                                 </form>
                                             @endif
 
+                                            <!-- Convert to Donor -->
+                                            @if ($member->status == 'approved' && !$member->is_donor)
+                                                <form method="POST"
+                                                    action="{{ route('admin.members.convert-to-donor', $member->id) }}"
+                                                    onsubmit="return confirm('এই মেম্বারকে Donor বানাবেন?')">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm rounded-2xl transition">
+                                                        Make Donor
+                                                    </button>
+                                                </form>
+                                            @endif
+
+                                            <!-- Already Donor -->
+                                            @if ($member->is_donor)
+                                                <span
+                                                    class="d-flex content-center px-3 py-1 bg-red-100 text-red-700 text-xs rounded-full">
+                                                    Donor
+                                                </span>
+                                            @endif
+
                                             @if ($member->status != 'rejected')
                                                 <form method="POST"
                                                     action="{{ route('admin.members.reject', $member->id) }}">

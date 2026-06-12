@@ -20,6 +20,7 @@ class Member extends Model
         'city',
         'status',
         'photo',
+        'is_donor',
     ];
 
     public function subscriptions()
@@ -37,5 +38,10 @@ class Member extends Model
         return $this->subscriptions()
             ->where('status', 'unpaid')
             ->exists();
+    }
+
+    public function donor()
+    {
+        return $this->hasOne(Donor::class);
     }
 }

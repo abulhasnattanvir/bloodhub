@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -10,19 +11,18 @@ use App\Models\Menu;
 
 class AppServiceProvider extends ServiceProvider
 {
-    public function register(): void
-    {
-        
-    }
+    public function register(): void {}
 
     public function boot(): void
     {
         // Tailwind pagination enable
         Paginator::useTailwind();
 
-        // Global settings share
-        $setting = Setting::first();
-        view()->share('setting', $setting);
+        // Global settings share (SAFE)
+        if (Schema::hasTable('settings')) {
+            $setting = Setting::first();
+            view()->share('setting', $setting);
+        }
 
         View::composer('layouts.frontend*', function ($view) {
 
@@ -34,8 +34,6 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('menus', $menus);
         });
-        
-       
     }
 
 

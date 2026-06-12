@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BloodGroup;
+use App\Models\Donor;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -213,5 +215,38 @@ class MemberController extends Controller
         ]);
 
         return redirect()->route('admin.members.index')->with('success', 'Member updated successfully');
+    }
+
+    public function convertToDonor($id)
+    {
+        $member = Member::findOrFail($id);
+
+        // ইতিমধ্যে donor আছে কিনা চেক
+        if ($member->donor()->exists() || $member->is_donor) {
+            return back()->with('error', 'This member is already converted to donor.');
+        }
+
+        // Blood Group খুঁজে বের করা
+        $bloodGroup = BloodGroup::where('name', $member->blood_group)->first();
+
+        // Donor তৈরি করা
+        $donor = Donor::create([
+            'member_id'           => $member->id,
+            'full_name'           => $member->name,
+            'profile_photo'       => $member->photo,
+            'blood_group_id'      => $bloodGroup?->id,
+            'phone_number'        => $member->phone,
+            'gender'              => $member->gender,
+            'address'             => $member->address,
+            'email'               => $member->email,
+            'availability_status' => true,
+            'last_donation_date'  => null,
+            'notes'               => 'Converted from Member on ' . now()->format('Y-m-d'),
+        ]);
+
+        // Member আপডেট (is_donor ফ্ল্যাগ)
+        $member->update(['is_donor' => true]);
+
+        return back()->with('success', 'Member successfully converted to Donor!');
     }
 }

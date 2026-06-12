@@ -182,6 +182,8 @@ Route::prefix('admin')
             Route::post('/members/{id}/approve', [MemberController::class, 'approve'])->name('members.approve');
             Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
             Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
+            Route::post('/members/{id}/convert-to-donor', [MemberController::class, 'convertToDonor'])
+            ->name('members.convert-to-donor');
         });
 
         //Council

@@ -26,6 +26,7 @@ return new class extends Migration
             // status system
             $table->enum('status', ['pending', 'approved', 'rejected'])
                 ->default('pending');
+            $table->boolean('is_donor')->default(false);
             $table->string('photo')->nullable();
             $table->timestamps();
         });

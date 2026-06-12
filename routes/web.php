@@ -117,9 +117,6 @@ use Illuminate\Validation\Rules\Can;
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
-
-
-
 //Admin Routes
 Route::prefix('admin')
     ->name('admin.')

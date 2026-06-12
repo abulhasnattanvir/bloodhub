@@ -1,251 +1,228 @@
 @extends('layouts.frontend')
 
 @section('content')
-
-    <!-- =========================
-             FILTER SECTION
-        ========================= -->
-    <section class="py-10 bg-gradient-to-r from-red-50 to-white">
+    <!-- Filter Section -->
+    <section class="py-12 bg-gradient-to-br from-red-50 via-white to-red-50">
         <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-gray-900 text-center mb-8">রক্তদাতার তালিকা</h2>
 
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">
-                রক্তদাতার তালিকা
-            </h2>
+            <div class="bg-white rounded-3xl shadow-lg p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Search -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">নাম / ফোন / ইমেইল</label>
+                        <input type="text" id="search-input"
+                            class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all"
+                            placeholder="অনুসন্ধান করুন..." value="{{ request('search') }}">
+                    </div>
 
-            <div class="grid md:grid-cols-3 gap-4">
+                    <!-- Blood Group -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">রক্তের গ্রুপ</label>
+                        <select id="blood-group-select"
+                            class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all">
+                            <option value="">সব রক্তের গ্রুপ</option>
+                            @foreach ($bloodGroups as $bloodGroup)
+                                <option value="{{ $bloodGroup->id }}"
+                                    {{ request('blood_group') == $bloodGroup->id ? 'selected' : '' }}>
+                                    {{ $bloodGroup->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <input type="text" id="search-input"
-                    class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-400"
-                    placeholder="Search name, phone, email" value="{{ request('search') }}">
-
-                <select id="blood-group-select" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-400">
-
-                    <option value="">All Blood Groups</option>
-
-                    @foreach ($bloodGroups as $bloodGroup)
-                        <option value="{{ $bloodGroup->id }}"
-                            {{ request('blood_group') == $bloodGroup->id ? 'selected' : '' }}>
-                            {{ $bloodGroup->name }}
-                        </option>
-                    @endforeach
-
-                </select>
-
-                <select id="availability-select" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-400">
-
-                    <option value="">All Status</option>
-                    <option value="available" {{ request('availability_status') == 'available' ? 'selected' : '' }}>
-                        Available
-                    </option>
-                    <option value="not_available" {{ request('availability_status') == 'not_available' ? 'selected' : '' }}>
-                        Not Available
-                    </option>
-
-                </select>
-
+                    <!-- Availability -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">অবস্থা</label>
+                        <select id="availability-select"
+                            class="w-full px-5 py-4 border border-gray-300 rounded-2xl focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition-all">
+                            <option value="">সব অবস্থা</option>
+                            <option value="available" {{ request('availability_status') == 'available' ? 'selected' : '' }}>
+                                উপলব্ধ</option>
+                            <option value="not_available"
+                                {{ request('availability_status') == 'not_available' ? 'selected' : '' }}>অনুপলব্ধ</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-
         </div>
     </section>
 
-    <!-- =========================
-             DESKTOP TABLE
-        ========================= -->
+    <!-- Desktop Table -->
     <section class="py-10 hidden md:block">
-        <div class="max-w-7xl mx-auto px-4">
-
+        <div class="max-w-10xl mx-auto px-4">
             @if ($donors->isEmpty())
-                <div class="text-center text-gray-500 py-10">
-                    No donors found
+                <div class="text-center py-20 bg-white rounded-3xl shadow">
+                    <i class="fas fa-users text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-xl text-gray-500">কোনো রক্তদাতা পাওয়া যায়নি</p>
                 </div>
             @else
-                <div class="bg-white rounded-2xl shadow overflow-x-auto">
-
-                    <table class="min-w-full text-sm">
-
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                    <table class="min-w-full">
                         <thead class="bg-red-600 text-white">
                             <tr>
-                                <th class="p-4">Photo</th>
-                                <th class="p-4">Name</th>
-                                <th class="p-4">Blood</th>
-                                <th class="p-4">Phone</th>
-                                <th class="p-4">Gender</th>
-                                <th class="p-4">Last Donation</th>
-                                <th class="p-4">Status</th>
-                                <th class="p-4">Address</th>
-                                <th class="p-4">Action</th>
+                                <th class="px-6 py-5 text-left">ছবি</th>
+                                <th class="px-6 py-5 text-left">নাম</th>
+                                <th class="px-6 py-5 text-left">রক্তের গ্রুপ</th>
+                                <th class="px-6 py-5 text-left">ফোন</th>
+                                <th class="px-6 py-5 text-left">লিঙ্গ</th>
+                                <th class="px-6 py-5 text-left">শেষ দান</th>
+                                <th class="px-6 py-5 text-left">অবস্থা</th>
+                                <th class="px-6 py-5 text-left">ঠিকানা</th>
+                                <th class="px-6 py-5 text-center">অ্যাকশন</th>
                             </tr>
                         </thead>
-
-                        <tbody>
+                        <tbody class="divide-y">
                             @foreach ($donors as $donor)
-                                <tr class="border-b hover:bg-red-50 transition">
-
-                                    <td class="p-3">
+                                <tr class="hover:bg-red-50 transition-all group">
+                                    <td class="px-3 py-3">
                                         @if ($donor->profile_photo)
                                             <img src="{{ Storage::url($donor->profile_photo) }}"
-                                                class="w-10 h-10 rounded-full object-cover">
+                                                class="w-12 h-12 rounded-2xl object-cover ring-2 ring-red-100">
                                         @else
-                                            <div
-                                                class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                                                <i class="fas fa-user text-gray-400"></i>
+                                            <div class="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center">
+                                                <i class="fas fa-user text-2xl text-gray-400"></i>
                                             </div>
                                         @endif
                                     </td>
-
-                                    <td class="p-3 font-semibold">{{ $donor->full_name }}</td>
-
-                                    <td class="p-3">
+                                    <td class="px-3 py-3 font-semibold text-gray-900">{{ $donor->full_name }}</td>
+                                    <td class="px-3 py-3">
                                         <span
-                                            class="px-3 py-1 rounded-full text-xs font-bold
-                                {{ str_contains($donor->bloodGroup->name, 'A') ? 'bg-red-100 text-red-600' : '' }}
-                                {{ str_contains($donor->bloodGroup->name, 'B') ? 'bg-green-100 text-green-600' : '' }}
-                                {{ str_contains($donor->bloodGroup->name, 'O') ? 'bg-yellow-100 text-yellow-700' : '' }}
-                                {{ str_contains($donor->bloodGroup->name, 'AB') ? 'bg-blue-100 text-blue-600' : '' }}">
+                                            class="px-4 py-2 text-sm font-bold rounded-full
+                                    @php
+$bg = $donor->bloodGroup->name;
+
+    $class = match(true) {
+        in_array($bg, ['A+', 'A-']) => 'bg-red-100 text-red-700',
+        in_array($bg, ['B+', 'B-']) => 'bg-blue-100 text-blue-700',
+        in_array($bg, ['O+', 'O-']) => 'bg-amber-100 text-amber-700',
+        str_contains($bg, 'AB') => 'bg-purple-100 text-purple-700',
+        default => 'bg-gray-100 text-gray-700'
+    }; @endphp
+">
                                             {{ $donor->bloodGroup->name }}
                                         </span>
                                     </td>
-
-                                    <td class="p-3">{{ $donor->phone_number }}</td>
-
-                                    <td class="p-3">{{ ucfirst($donor->gender) }}</td>
-
-                                    <td class="p-3">
-                                        {{ $donor->last_donation_date ? $donor->last_donation_date->format('M d, Y') : 'Never' }}
+                                    <td class="px-6 py-5">{{ $donor->phone_number }}</td>
+                                    <td class="px-6 py-5">{{ ucfirst($donor->gender) }}</td>
+                                    <td class="px-6 py-5 text-gray-600">
+                                        {{ $donor->last_donation_date ? $donor->last_donation_date->format('d M, Y') : 'কখনো দান করেননি' }}
                                     </td>
-
-                                    <td class="p-3">
+                                    <td class="px-6 py-5">
                                         @if ($donor->availability_status == 'available')
-                                            <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs">
-                                                Available
-                                            </span>
+                                            <span
+                                                class="px-4 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full">উপলব্ধ</span>
                                         @else
-                                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">
-                                                Not Available
-                                            </span>
+                                            <span
+                                                class="px-4 py-1 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">অনুপলব্ধ</span>
                                         @endif
                                     </td>
-
-                                    <td class="p-3 text-gray-500 max-w-[180px] truncate">
-                                        {{ $donor->address }}
+                                    <td class="px-6 py-5 text-gray-500 text-sm max-w-xs truncate">
+                                        {{ $donor->address ?? '-' }}</td>
+                                    <td class="px-6 py-5 text-center">
+                                        <div class="flex gap-2 justify-center">
+                                            <button
+                                                class="view-donor-btn px-5 py-2 bg-red-50 hover:bg-red-100 text-red-600 rounded-2xl text-sm font-medium transition-all"
+                                                data-donor-id="{{ $donor->id }}">
+                                                বিস্তারিত
+                                            </button>
+                                            <a href="tel:{{ $donor->phone_number }}"
+                                                class="px-5 py-2 bg-green-50 hover:bg-green-100 text-green-600 rounded-2xl text-sm font-medium transition-all">
+                                                কল করুন
+                                            </a>
+                                        </div>
                                     </td>
-
-                                    <td class="p-3 flex gap-2">
-
-                                        <button class="view-donor-btn px-3 py-1 bg-red-50 text-red-600 rounded-lg"
-                                            data-donor-id="{{ $donor->id }}">
-                                            View
-                                        </button>
-
-                                        <a href="tel:{{ $donor->phone_number }}"
-                                            class="px-3 py-1 bg-green-50 text-green-600 rounded-lg">
-                                            Call
-                                        </a>
-
-                                    </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
-
                     </table>
-
                 </div>
 
-                <div class="mt-5">
+                <div class="mt-8 flex justify-center">
                     {{ $donors->links() }}
                 </div>
             @endif
-
         </div>
     </section>
 
-    <!-- =========================
-             MOBILE CARD VIEW
-        ========================= -->
-    <section class="md:hidden py-6">
-        <div class="max-w-7xl mx-auto px-4 space-y-4">
-
-            @foreach ($donors as $donor)
-                <div class="bg-white shadow rounded-2xl p-4">
-
-                    <div class="flex items-center gap-3">
-
-                        @if ($donor->profile_photo)
-                            <img src="{{ Storage::url($donor->profile_photo) }}"
-                                class="w-14 h-14 rounded-full object-cover">
-                        @else
-                            <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-user text-gray-400"></i>
-                            </div>
-                        @endif
-
-                        <div>
-                            <h3 class="font-bold">{{ $donor->full_name }}</h3>
-                            <p class="text-sm text-gray-500">{{ $donor->bloodGroup->name }}</p>
+    <!-- Mobile Card View -->
+    <section class="md:hidden py-8 px-4 space-y-5">
+        @foreach ($donors as $donor)
+            <div class="bg-white rounded-3xl shadow-md p-5 hover:shadow-xl transition-all">
+                <div class="flex items-start gap-4">
+                    @if ($donor->profile_photo)
+                        <img src="{{ Storage::url($donor->profile_photo) }}"
+                            class="w-16 h-16 rounded-2xl object-cover ring-4 ring-red-50">
+                    @else
+                        <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-user text-4xl text-gray-400"></i>
                         </div>
+                    @endif>
 
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-bold text-lg text-gray-900">{{ $donor->full_name }}</h3>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span
+                                class="px-3 py-1 text-sm font-bold rounded-full {{ str_contains($donor->bloodGroup->name, 'A') ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600' }}">
+                                {{ $donor->bloodGroup->name }}
+                            </span>
+                            @if ($donor->availability_status == 'available')
+                                <span
+                                    class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">উপলব্ধ</span>
+                            @else
+                                <span
+                                    class="px-3 py-1 bg-gray-100 text-gray-500 text-xs font-medium rounded-full">অনুপলব্ধ</span>
+                            @endif
+                        </div>
                     </div>
-
-                    <div class="mt-3 text-sm text-gray-600 space-y-1">
-                        <p><b>Phone:</b> {{ $donor->phone_number }}</p>
-                        <p><b>Gender:</b> {{ ucfirst($donor->gender) }}</p>
-                        <p><b>Status:</b> {{ $donor->availability_status }}</p>
-                    </div>
-
-                    <div class="mt-4 flex gap-2">
-
-                        <a href="tel:{{ $donor->phone_number }}"
-                            class="flex-1 bg-green-500 text-white py-2 rounded-lg text-center">
-                            Call
-                        </a>
-
-                        <button class="view-donor-btn flex-1 bg-red-500 text-white py-2 rounded-lg"
-                            data-donor-id="{{ $donor->id }}">
-                            View
-                        </button>
-
-                    </div>
-
                 </div>
-            @endforeach
 
-        </div>
+                <div class="mt-5 space-y-2 text-sm text-gray-600">
+                    <p><span class="font-medium">ফোন:</span> {{ $donor->phone_number }}</p>
+                    <p><span class="font-medium">লিঙ্গ:</span> {{ ucfirst($donor->gender) }}</p>
+                    <p><span class="font-medium">শেষ দান:</span>
+                        {{ $donor->last_donation_date ? $donor->last_donation_date->format('d M, Y') : 'কখনো দান করেননি' }}
+                    </p>
+                </div>
+
+                <div class="mt-6 flex gap-3">
+                    <a href="tel:{{ $donor->phone_number }}"
+                        class="flex-1 bg-green-600 hover:bg-green-700 text-white text-center py-3 rounded-2xl font-medium transition-all">
+                        কল করুন
+                    </a>
+                    <button
+                        class="view-donor-btn flex-1 bg-red-600 hover:bg-red-700 text-white py-3 rounded-2xl font-medium transition-all"
+                        data-donor-id="{{ $donor->id }}">
+                        বিস্তারিত দেখুন
+                    </button>
+                </div>
+            </div>
+        @endforeach
     </section>
 
-    <!-- =========================
-             MODAL
-        ========================= -->
-    <div id="donorModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
-
-        <div class="bg-white w-full max-w-lg rounded-2xl p-6 relative shadow-2xl">
-
-            <button id="closeModal" class="absolute right-4 top-3 text-2xl text-gray-500 hover:text-red-500">
-                ×
-            </button>
-
-            <div id="donorModalBody" class="text-gray-700">
-                Loading...
+    <!-- Improved Modal -->
+    <div id="donorModal" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden">
+            <div class="flex justify-between items-center border-b px-6 py-4">
+                <h3 class="text-xl font-bold text-gray-900">রক্তদাতার বিস্তারিত তথ্য</h3>
+                <button id="closeModal" class="text-3xl text-gray-400 hover:text-red-500 transition-colors">×</button>
             </div>
 
+            <div id="donorModalBody" class="p-6 text-gray-700">
+                <!-- Dynamic content loaded by JS -->
+            </div>
         </div>
-
     </div>
-
 @endsection
 
-<!-- =========================
-     SCRIPT
-========================= -->
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
             const search = document.getElementById('search-input');
             const blood = document.getElementById('blood-group-select');
             const status = document.getElementById('availability-select');
 
-            function debounce(func, delay = 500) {
+            function debounce(func, delay = 600) {
                 let timer;
                 return function(...args) {
                     clearTimeout(timer);
@@ -255,26 +232,22 @@
 
             function updateFilters() {
                 const params = new URLSearchParams();
-
-                if (search?.value.trim()) params.append('search', search.value.trim());
-                if (blood?.value) params.append('blood_group', blood.value);
-                if (status?.value) params.append('availability_status', status.value);
-
+                if (search.value.trim()) params.append('search', search.value.trim());
+                if (blood.value) params.append('blood_group', blood.value);
+                if (status.value) params.append('availability_status', status.value);
                 window.location.href = `?${params.toString()}`;
             }
 
-            const debouncedUpdate = debounce(updateFilters, 500);
+            search.addEventListener('input', debounce(updateFilters));
+            blood.addEventListener('change', updateFilters);
+            status.addEventListener('change', updateFilters);
 
-            search?.addEventListener('input', debouncedUpdate);
-            blood?.addEventListener('change', debounce(updateFilters, 300));
-            status?.addEventListener('change', debounce(updateFilters, 300));
-
-            // MODAL
+            // Modal
             const modal = document.getElementById('donorModal');
             const body = document.getElementById('donorModalBody');
-            const close = document.getElementById('closeModal');
+            const closeBtn = document.getElementById('closeModal');
 
-            function openModal() {
+            function showModal() {
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
             }
@@ -284,55 +257,63 @@
                 modal.classList.remove('flex');
             }
 
-            close?.addEventListener('click', hideModal);
-
-            modal?.addEventListener('click', (e) => {
+            closeBtn.addEventListener('click', hideModal);
+            modal.addEventListener('click', (e) => {
                 if (e.target === modal) hideModal();
             });
 
             document.querySelectorAll('.view-donor-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-
                     const id = this.dataset.donorId;
-
-                    openModal();
+                    showModal();
 
                     body.innerHTML = `
-                <div class="text-center py-10 text-gray-500">
-                    Loading...
+                <div class="text-center py-12">
+                    <div class="animate-spin w-8 h-8 border-4 border-red-200 border-t-red-600 rounded-full mx-auto"></div>
+                    <p class="mt-4 text-gray-500">তথ্য লোড হচ্ছে...</p>
                 </div>
             `;
 
                     fetch(`/api/donors/${id}`)
                         .then(res => res.json())
                         .then(donor => {
-
                             body.innerHTML = `
-                        <div class="space-y-2">
-                            <h2 class="text-2xl font-bold">${donor.full_name}</h2>
-
-                            <p><b>Phone:</b> ${donor.phone_number ?? 'N/A'}</p>
-                            <p><b>Blood:</b> ${donor.blood_group?.name ?? 'N/A'}</p>
-                            <p><b>Email:</b> ${donor.email ?? 'N/A'}</p>
-                            <p><b>Gender:</b> ${donor.gender ?? 'N/A'}</p>
-                            <p><b>Address:</b> ${donor.address ?? 'N/A'}</p>
-
-                            <div class="mt-4">
-                                <a href="tel:${donor.phone_number}"
-                                   class="bg-green-500 text-white px-4 py-2 rounded-lg">
-                                   Call Now
-                                </a>
+                        <div class="space-y-5">
+                            <div class="flex items-center gap-4">
+                                ${donor.profile_photo ? 
+                                    `<img src="${donor.profile_photo_url}" class="w-20 h-20 rounded-2xl object-cover">` : 
+                                    `<div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center"><i class="fas fa-user text-5xl text-gray-400"></i></div>`}
+                                <div>
+                                    <h2 class="text-2xl font-bold">${donor.full_name}</h2>
+                                    <p class="text-red-600 font-bold text-xl">${donor.blood_group?.name ?? 'N/A'}</p>
+                                </div>
                             </div>
+                            
+                            <div class="grid grid-cols-2 gap-4 text-sm">
+                                <div><span class="font-medium">ফোন:</span><br>${donor.phone_number ?? 'N/A'}</div>
+                                <div><span class="font-medium">ইমেইল:</span><br>${donor.email ?? 'N/A'}</div>
+                                <div><span class="font-medium">লিঙ্গ:</span><br>${donor.gender ?? 'N/A'}</div>
+                                <div><span class="font-medium">শেষ দান:</span><br>${donor.last_donation_date ?? 'কখনো দান করেননি'}</div>
+                            </div>
+                            
+                            <div class="pt-4 border-t">
+                                <p class="font-medium">ঠিকানা:</p>
+                                <p class="text-gray-600">${donor.address ?? 'তথ্য নেই'}</p>
+                            </div>
+                            
+                            <a href="tel:${donor.phone_number}" 
+                               class="block w-full text-center bg-green-600 hover:bg-green-700 text-white py-4 rounded-2xl font-semibold text-lg transition-all mt-6">
+                                📞 এখনই কল করুন
+                            </a>
                         </div>
                     `;
                         })
                         .catch(() => {
-                            body.innerHTML = `<p class="text-red-500">Failed to load</p>`;
+                            body.innerHTML =
+                                `<p class="text-red-500 text-center py-10">তথ্য লোড করতে সমস্যা হয়েছে</p>`;
                         });
-
                 });
             });
-
         });
     </script>
 @endpush

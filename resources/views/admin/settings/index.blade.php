@@ -1,5 +1,7 @@
 @extends('layouts.admin')
-
+@php
+    $settings = \App\Models\ContactSetting::first();
+@endphp
 @section('content')
     <div class="py-8">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,6 +35,55 @@
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Tagline</label>
                                     <input type="text" name="tagline" value="{{ $settings['tagline'] ?? '' }}"
+                                        class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transaction Information -->
+                        <div>
+                            <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                                <i class="fa-regular fa-credit-card text-red-500"></i>
+                                Transaction Info (Mobile Banking)
+                            </h2>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Bkash Number</label>
+                                    <input type="text" name="bkashNumber" value="{{ $settings['bkashNumber'] ?? '' }}"
+                                        class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Nagad Number</label>
+                                    <input type="text" name="nagadNumber" value="{{ $settings['nagadNumber'] ?? '' }}"
+                                        class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-building-columns text-red-500"></i>
+                                Bank Account info
+                            </h2>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Account Name</label>
+                                    <input type="text" name="accName" value="{{ $settings['accName'] ?? '' }}"
+                                        class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Account Number</label>
+                                    <input type="text" name="accNumber" value="{{ $settings['accNumber'] ?? '' }}"
+                                        class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Bank Name</label>
+                                    <input type="text" name="bankName" value="{{ $settings['bankName'] ?? '' }}"
+                                        class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Route Number</label>
+                                    <input type="text" name="routeNumber" value="{{ $settings['routeNumber'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                             </div>

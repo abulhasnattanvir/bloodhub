@@ -1,5 +1,7 @@
 @extends('layouts.frontend')
-
+@php
+    $settings = \App\Models\Setting::all()->pluck('value', 'key')->toArray();
+@endphp
 @section('content')
     <div class="max-w-5xl mx-auto py-10 px-4">
 
@@ -36,7 +38,7 @@
                 </h2>
 
                 <p class="text-gray-700">
-                    📱 সেন্ড মানি: <span class="font-bold">01XXXXXXXXX</span>
+                    📱 সেন্ড মানি: <span class="font-bold">{{ $settings['bkashNumber'] ?? '01XXXXXXXXX' }}</span>
                 </p>
 
                 <p class="text-sm text-gray-500 mt-1">
@@ -51,7 +53,7 @@
                 </h2>
 
                 <p class="text-gray-700">
-                    📱 সেন্ড মানি: <span class="font-bold">01XXXXXXXXX</span>
+                    📱 সেন্ড মানি: <span class="font-bold">{{ $settings['nagadNumber'] ?? '01XXXXXXXXX' }}</span>
                 </p>
 
                 <p class="text-sm text-gray-500 mt-1">
@@ -66,15 +68,18 @@
                 </h2>
 
                 <p class="text-gray-700">
-                    🏦 অ্যাকাউন্ট নাম: <span class="font-bold">ESW Org</span>
+                    🏦 অ্যাকাউন্ট নাম: <span class="font-bold">{{ $settings['accName'] ?? 'ESW ORG' }}</span>
                 </p>
 
                 <p class="text-gray-700">
-                    💳 অ্যাকাউন্ট নম্বর: <span class="font-bold">1234567890</span>
+                    💳 অ্যাকাউন্ট নম্বর: <span class="font-bold">{{ $settings['accNumber'] ?? '0505 XXXX XXX' }}</span>
                 </p>
 
                 <p class="text-gray-700">
-                    🏛 ব্যাংক: Sonali Bank Ltd.
+                    🏛 ব্যাংক: {{ $settings['bankName'] ?? '0505 XXXX XXX' }}
+                </p>
+                <p class="text-gray-700">
+                    🔢 রাউট নাম্বার: {{ $settings['routeNumber'] ?? '0505 458' }}
                 </p>
             </div>
 

@@ -104,9 +104,11 @@
                             <div>
                                 <p class="text-sm text-gray-500">Last Donation Date</p>
                                 <p class="text-xl font-medium text-gray-800">
-                                    {{ $donor->last_donation_date
-                                        ? $donor->last_donation_date->format('F d, Y')
-                                        : '<span class="text-gray-400">Never Donated</span>' }}
+                                    @if ($donor->last_donation_date)
+                                        {{ $donor->last_donation_date->format('F d, Y') }}
+                                    @else
+                                        <span class="text-gray-400">Never Donated</span>
+                                    @endif
                                 </p>
                             </div>
 

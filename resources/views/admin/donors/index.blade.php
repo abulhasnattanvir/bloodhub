@@ -128,21 +128,22 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-5">
-                                        <div class="flex gap-2 justify-center">
+                                        <div class="flex gap-2 justify-center items-center">
                                             <a href="{{ route('admin.donors.show', $donor->id) }}"
-                                                class="p-3 text-blue-600 hover:bg-blue-50 rounded-2xl transition">
+                                                class="flex justify-center items-center p-3 text-blue-600 hover:bg-blue-50 rounded-2xl transition">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                             <a href="{{ route('admin.donors.edit', $donor->id) }}"
-                                                class="p-3 text-indigo-600 hover:bg-indigo-50 rounded-2xl transition">
+                                                class="flex justify-center items-center p-3 text-indigo-600 hover:bg-indigo-50 rounded-2xl transition">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.donors.destroy', $donor->id) }}" method="POST"
+                                            <form class="mb-0 flex flex justify-center items-center"
+                                                action="{{ route('admin.donors.destroy', $donor->id) }}" method="POST"
                                                 onsubmit="return confirm('Delete this donor?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="p-3 text-red-600 hover:bg-red-50 rounded-2xl transition">
+                                                    class="p-3 mb-0 text-red-600 hover:bg-red-50 rounded-2xl transition">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>

@@ -74,7 +74,7 @@
 
                                             <form action="{{ route('admin.green.destroy', $item) }}" method="POST"
                                                 class="d-inline"
-                                                onsubmit="return confirm('আপনি কি নিশ্চিতভাবে এটি মুছে ফেলতে চান?')">
+                                                onsubmit="return confirm('Are you sure you want to delete this Item?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
@@ -90,7 +90,7 @@
                                     <td colspan="5" class="px-6 py-16 text-center">
                                         <div class="flex flex-col items-center">
                                             <i class="fas fa-seedling text-5xl text-gray-300 mb-4"></i>
-                                            <p class="text-gray-500 text-lg">কোনো তথ্য পাওয়া যায়নি</p>
+                                            <p class="text-gray-500 text-lg">No results found</p>
                                         </div>
                                     </td>
                                 </tr>

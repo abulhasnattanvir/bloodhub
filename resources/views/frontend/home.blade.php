@@ -93,9 +93,11 @@
                                 </div>
 
                                 <!-- Right Image -->
-                                <div class="relative order-1 lg:order-2" style="height: 100%">
-                                    <img src="{{ asset('storage/' . $slider->image) }}"
-                                        class="w-full h-full object-cover lg:rounded-r-3xl" alt="{{ $slider->title }}">
+                                <div class="relative order-1 lg:order-2" style="height:100%;">
+                                    @if ($slider->image)
+                                        <img src="{{ asset('storage/' . $slider->image) }}"
+                                            class="w-full h-full object-cover lg:rounded-r-3xl" alt="photo">
+                                    @endif
                                 </div>
 
                             </div>

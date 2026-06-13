@@ -63,13 +63,14 @@ class DonorController extends Controller
     {
         $data = $request->validated();
 
-        // Handle profile photo upload
+        $data['member_id'] = null;
+
+        $donor = Donor::create($data);
+
         if ($request->hasFile('profile_photo')) {
             $path = $request->file('profile_photo')->store('donor_photos', 'public');
-            $data['profile_photo'] = $path;
+            $donor->update(['profile_photo' => $path]);
         }
-
-        Donor::create($data);
 
         return redirect()->route('admin.donors.index')
             ->with('success', 'Donor created successfully.');

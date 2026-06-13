@@ -21,7 +21,7 @@ class Donor extends Model
         'availability_status',
         'email',
         'notes',
-        'member_id',           // ← শুধু এটি যোগ করা হলো
+        'member_id',
     ];
 
     /**

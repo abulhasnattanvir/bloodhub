@@ -137,28 +137,28 @@
                                                     @if ($council->facebook)
                                                         <a href="{{ $council->facebook }}" target="_blank"
                                                             class="w-9 h-9 flex items-center justify-center rounded-full bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition">
-                                                            ফেসবুক
+                                                            <i class="fab fa-facebook-f"></i>
                                                         </a>
                                                     @endif
 
                                                     @if ($council->twitter)
                                                         <a href="{{ $council->twitter }}" target="_blank"
                                                             class="w-9 h-9 flex items-center justify-center rounded-full bg-sky-50 text-sky-500 hover:bg-sky-500 hover:text-white transition">
-                                                            টুইটার
+                                                            <i class="fab fa-twitter"></i>
                                                         </a>
                                                     @endif
 
                                                     @if ($council->linkedin)
                                                         <a href="{{ $council->linkedin }}" target="_blank"
                                                             class="w-9 h-9 flex items-center justify-center rounded-full bg-blue-50 text-blue-700 hover:bg-blue-700 hover:text-white transition">
-                                                            লিংকডইন
+                                                            <i class="fab fa-linkedin-in"></i>
                                                         </a>
                                                     @endif
 
                                                     @if ($council->instagram)
                                                         <a href="{{ $council->instagram }}" target="_blank"
                                                             class="w-9 h-9 flex items-center justify-center rounded-full bg-pink-50 text-pink-500 hover:bg-pink-500 hover:text-white transition">
-                                                            ইনস্টাগ্রাম
+                                                            <i class="fab fa-instagram"></i>
                                                         </a>
                                                     @endif
 

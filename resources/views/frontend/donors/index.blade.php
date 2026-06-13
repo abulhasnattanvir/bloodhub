@@ -89,17 +89,17 @@
                                     <td class="px-3 py-3">
                                         <span
                                             class="px-4 py-2 text-sm font-bold rounded-full
-                                    @php
+                                        @php
 $bg = $donor->bloodGroup->name;
 
-    $class = match(true) {
-        in_array($bg, ['A+', 'A-']) => 'bg-red-100 text-red-700',
-        in_array($bg, ['B+', 'B-']) => 'bg-blue-100 text-blue-700',
-        in_array($bg, ['O+', 'O-']) => 'bg-amber-100 text-amber-700',
-        str_contains($bg, 'AB') => 'bg-purple-100 text-purple-700',
-        default => 'bg-gray-100 text-gray-700'
-    }; @endphp
-">
+                                            $class = match(true) {
+                                                in_array($bg, ['A+', 'A-']) => 'bg-red-100 text-red-700',
+                                                in_array($bg, ['B+', 'B-']) => 'bg-blue-100 text-blue-700',
+                                                in_array($bg, ['O+', 'O-']) => 'bg-amber-100 text-amber-700',
+                                                str_contains($bg, 'AB') => 'bg-purple-100 text-purple-700',
+                                                default => 'bg-gray-100 text-gray-700'
+                                            }; @endphp
+                                        ">
                                             {{ $donor->bloodGroup->name }}
                                         </span>
                                     </td>

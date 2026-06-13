@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('donors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id');
+            $table->foreignId('member_id')->nullable();
             $table->string('full_name');
             $table->string('profile_photo')->nullable(); // path to the photo
             $table->foreignId('blood_group_id')->constrained()->onDelete('cascade');

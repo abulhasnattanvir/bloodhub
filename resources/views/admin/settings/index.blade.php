@@ -1,7 +1,7 @@
 @extends('layouts.admin')
-@php
+{{-- @php
     $settings = \App\Models\ContactSetting::first();
-@endphp
+@endphp --}}
 @section('content')
     <div class="py-8">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -151,6 +151,7 @@
                                 <!-- Logo -->
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Header Logo</label>
+
                                     @if (!empty($settings['logo']))
                                         <div class="mb-3">
                                             <img src="{{ asset('storage/' . $settings['logo']) }}"
@@ -166,7 +167,7 @@
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Footer Logo</label>
                                     @if (!empty($settings['flogo']))
                                         <div class="mb-3">
-                                            <img src="{{ asset('storage/' . $settings['flogo']) }}"
+                                            <img src="{{ asset('storage/' . $setting['flogo']) }}"
                                                 class="h-20 w-auto border border-gray-100 rounded-2xl p-1">
                                         </div>
                                     @endif

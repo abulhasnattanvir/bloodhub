@@ -29,12 +29,15 @@
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Site Name</label>
-                                    <input type="text" name="site_name" value="{{ $settings['site_name'] ?? '' }}"
+                                    <input type="text" name="site_name"
+                                        placeholder="Enter your organization or site name"
+                                        value="{{ $settings['site_name'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Tagline</label>
-                                    <input type="text" name="tagline" value="{{ $settings['tagline'] ?? '' }}"
+                                    <input type="text" name="tagline" placeholder="Enter tagline or slogan"
+                                        value="{{ $settings['tagline'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                             </div>
@@ -49,12 +52,14 @@
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Bkash Number</label>
-                                    <input type="text" name="bkashNumber" value="{{ $settings['bkashNumber'] ?? '' }}"
+                                    <input type="text" name="bkashNumber" placeholder="01XXXXXXXXX"
+                                        value="{{ $settings['bkashNumber'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Nagad Number</label>
-                                    <input type="text" name="nagadNumber" value="{{ $settings['nagadNumber'] ?? '' }}"
+                                    <input type="text" name="nagadNumber" placeholder="01XXXXXXXXX"
+                                        value="{{ $settings['nagadNumber'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                             </div>
@@ -68,22 +73,27 @@
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Account Name</label>
-                                    <input type="text" name="accName" value="{{ $settings['accName'] ?? '' }}"
+                                    <input type="text" name="accName" placeholder="Enter account holder full name"
+                                        value="{{ $settings['accName'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Account Number</label>
-                                    <input type="text" name="accNumber" value="{{ $settings['accNumber'] ?? '' }}"
+                                    <input type="text" name="accNumber" placeholder="Enter account number"
+                                        value="{{ $settings['accNumber'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Bank Name</label>
-                                    <input type="text" name="bankName" value="{{ $settings['bankName'] ?? '' }}"
+                                    <input type="text" name="bankName"
+                                        placeholder="Enter bank name (e.g. Dutch Bangla Bank)"
+                                        value="{{ $settings['bankName'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Route Number</label>
-                                    <input type="text" name="routeNumber" value="{{ $settings['routeNumber'] ?? '' }}"
+                                    <input type="text" name="routeNumber" placeholder="Enter routing number"
+                                        value="{{ $settings['routeNumber'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                             </div>
@@ -98,17 +108,20 @@
                             <div class="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-                                    <input type="email" name="email" value="{{ $settings['email'] ?? '' }}"
+                                    <input type="email" name="email" placeholder="example@domain.com"
+                                        value="{{ $settings['email'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
-                                    <input type="text" name="phone" value="{{ $settings['phone'] ?? '' }}"
+                                    <input type="text" name="phone" placeholder="01XXXXXXXXX"
+                                        value="{{ $settings['phone'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Full Address</label>
-                                    <input type="text" name="address" value="{{ $settings['address'] ?? '' }}"
+                                    <input type="text" name="address" placeholder="Enter complete address"
+                                        value="{{ $settings['address'] ?? '' }}"
                                         class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">
                                 </div>
                             </div>
@@ -122,7 +135,7 @@
                             </h2>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Footer Text</label>
-                                <textarea name="footer_text" rows="4"
+                                <textarea name="footer_text" rows="4" placeholder="Enter footer copyright text or additional information..."
                                     class="block w-full rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500 py-4 px-5">{{ $settings['footer_text'] ?? '' }}</textarea>
                             </div>
                         </div>
@@ -148,7 +161,7 @@
                                         class="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:border-0 file:text-sm file:font-medium file:bg-red-50 file:text-red-700 hover:file:bg-red-100">
                                 </div>
 
-                                <!--Main Logo -->
+                                <!-- Footer Logo -->
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Footer Logo</label>
                                     @if (!empty($settings['flogo']))

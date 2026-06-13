@@ -4,11 +4,11 @@
     <div class="max-w-6xl mx-auto py-10 px-4">
 
         <h1 class="text-3xl font-extrabold text-center mb-2">
-            Donation Contributors 🏆
+            দানকারীদের তালিকা 🏆
         </h1>
 
         <p class="text-center text-gray-500 mb-8">
-            Real heroes who supported our mission ❤️
+            যারা আমাদের মিশনকে সাহায্য করেছেন ❤️
         </p>
 
         <div class="grid md:grid-cols-3 gap-5">
@@ -29,34 +29,34 @@
 
                     {{-- TOTAL --}}
                     <p class="text-green-600 font-semibold mt-1">
-                        💰 {{ number_format($donor->total_amount) }} BDT
+                        💰 {{ number_format($donor->total_amount) }} টাকা
                     </p>
 
                     {{-- COUNT --}}
                     <p class="text-sm text-gray-500">
-                        🧾 {{ $donor->total_donations }} donations
+                        🧾 {{ $donor->total_donations }}টি দান
                     </p>
 
                     {{-- BADGE --}}
                     <div class="mt-3">
                         @if ($donor->total_amount >= 10000)
-                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">
-                                🥇 Gold Donor
+                            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-medium">
+                                🥇 গোল্ডেন ডোনার
                             </span>
                         @elseif($donor->total_amount >= 5000)
-                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs">
-                                🥈 Silver Donor
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
+                                🥈 সিলভার ডোনার
                             </span>
                         @else
-                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
-                                🥉 Supporter
+                            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
+                                🥉 সমর্থক
                             </span>
                         @endif
                     </div>
 
                     {{-- LAST DONATION --}}
                     <p class="text-xs text-gray-400 mt-3">
-                        Last: {{ \Carbon\Carbon::parse($donor->last_donation)->diffForHumans() }}
+                        সর্বশেষ দান: {{ \Carbon\Carbon::parse($donor->last_donation)->diffForHumans() }}
                     </p>
 
                 </div>

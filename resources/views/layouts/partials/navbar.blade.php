@@ -45,7 +45,7 @@
                         <!-- Simple Link -->
                         <a href="{{ url($menu->url) }}"
                             class="px-4 py-2 rounded-lg whitespace-nowrap transition
-                  {{ $menu->isActive() ? 'bg-red-700 text-white' : 'text-black hover:bg-red-700 hover:text-white' }}">
+                  {{ $menu->isActive() ? 'bg-green-600 text-white' : 'text-black hover:bg-green-600 hover:text-white' }}">
                             {{ $menu->title }}
                         </a>
                     @endif

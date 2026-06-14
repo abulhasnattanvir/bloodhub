@@ -1,3 +1,49 @@
+@font-face {
+    font-family: 'Li Shohid Tahmid Tamin Unicode';
+    src: url('../fronts/LiShohidTahmidTaminUnicode.woff2') format('woff2'),
+        url('../fronts/LiShohidTahmidTaminUnicode.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Li Shadhinata2 2.0 Unicode';
+    src: url('../fronts/LiShadhinata220Unicode.woff2') format('woff2'),
+        url('../fronts/LiShadhinata220Unicode.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Li Purno Pran Unicode';
+    src: url('../fronts/LiPurnoPranUnicode.woff2') format('woff2'),
+        url('../fronts/LiPurnoPranUnicode.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Li Shadhinata2 2.0 Unicode';
+    font-size: 18px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Li Shadhinata2 2.0 Unicode';
+}
+
+p {
+    font-family: 'Li Purno Pran Unicode';
+}
+
+
 :root {
     --primary: #dc3545;
     --secondary: #6c757d;
@@ -183,7 +229,7 @@ body.dark-mode .navbar-dark {
 .hero-slider-section {
     position: relative;
     overflow: hidden;
-    padding: 90px 0;
+    /* padding: 90px 0; */
     background:
         radial-gradient(circle at top left, rgba(255, 0, 76, 0.12), transparent 30%),
         radial-gradient(circle at bottom right, rgba(255, 0, 0, 0.12), transparent 30%),
@@ -353,4 +399,17 @@ body.dark-mode .hero-badge {
 
 .dark .faq-btn:hover {
     background-color: #2a2a2a !important;
+}
+
+
+/* Donation Call To Action */
+.calltoactionDonation h3,
+p {
+    font-family: 'Li Shohid Tahmid Tamin Unicode';
+}
+
+
+.DonationInfo h2,
+p {
+    font-family: 'Li Shadhinata2 2.0 Unicode';
 }

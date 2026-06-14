@@ -52,7 +52,7 @@
         }
     </style>
 
-    <section class="hero-slider-section pt-15 relative py-16 lg:py-20 overflow-hidden">
+    <section class="hero-slider-section py-4 px-4 sm:py-10 lg:pt-15 lg:py-20 relative overflow-hidden">
         <!-- Background Shapes -->
         <div class="hero-shape hero-shape-1"></div>
         <div class="hero-shape hero-shape-2"></div>
@@ -62,7 +62,7 @@
                 <div class="swiper-wrapper">
                     @foreach ($sliders as $slider)
                         <div class="swiper-slide">
-                            <div class="grid lg:grid-cols-2 items-center gap-10 lg:gap-16 bg-white">
+                            <div class="grid lg:grid-cols-2 items-center gap-5 lg:gap-16 bg-white">
 
                                 <!-- Left Content -->
                                 <div class="p-8 lg:p-16 order-2 lg:order-1">
@@ -79,7 +79,7 @@
                                     </h1>
 
                                     @if ($slider->description)
-                                        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                                        <p class="text-lg text-gray-600 mb-4 lg:mb-8 leading-relaxed">
                                             {{ $slider->description }}
                                         </p>
                                     @endif
@@ -115,6 +115,33 @@
         @endif
     </section>
 
+    <!-- Donation Section - Tailwind CSS -->
+    {{-- <section class="bg-gradient-to-r from-red-500 to-rose-500 py-8 shadow-lg">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+
+                <!-- Text Content -->
+                <div class="text-white">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-2">
+                        সাহায্যের হাত বাড়িয়ে দিন
+                    </h3>
+                    <p class="text-lg opacity-95">
+                        আপনার ছোট অনুদানও অনেক বড় পরিবর্তন আনতে পারে
+                    </p>
+                </div>
+
+                <!-- Donate Button -->
+                <div>
+                    <a href="{{ route('member.create') }}"
+                        class="group flex items-center gap-3 bg-white text-red-600 hover:text-red-700 px-8 py-4 rounded-full font-semibold text-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                        <span>ডোনেশন করুন</span>
+                        <span class="text-2xl group-hover:scale-125 transition-transform">❤️</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section> --}}
 
     {{-- Mission and Goals --}}
     <section class="py-16 md:py-24 bg-white">
@@ -426,5 +453,40 @@
                 </div>
             @endforeach
         </div>
+
     </div>
+    <!-- Light Full Width Donation Section - Improved Button -->
+    <section class="w-full calltoactionDonation">
+        <div class="">
+            <div
+                class="backdrop-blur-xl bg-white/70 border border-white/50
+            bg-gradient-to-r from-emerald-500/10 via-blue-500/10 to-cyan-500/10 
+            p-8 md:p-12 lg:p-16 w-full">
+                <div class="flex max-w-7xl mx-auto flex-col md:flex-row items-center justify-between gap-8 w-full">
+                    <!-- Left Text -->
+                    <div class="text-gray-800 max-w-2xl">
+                        <h3 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
+                            সাহায্যের হাত বাড়িয়ে দিন
+                        </h3>
+                        <p class="text-lg md:text-xl text-gray-700">
+                            আপনার ছোট অনুদানও দুর্যোগে ক্ষতিগ্রস্ত মানুষের পাশে বড় পরিবর্তন আনতে পারে
+                        </p>
+                    </div>
+
+                    <!-- Donate Button - New Color -->
+                    <div class="flex-shrink-0 pt-4 md:pt-0">
+                        <a href="{{ route('member.create') }}"
+                            class="group flex items-center gap-4 bg-green-600 hover:bg-green-700
+    text-white px-12 py-6 rounded-full font-bold text-2xl md:text-3xl 
+    transition-all duration-300 hover:-translate-y-1 shadow-md hover:shadow-xl 
+    w-full md:w-auto justify-center">
+                            <span>অনুদান করুন</span>
+                            <span class="text-4xl group-hover:scale-125 transition-transform">🤝</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection

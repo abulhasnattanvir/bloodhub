@@ -1,7 +1,6 @@
 <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg shadow-sm border-b border-green-100 transition-all">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex items-center justify-between h-16">
-
             <!-- Logo -->
             <a href="{{ route('home') }}" class="flex items-center flex-shrink-0">
                 @if (setting('logo'))
@@ -14,7 +13,7 @@
             </a>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-2 flex-1 justify-end">
+            <div class="hidden flex-wrap md:flex items-center space-x-2 flex-1 justify-end">
                 @foreach ($menus as $menu)
                     @if ($menu->children->count())
                         <!-- Dropdown Parent -->
@@ -53,11 +52,21 @@
 
             </div>
 
-            <!-- Mobile Button -->
-            <button @click="open = true" class="md:hidden bg-black-600 text-2xl flex-shrink-0">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="pl-2 flex gap-2">
+                <!-- Add -->
+                <a href="{{ route('member.create') }}"
+                    class="inline-flex items-center justify-center gap-2 px-3 py-3 px-lg-4 py-lg-3 bg-red-600 hover:bg-red-400 text-white text-sm font-semibold
+    rounded-full sm:rounded-[25px]
+    shadow-none transition-all duration-300 flex-shrink-0">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="hidden sm:inline">যোগ দিন</span>
+                </a>
 
+                <!-- Mobile Button -->
+                <button @click="open = true" class="md:hidden bg-black-600 text-2xl flex-shrink-0">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -82,17 +91,12 @@
 
         <!-- Header -->
         <div class="flex items-center justify-between p-4 border-b">
-
             <h3 class="font-bold text-lg">
                 Menu
             </h3>
-
             <button @click="open = false" class="text-gray-700 bg-black-600 text-xl">
-
                 <i class="fas fa-times"></i>
-
             </button>
-
         </div>
 
         <!-- Menu Items -->
@@ -138,9 +142,6 @@
 
                 </div>
             @endforeach
-
         </div>
-
     </div>
-
 </nav>

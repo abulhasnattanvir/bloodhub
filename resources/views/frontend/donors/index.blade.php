@@ -50,7 +50,7 @@
 
     <!-- Desktop Table -->
     <section class="py-10 hidden md:block">
-        <div class="max-w-10xl mx-auto px-4">
+        <div class="max-w-8xl mx-auto px-4">
             @if ($donors->isEmpty())
                 <div class="text-center py-20 bg-white rounded-3xl shadow">
                     <i class="fas fa-users text-6xl text-gray-300 mb-4"></i>
@@ -111,10 +111,12 @@ $bg = $donor->bloodGroup->name;
                                     <td class="px-6 py-5">
                                         @if ($donor->availability_status == 'available')
                                             <span
-                                                class="px-4 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full">উপলব্ধ</span>
+                                                class="px-4 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full">রক্তদানে
+                                                প্রস্তুত</span>
                                         @else
                                             <span
-                                                class="px-4 py-1 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">অনুপলব্ধ</span>
+                                                class="px-4 py-1 bg-gray-100 text-gray-600 text-sm font-medium rounded-full">প্রস্তুত
+                                                না</span>
                                         @endif
                                     </td>
                                     <td class="px-6 py-5 text-gray-500 text-sm max-w-xs truncate">
@@ -177,7 +179,7 @@ $bg = $donor->bloodGroup->name;
                     </div>
                 </div>
 
-                <div class="mt-5 space-y-2 text-sm text-gray-600">
+                <div class="mt-5 space-y-2 text-md text-gray-600">
                     <p><span class="font-medium">ফোন:</span> {{ $donor->phone_number }}</p>
                     <p><span class="font-medium">লিঙ্গ:</span> {{ ucfirst($donor->gender) }}</p>
                     <p><span class="font-medium">শেষ দান:</span>
@@ -208,7 +210,7 @@ $bg = $donor->bloodGroup->name;
                 <button id="closeModal" class="text-3xl text-gray-400 hover:text-red-500 transition-colors">×</button>
             </div>
 
-            <div id="donorModalBody" class="p-6 text-gray-700">
+            <div id="donorModalBody" class="p-4 text-gray-700">
                 <!-- Dynamic content loaded by JS -->
             </div>
         </div>
@@ -281,7 +283,7 @@ $bg = $donor->bloodGroup->name;
                         <div class="space-y-5">
                             <div class="flex items-center gap-4">
                                 ${donor.profile_photo ? 
-                                    `<img src="${donor.profile_photo_url}" class="w-20 h-20 rounded-2xl object-cover">` : 
+                                    `<img src="${donor.profile_photo}" class="w-20 h-20 rounded-2xl object-cover">` : 
                                     `<div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center"><i class="fas fa-user text-5xl text-gray-400"></i></div>`}
                                 <div>
                                     <h2 class="text-2xl font-bold">${donor.full_name}</h2>
@@ -289,9 +291,9 @@ $bg = $donor->bloodGroup->name;
                                 </div>
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div class="grid grid-cols-2 gap-4 text-md">
                                 <div><span class="font-medium">ফোন:</span><br>${donor.phone_number ?? 'N/A'}</div>
-                                <div><span class="font-medium">ইমেইল:</span><br>${donor.email ?? 'N/A'}</div>
+                                <div class="break-all"><span class="font-medium">ইমেইল:</span><br>${donor.email ?? 'N/A'}</div>
                                 <div><span class="font-medium">লিঙ্গ:</span><br>${donor.gender ?? 'N/A'}</div>
                                 <div><span class="font-medium">শেষ দান:</span><br>${donor.last_donation_date ?? 'কখনো দান করেননি'}</div>
                             </div>

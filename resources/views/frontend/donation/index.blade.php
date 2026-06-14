@@ -29,7 +29,7 @@
         @endif
 
         {{-- PAYMENT INFO CARDS --}}
-        <div class="grid md:grid-cols-3 gap-4 mb-8">
+        <div class="DonationInfo grid md:grid-cols-3 gap-4 mb-8">
 
             {{-- BKASH --}}
             <div class="bg-pink-50 border border-pink-200 p-5 rounded-xl shadow-sm">

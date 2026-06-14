@@ -121,7 +121,7 @@
 
                                                 <!-- Contact -->
                                                 @if ($council->phone || $council->email)
-                                                    <div class="mt-4 text-xs text-gray-500 space-y-1">
+                                                    <div class="mt-4 text-sm text-gray-500 space-y-1">
                                                         @if ($council->phone)
                                                             <p>📞 {{ $council->phone }}</p>
                                                         @endif

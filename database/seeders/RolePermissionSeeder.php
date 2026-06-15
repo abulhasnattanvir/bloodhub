@@ -156,6 +156,17 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'users.edit']);
         Permission::create(['name' => 'users.delete']);
 
+        // Social Chat
+        Permission::create(['name' => 'socialchat.edit']);
+        Permission::create(['name' => 'socialchat.update']);
+
+        // Notice Managment
+        Permission::create(['name' => 'notices.index']);
+        Permission::create(['name' => 'notices.create']);
+        Permission::create(['name' => 'notices.edit']);
+        Permission::create(['name' => 'notices.delete']); 
+        Permission::create(['name' => 'notices.download']);
+
         // ==================== ROLES ====================
 
         $admin = Role::create(['name' => 'Admin']);

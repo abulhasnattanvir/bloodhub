@@ -314,16 +314,18 @@ Route::prefix('admin')
             Route::post('/usermodule/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('usermodule.permissions.sync');
         });
 
-
         //Social Chat
-        Route::get('/socialchat', [SocialChatController::class, 'edit'])->name('socialchat.edit');
-        Route::post('/socialchat', [SocialChatController::class, 'update'])->name('socialchat.update');
+        Route::middleware(['permission:socialchat.edit'])->group(function () {
+            Route::get('/socialchat', [SocialChatController::class, 'edit'])->name('socialchat.edit');
+            Route::post('/socialchat', [SocialChatController::class, 'update'])->name('socialchat.update');
+        });
 
         //Notice
-        Route::get('/notices', [NoticeController::class, 'adminIndex'])->name('notices.index'); 
-        Route::resource('notices', NoticeController::class)->except(['index', 'show']);
-        Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
-        
+        Route::middleware(['permission:notices.index'])->group(function () {
+            Route::get('/notices', [NoticeController::class, 'adminIndex'])->name('notices.index'); 
+            Route::resource('notices', NoticeController::class)->except(['index', 'show']);
+            Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
+        });
 });
 
 require __DIR__.'/auth.php';

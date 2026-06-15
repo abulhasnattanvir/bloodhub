@@ -192,4 +192,14 @@
             <i class="fas fa-sliders-h mr-3"></i> Sliders
         </a>
     @endcan
+
+    <a href="{{ route('admin.socialchat.edit') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.socialchat.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fa-brands fa-rocketchat"></i> Social Chat
+    </a>
+
+    <a href="{{ route('admin.notices.index') }}"
+        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.notices.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+        <i class="fa-brands fa-rocketchat"></i> Notices
+    </a>
 </div>

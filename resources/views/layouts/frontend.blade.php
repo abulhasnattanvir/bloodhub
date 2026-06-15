@@ -35,6 +35,7 @@
 
     <main>
         @yield('content')
+        <x-whatsapp-widget />
     </main>
 
     @include('layouts.partials.footer')

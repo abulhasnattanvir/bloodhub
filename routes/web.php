@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\GreenInitiativeController;
 use App\Http\Controllers\Admin\MemberFinanceController;
 use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SocialChatController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\BlogTagController;
 use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController as UserProfileController;
 use App\Http\Controllers\SliderController;
@@ -117,6 +119,10 @@ use Illuminate\Validation\Rules\Can;
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
+    //Notice
+    Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');
+    Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
+    
 //Admin Routes
 Route::prefix('admin')
     ->name('admin.')
@@ -308,6 +314,16 @@ Route::prefix('admin')
             Route::post('/usermodule/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('usermodule.permissions.sync');
         });
 
+
+        //Social Chat
+        Route::get('/socialchat', [SocialChatController::class, 'edit'])->name('socialchat.edit');
+        Route::post('/socialchat', [SocialChatController::class, 'update'])->name('socialchat.update');
+
+        //Notice
+        Route::get('/notices', [NoticeController::class, 'adminIndex'])->name('notices.index'); 
+        Route::resource('notices', NoticeController::class)->except(['index', 'show']);
+        Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
+        
 });
 
 require __DIR__.'/auth.php';

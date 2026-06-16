@@ -31,6 +31,18 @@ class SettingController extends Controller
                     ['value' => $path]
                 );
 
+                // Save logo width
+                Setting::updateOrCreate(
+                    ['key' => 'hlogoWidth'],
+                    ['value' => $request->hlogoWidth]
+                );
+
+                // Save logo height
+                Setting::updateOrCreate(
+                    ['key' => 'hlogoHeight'],
+                    ['value' => $request->hlogoHeight]
+                );
+
                 continue;
             }
 
@@ -41,6 +53,17 @@ class SettingController extends Controller
                 Setting::updateOrCreate(
                     ['key' => 'flogo'],
                     ['value' => $path]
+                );
+
+                Setting::updateOrCreate(
+                    ['key' => 'flogoWidth'],
+                    ['value' => $request->hlogoWidth]
+                );
+
+                // Save logo height
+                Setting::updateOrCreate(
+                    ['key' => 'flogoHeight'],
+                    ['value' => $request->hlogoHeight]
                 );
 
                 continue;

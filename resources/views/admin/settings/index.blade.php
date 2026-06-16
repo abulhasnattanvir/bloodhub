@@ -153,9 +153,18 @@
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Header Logo</label>
 
                                     @if (!empty($settings['logo']))
-                                        <div class="mb-3">
+                                        <div class="mb-3 gap-5 flex">
                                             <img src="{{ asset('storage/' . $settings['logo']) }}"
                                                 class="h-20 w-auto border border-gray-100 rounded-2xl p-1">
+                                            <input type="number" style="width:100px!important;" max="250"
+                                                min="0" placeholder="Width" name="hlogoWidth"
+                                                value="{{ $settings['hlogoWidth'] ?? '' }}"
+                                                class="block rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500">
+
+                                            <input type="number" style="width:100px!important;" max="250"
+                                                min="0" placeholder="Height" name="hlogoHeight"
+                                                value="{{ $settings['hlogoHeight'] ?? '' }}"
+                                                class="block rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500">
                                         </div>
                                     @endif
                                     <input type="file" name="logo"
@@ -166,9 +175,17 @@
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-2">Footer Logo</label>
                                     @if (!empty($settings['flogo']))
-                                        <div class="mb-3">
-                                            <img src="{{ asset('storage/' . $setting['flogo']) }}"
+                                        <div class="mb-3 gap-5 flex">
+                                            <img src="{{ asset('storage/' . $settings['flogo']) }}"
                                                 class="h-20 w-auto border border-gray-100 rounded-2xl p-1">
+                                            <input type="number" style="width:100px!important;" max="250"
+                                                min="0" placeholder="Width" name="flogoWidth"
+                                                value="{{ $settings['flogoWidth'] ?? '' }}"
+                                                class="block rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500">
+                                            <input type="number" style="width:100px!important;" max="250"
+                                                min="0" placeholder="Height" name="flogoHeight"
+                                                value="{{ $settings['flogoHeight'] ?? '' }}"
+                                                class="block rounded-2xl border-gray-300 focus:border-red-500 focus:ring-red-500">
                                         </div>
                                     @endif
                                     <input type="file" name="flogo"

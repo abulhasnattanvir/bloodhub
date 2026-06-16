@@ -11,7 +11,9 @@
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="inline-block mb-6">
                     @if (setting('flogo'))
-                        <img src="{{ asset('storage/' . setting('flogo')) }}" style="width: 150px;" alt="Logo">
+                        {{-- <img src="{{ asset('storage/' . setting('flogo')) }}" style="width: 150px;" alt="Logo"> --}}
+                        <img src="{{ asset('storage/' . setting('flogo')) }}" width="{{ setting('flogoWidth') ?? 120 }}"
+                            height="{{ setting('flogoHeight') ?? 'auto' }}" alt="Logo">
                     @else
                         <h2 class="text-3xl font-bold">{{ setting('site_name') }}</h2>
                     @endif

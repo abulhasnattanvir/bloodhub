@@ -39,6 +39,7 @@ use App\Http\Controllers\Frontend\BloodController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\NoticeTickerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController as UserProfileController;
 use App\Http\Controllers\SliderController;
@@ -326,6 +327,9 @@ Route::prefix('admin')
             Route::resource('notices', NoticeController::class)->except(['index', 'show']);
             Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
         });
+
+        // Notice Ticker
+        Route::resource('notice-ticker',NoticeTickerController::class);
 });
 
 require __DIR__.'/auth.php';

@@ -413,3 +413,19 @@ p {
 p {
     font-family: 'Li Shadhinata2 2.0 Unicode';
 }
+
+
+.ticker-animation {
+    width: max-content;
+    animation: ticker-scroll 40s linear infinite;
+}
+
+@keyframes ticker-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-25%);
+    }
+}

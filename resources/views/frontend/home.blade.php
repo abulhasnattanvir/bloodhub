@@ -115,6 +115,42 @@
         @endif
     </section>
 
+    @if ($announcements->count())
+        <section class="bg-red-600 text-white overflow-hidden">
+            <div class="flex items-center h-12">
+
+                <!-- Label -->
+                <div class="shrink-0 bg-red-800 px-4 h-full flex items-center font-semibold">
+                    📢 ঘোষণা
+                </div>
+
+                <!-- Scrolling Area -->
+                <div class="relative flex-1 overflow-hidden">
+
+                    <div id="ticker-track" class="flex flex-nowrap items-center whitespace-nowrap gap-16 py-3 shrink-0">
+
+                        @for ($i = 0; $i < 4; $i++)
+                            @foreach ($announcements as $announcement)
+                                @if ($announcement->url)
+                                    <a href="{{ $announcement->url }}"
+                                        class="shrink-0 font-medium hover:text-yellow-300 transition">
+                                        {{ $announcement->title }}
+                                    </a>
+                                @else
+                                    <span class="shrink-0">
+                                        {{ $announcement->title }}
+                                    </span>
+                                @endif
+                            @endforeach
+                        @endfor
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    @endif
     <!-- Donation Section - Tailwind CSS -->
     {{-- <section class="bg-gradient-to-r from-red-500 to-rose-500 py-8 shadow-lg">
         <div class="max-w-6xl mx-auto px-6">

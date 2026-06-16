@@ -12,6 +12,7 @@ use App\Models\Faq;
 use App\Models\Slider;
 use App\Models\Goal;
 use App\Models\GreenInitiative;
+use App\Models\NoticeTicker;
 use App\Models\Video;
 
 class HomeController extends Controller
@@ -42,6 +43,10 @@ class HomeController extends Controller
 
         $posts = BlogPost::published()->latest('published_at')->take(3)->get();
 
+        $announcements = NoticeTicker::where('is_active', 1)
+            ->latest()
+            ->get();
+
         return view('frontend.home', compact(
             'totalDonors',
             'availableDonors',
@@ -53,7 +58,8 @@ class HomeController extends Controller
             'faqs',
             'greenInitiatives',
             'videos',
-            'posts'
+            'posts',
+            'announcements'
         ));
     }
 }

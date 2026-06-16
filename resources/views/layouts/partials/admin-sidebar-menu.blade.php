@@ -206,9 +206,10 @@
             <i class="fa-solid fa-file"></i> Notices
         </a>
     @endcan
-
-    <a href="{{ route('admin.notice-ticker.index') }}"
-        class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.notice-ticker.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fa-solid fa-file"></i> Notices Ticker
-    </a>
+    @can('noticeticker.index')
+        <a href="{{ route('admin.notice-ticker.index') }}"
+            class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.notice-ticker.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
+            <i class="fa-solid fa-file"></i> Notices Ticker
+        </a>
+    @endcan
 </div>

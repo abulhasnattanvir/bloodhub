@@ -329,7 +329,9 @@ Route::prefix('admin')
         });
 
         // Notice Ticker
-        Route::resource('notice-ticker',NoticeTickerController::class);
+        Route::middleware(['permission:noticeticker.index'])->group(function () {
+            Route::resource('notice-ticker',NoticeTickerController::class);
+        });
 });
 
 require __DIR__.'/auth.php';

@@ -167,6 +167,13 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'notices.delete']); 
         Permission::create(['name' => 'notices.download']);
 
+        // Notice Ticker Managment
+        Permission::create(['name' => 'noticeticker.index']);
+        Permission::create(['name' => 'noticeticker.create']);
+        Permission::create(['name' => 'noticeticker.edit']);
+        Permission::create(['name' => 'noticeticker.delete']); 
+        Permission::create(['name' => 'noticeticker.download']);
+
         // ==================== ROLES ====================
 
         $admin = Role::create(['name' => 'Admin']);

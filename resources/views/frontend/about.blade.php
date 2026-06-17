@@ -22,7 +22,7 @@
     <section class="about-hero py-24 md:py-32 text-white">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <span class="inline-block px-6 py-2.5 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold mb-6">
-                Educare Group of Society Welfare (EGSW)
+                Educare Society Welfare (ESW)
             </span>
             <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
                 মানব সেবাই আমাদের স্বপ্ন
@@ -40,7 +40,7 @@
                 <div>
                     <h2 class="text-4xl font-bold text-gray-900 mb-6">আমাদের সম্পর্কে</h2>
                     <p class="text-gray-600 leading-relaxed text-lg mb-6">
-                        এডুকেয়ার গ্রুপ অফ সোসাইটি ওয়েলফেয়ার (EGSW) একটি অরাজনৈতিক, সেবামূলক সংগঠন।
+                        এডুকেয়ার গ্রুপ অফ সোসাইটি ওয়েলফেয়ার (ESW) একটি অরাজনৈতিক, সেবামূলক সংগঠন।
                         ২০১৮ সালে নোয়াখালী জেলার দক্ষিণ নাজিরপুর, অশ্বদিয়া এলাকায় কিছু শিক্ষিত তরুণদের উদ্যোগে প্রতিষ্ঠিত
                         হয়।
                     </p>

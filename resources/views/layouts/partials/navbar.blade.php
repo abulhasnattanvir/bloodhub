@@ -101,7 +101,7 @@
         </div>
 
         <!-- Menu Items -->
-        <div class="p-3 bg-white">
+        <div class="p-3 bg-white" style="height: 95vh; overflow: auto;">
 
             @foreach ($menus as $menu)
                 <div x-data="{ submenu: false }" class="border-b border-gray-100">

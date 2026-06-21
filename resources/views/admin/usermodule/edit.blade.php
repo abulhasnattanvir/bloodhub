@@ -31,6 +31,7 @@
                 <div class="px-8 py-8 border-t border-gray-100 mt-6">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-semibold text-gray-800">Permissions</h3>
+
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="checkbox" id="select-all"
                                 class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
@@ -38,18 +39,48 @@
                         </label>
                     </div>
 
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[420px] overflow-y-auto pr-2 custom-scroll">
-                        @foreach ($permissions as $permission)
-                            <label
-                                class="group flex items-center gap-3 p-4 border border-gray-100 hover:border-indigo-200 rounded-2xl cursor-pointer transition-all hover:bg-gray-50">
-                                <input type="checkbox"
-                                    class="perm-checkbox w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                                    value="{{ $permission->name }}"
-                                    {{ in_array($permission->name, $rolePermissions) ? 'checked' : '' }}>
-                                <span class="text-gray-700 font-medium">{{ $permission->name }}</span>
-                            </label>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                        @foreach ($groupedPermissions as $module => $modulePermissions)
+                            <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+
+                                <!-- Module Header -->
+                                <div class="flex items-center justify-between mb-4">
+                                    <h4 class="font-semibold text-lg text-gray-800 capitalize">
+                                        {{ str_replace('_', ' ', $module) }}
+                                    </h4>
+
+                                    <input type="checkbox" class="module-checkbox w-5 h-5 text-indigo-600 rounded"
+                                        data-module="{{ $module }}">
+                                </div>
+
+                                <!-- Module Permissions -->
+                                <div class="space-y-3">
+
+                                    @foreach ($modulePermissions as $permission)
+                                        @php
+                                            $action = explode('.', $permission->name)[1] ?? $permission->name;
+                                        @endphp
+
+                                        <label
+                                            class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+
+                                            <input type="checkbox"
+                                                class="perm-checkbox module-{{ $module }} w-4 h-4 text-indigo-600 rounded"
+                                                value="{{ $permission->name }}"
+                                                {{ in_array($permission->name, $rolePermissions) ? 'checked' : '' }}>
+
+                                            <span class="text-gray-700">
+                                                {{ ucfirst($action) }}
+                                            </span>
+                                        </label>
+                                    @endforeach
+
+                                </div>
+
+                            </div>
                         @endforeach
+
                     </div>
                 </div>
 
@@ -78,55 +109,122 @@
 
 @push('scripts')
     <script>
-        // Select All
-        document.getElementById('select-all').addEventListener('change', function() {
-            document.querySelectorAll('.perm-checkbox').forEach(cb => cb.checked = this.checked);
-        });
+        document.addEventListener('DOMContentLoaded', function() {
 
-        function savePermissions() {
-            const btn = document.getElementById('saveBtn');
-            const msgDiv = document.getElementById('msg');
-            const originalHTML = btn.innerHTML;
+            const selectAll = document.getElementById('select-all');
+            const permCheckboxes = document.querySelectorAll('.perm-checkbox');
+            const moduleCheckboxes = document.querySelectorAll('.module-checkbox');
 
-            btn.disabled = true;
-            btn.innerHTML = `<span class="animate-spin inline-block w-5 h-5 mr-2">⟳</span>Saving...`;
+            // ====================== GLOBAL SELECT ALL ======================
+            if (selectAll) {
+                selectAll.addEventListener('change', function() {
+                    permCheckboxes.forEach(cb => {
+                        cb.checked = this.checked;
+                    });
+                    updateModuleCheckboxes();
+                });
+            }
 
-            let permissions = [];
-            document.querySelectorAll('.perm-checkbox:checked').forEach(cb => {
-                permissions.push(cb.value);
+            // ====================== MODULE SELECT ALL ======================
+            moduleCheckboxes.forEach(moduleCb => {
+                moduleCb.addEventListener('change', function() {
+                    const moduleName = this.dataset.module;
+                    const modulePerms = document.querySelectorAll(`.module-${moduleName}`);
+
+                    modulePerms.forEach(cb => {
+                        cb.checked = this.checked;
+                    });
+
+                    updateSelectAllState();
+                });
             });
 
-            // ✅ Most Reliable Method
-            const syncUrl = "{{ url('admin/usermodule/' . $role->id . '/permissions') }}";
-
-            fetch(syncUrl, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: JSON.stringify({
-                        permissions: permissions
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success || data.status === 'success') {
-                        msgDiv.innerHTML =
-                            `<div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-2xl">✅ ${data.message || 'Permissions updated successfully'}</div>`;
-                    } else {
-                        msgDiv.innerHTML =
-                            `<div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl">${data.message || 'Something went wrong'}</div>`;
-                    }
-                })
-                .catch(() => {
-                    msgDiv.innerHTML =
-                        `<div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl">Connection error. Please try again.</div>`;
-                })
-                .finally(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = originalHTML;
+            // ====================== INDIVIDUAL CHECKBOXES ======================
+            permCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateModuleCheckboxes();
+                    updateSelectAllState();
                 });
-        }
+            });
+
+            // Update Module checkboxes based on their permissions
+            function updateModuleCheckboxes() {
+                moduleCheckboxes.forEach(moduleCb => {
+                    const moduleName = moduleCb.dataset.module;
+                    const modulePerms = Array.from(document.querySelectorAll(`.module-${moduleName}`));
+
+                    const allChecked = modulePerms.every(cb => cb.checked);
+                    const someChecked = modulePerms.some(cb => cb.checked);
+
+                    moduleCb.checked = allChecked;
+                    moduleCb.indeterminate = !allChecked && someChecked;
+                });
+            }
+
+            // Update "Select All" state
+            function updateSelectAllState() {
+                if (!selectAll) return;
+
+                const allChecked = Array.from(permCheckboxes).every(cb => cb.checked);
+                const someChecked = Array.from(permCheckboxes).some(cb => cb.checked);
+
+                selectAll.checked = allChecked;
+                selectAll.indeterminate = !allChecked && someChecked;
+            }
+
+            // Initial state update
+            updateModuleCheckboxes();
+            updateSelectAllState();
+
+            // ====================== SAVE FUNCTION ======================
+            window.savePermissions = function() {
+                const btn = document.getElementById('saveBtn');
+                const msgDiv = document.getElementById('msg');
+                const originalHTML = btn.innerHTML;
+
+                btn.disabled = true;
+                btn.innerHTML = `<span class="animate-spin inline-block w-5 h-5 mr-2">⟳</span>Saving...`;
+
+                const permissions = [];
+                document.querySelectorAll('.perm-checkbox:checked').forEach(cb => {
+                    permissions.push(cb.value);
+                });
+
+                fetch("{{ url('admin/usermodule/' . $role->id . '/permissions') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            permissions: permissions
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success || data.status === 'success') {
+                            msgDiv.innerHTML = `
+                        <div class="bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-2xl">
+                            ✅ ${data.message || 'Permissions updated successfully'}
+                        </div>`;
+                        } else {
+                            msgDiv.innerHTML = `
+                        <div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl">
+                            ${data.message || 'Something went wrong'}
+                        </div>`;
+                        }
+                    })
+                    .catch(() => {
+                        msgDiv.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-2xl">
+                        Connection error. Please try again.
+                    </div>`;
+                    })
+                    .finally(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = originalHTML;
+                    });
+            };
+        });
     </script>
 @endpush

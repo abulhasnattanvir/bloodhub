@@ -49,17 +49,43 @@
                                 </label>
                             </div>
 
-                            <div
-                                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[420px] overflow-y-auto pr-2 custom-scroll">
-                                @foreach ($permissions as $permission)
-                                    <label
-                                        class="group flex items-center gap-3 p-4 border border-gray-100 hover:border-indigo-200 rounded-2xl cursor-pointer transition-all hover:bg-gray-50">
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
-                                            class="perm-checkbox w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                                            {{ old('permissions') && in_array($permission->name, old('permissions')) ? 'checked' : '' }}>
-                                        <span class="text-gray-700 font-medium">{{ $permission->name }}</span>
-                                    </label>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                                @foreach ($groupedPermissions as $module => $modulePermissions)
+                                    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+
+                                        <!-- Module Header with Checkbox -->
+                                        <div class="flex items-center justify-between mb-4">
+                                            <h4 class="font-semibold text-lg text-gray-800 capitalize">
+                                                {{ str_replace('_', ' ', $module) }}
+                                            </h4>
+
+                                            <input type="checkbox" class="module-checkbox w-5 h-5 text-indigo-600 rounded"
+                                                data-module="{{ $module }}">
+                                        </div>
+
+                                        <!-- Module Permissions -->
+                                        <div class="space-y-3">
+                                            @foreach ($modulePermissions as $permission)
+                                                @php
+                                                    $action = explode('.', $permission->name)[1] ?? $permission->name;
+                                                @endphp
+
+                                                <label
+                                                    class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">
+                                                    <input type="checkbox" name="permissions[]"
+                                                        class="perm-checkbox module-{{ $module }} w-4 h-4 text-indigo-600 rounded"
+                                                        value="{{ $permission->name }}">
+                                                    <span class="text-gray-700">
+                                                        {{ ucfirst($action) }}
+                                                    </span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+
+                                    </div>
                                 @endforeach
+
                             </div>
                         </div>
 
@@ -90,11 +116,72 @@
 
 @push('scripts')
     <script>
-        // Select All functionality
-        document.getElementById('select-all').addEventListener('change', function() {
-            document.querySelectorAll('.perm-checkbox').forEach(cb => {
-                cb.checked = this.checked;
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const selectAll = document.getElementById('select-all');
+            const permCheckboxes = document.querySelectorAll('.perm-checkbox');
+            const moduleCheckboxes = document.querySelectorAll('.module-checkbox');
+
+            // ====================== GLOBAL SELECT ALL ======================
+            if (selectAll) {
+                selectAll.addEventListener('change', function() {
+                    permCheckboxes.forEach(cb => {
+                        cb.checked = this.checked;
+                    });
+                    updateModuleCheckboxes();
+                });
+            }
+
+            // ====================== MODULE SELECT ALL ======================
+            moduleCheckboxes.forEach(moduleCb => {
+                moduleCb.addEventListener('change', function() {
+                    const moduleName = this.dataset.module;
+                    const modulePerms = document.querySelectorAll(`.module-${moduleName}`);
+
+                    modulePerms.forEach(cb => {
+                        cb.checked = this.checked;
+                    });
+
+                    updateSelectAllState();
+                });
             });
+
+            // ====================== INDIVIDUAL CHECKBOXES ======================
+            permCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    updateModuleCheckboxes();
+                    updateSelectAllState();
+                });
+            });
+
+            // Update Module checkboxes based on their permissions
+            function updateModuleCheckboxes() {
+                moduleCheckboxes.forEach(moduleCb => {
+                    const moduleName = moduleCb.dataset.module;
+                    const modulePerms = Array.from(document.querySelectorAll(`.module-${moduleName}`));
+
+                    const allChecked = modulePerms.every(cb => cb.checked);
+                    const someChecked = modulePerms.some(cb => cb.checked);
+
+                    moduleCb.checked = allChecked;
+                    moduleCb.indeterminate = !allChecked && someChecked;
+                });
+            }
+
+            // Update "Select All" state
+            function updateSelectAllState() {
+                if (!selectAll) return;
+
+                const allChecked = Array.from(permCheckboxes).every(cb => cb.checked);
+                const someChecked = Array.from(permCheckboxes).some(cb => cb.checked);
+
+                selectAll.checked = allChecked;
+                selectAll.indeterminate = !allChecked && someChecked;
+            }
+
+            // Initial state
+            updateModuleCheckboxes();
+            updateSelectAllState();
         });
     </script>
 @endpush

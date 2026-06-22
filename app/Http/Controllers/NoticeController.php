@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Notices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
-class NoticeController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class NoticeController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:notices.view', only: ['index', 'show']),
+            new Middleware('permission:notices.create', only: ['create', 'store']),
+            new Middleware('permission:notices.edit', only: ['edit', 'update']),
+            new Middleware('permission:notices.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $notices = Notices::active()

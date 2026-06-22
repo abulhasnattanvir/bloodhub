@@ -64,7 +64,7 @@
 @can('gallery.view')
     <a href="{{ route('admin.gallery.index') }}"
         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.gallery.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-        <i class="fa-solid fa-photo-film"></i> Gallery
+        <i class="fa-regular fa-images"></i> Gallery
     </a>
 @endcan
 @canany(['video.view', 'video.create'])

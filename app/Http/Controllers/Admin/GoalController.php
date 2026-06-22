@@ -5,8 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Goal;
-class GoalController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class GoalController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:goal.view', only: ['index', 'show']),
+            new Middleware('permission:goal.create', only: ['create', 'store']),
+            new Middleware('permission:goal.edit', only: ['edit', 'update']),
+            new Middleware('permission:goal.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $goals = Goal::latest()->paginate(10);

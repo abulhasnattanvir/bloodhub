@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
-class BlogCategoryController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class BlogCategoryController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:blog-category.view', only: ['index', 'show']),
+            new Middleware('permission:blog-category.create', only: ['create', 'store']),
+            new Middleware('permission:blog-category.edit', only: ['edit', 'update']),
+            new Middleware('permission:blog-category.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $categories = BlogCategory::withCount('posts')->latest()->paginate(10);

@@ -5,10 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContactSetting;
 use Illuminate\Http\Request;
-
-class ContactSettingController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class ContactSettingController extends Controller implements HasMiddleware
 {
-    
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:contact.view', only: ['index', 'show']),
+            new Middleware('permission:contact.create', only: ['create', 'store']),
+            new Middleware('permission:contact.edit', only: ['edit', 'update']),
+            new Middleware('permission:contact.delete', only: ['destroy']),
+        ];
+    }
+
     public function edit()
     {
         $contact = ContactSetting::firstOrCreate(['id' => 1]);

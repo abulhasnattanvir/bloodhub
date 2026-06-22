@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Galleries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
-class GalleryController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class GalleryController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:gallery.view', only: ['index', 'show']),
+            new Middleware('permission:gallery.create', only: ['create', 'store']),
+            new Middleware('permission:gallery.edit', only: ['edit', 'update']),
+            new Middleware('permission:gallery.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $galleries = Galleries::latest()->paginate(12);

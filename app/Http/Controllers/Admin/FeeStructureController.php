@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FeeStructure;
-
-class FeeStructureController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class FeeStructureController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:fee.view', only: ['index', 'show']),
+            new Middleware('permission:fee.create', only: ['create', 'store']),
+            new Middleware('permission:fee.edit', only: ['edit', 'update']),
+            new Middleware('permission:fee.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $fees = FeeStructure::latest()->paginate(20);

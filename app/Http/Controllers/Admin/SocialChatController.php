@@ -5,8 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SocialChat;
-class SocialChatController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class SocialChatController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:socialchat.view', only: ['index', 'show']),
+            new Middleware('permission:socialchat.create', only: ['create', 'store']),
+            new Middleware('permission:socialchat.edit', only: ['edit', 'update']),
+            new Middleware('permission:socialchat.delete', only: ['destroy']),
+        ];
+    }
+
     public function edit()
     {
         $socialchat = SocialChat::first();

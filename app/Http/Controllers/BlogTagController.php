@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\BlogTag;
 use Illuminate\Http\Request;
-
-class BlogTagController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class BlogTagController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:blog-tag.view', only: ['index', 'show']),
+            new Middleware('permission:blog-tag.create', only: ['create', 'store']),
+            new Middleware('permission:blog-tag.edit', only: ['edit', 'update']),
+            new Middleware('permission:blog-tag.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $tags = BlogTag::withCount('posts')->latest()->paginate(15);

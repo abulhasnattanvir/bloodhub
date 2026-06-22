@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ContactMessages;
-
-class ContactMessageController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class ContactMessageController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:message.view', only: ['index', 'show']),
+            new Middleware('permission:message.create', only: ['create', 'store']),
+            new Middleware('permission:message.edit', only: ['edit', 'update']),
+            new Middleware('permission:message.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $messages = ContactMessages::latest()->paginate(15);

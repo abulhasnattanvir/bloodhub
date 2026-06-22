@@ -6,9 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ActivityController extends Controller
+class ActivityController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:activity.view', only: ['index', 'show']),
+            new Middleware('permission:activity.create', only: ['create', 'store']),
+            new Middleware('permission:activity.edit', only: ['edit', 'update']),
+            new Middleware('permission:activity.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $activities = Activity::latest()->paginate(10);

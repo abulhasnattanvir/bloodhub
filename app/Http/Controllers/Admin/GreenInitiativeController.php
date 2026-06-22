@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\GreenInitiative;
 use Illuminate\Support\Facades\Storage;
-
-class GreenInitiativeController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class GreenInitiativeController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:green.view', only: ['index', 'show']),
+            new Middleware('permission:green.create', only: ['create', 'store']),
+            new Middleware('permission:green.edit', only: ['edit', 'update']),
+            new Middleware('permission:green.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $greenInitiatives = GreenInitiative::latest()->paginate(10);

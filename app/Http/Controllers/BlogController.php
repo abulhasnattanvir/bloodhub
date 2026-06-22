@@ -6,9 +6,20 @@ use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
-class BlogController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class BlogController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:blog.view', only: ['index', 'show']),
+            new Middleware('permission:blog.create', only: ['create', 'store']),
+            new Middleware('permission:blog.edit', only: ['edit', 'update']),
+            new Middleware('permission:blog.delete', only: ['destroy']),
+        ];
+    }
+
     // ====================== PUBLIC ROUTES ======================
 
     public function index()

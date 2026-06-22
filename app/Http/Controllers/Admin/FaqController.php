@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use Illuminate\Http\Request;
-
-class FaqController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class FaqController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:faq.view', only: ['index', 'show']),
+            new Middleware('permission:faq.create', only: ['create', 'store']),
+            new Middleware('permission:faq.edit', only: ['edit', 'update']),
+            new Middleware('permission:faq.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $faqs = Faq::latest()->paginate(10);

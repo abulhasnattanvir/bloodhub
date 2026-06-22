@@ -230,26 +230,26 @@ Route::prefix('admin')
         // });
 
         //Contact settings
-        // Route::middleware(['permission:contact.edit'])->group(function () {
+        Route::middleware(['permission:contact.edit'])->group(function () {
             Route::get('/contact/edit', [ContactSettingController::class, 'edit'])->name('contact.edit');
             Route::put('/contact/update', [ContactSettingController::class, 'update'])->name('contact.update');
-        // });
+        });
 
         //Messages
-        // Route::middleware(['permission:message.view'])->group(function () {
+        Route::middleware(['permission:message.view'])->group(function () {
             Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
             Route::get('/messages/{id}', [ContactMessageController::class, 'show'])->name('messages.show');
             Route::patch('/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.mark-read');
             Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
-        // });
+        });
 
         //Finance
-        // Route::middleware(['permission:finance.view'])->group(function () {
+        Route::middleware(['permission:finance.view'])->group(function () {
             Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index')->middleware('role:Admin|Manager');
             Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid')->middleware('role:Admin|Manager');
             Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show')->middleware('role:Admin|Manager');
             Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store')->middleware('role:Admin|Manager');
-        // });
+        });
 
         //Fees
         // Route::middleware(['permission:fee.view'])->group(function () {
@@ -262,12 +262,12 @@ Route::prefix('admin')
             // Route::resource('gallery', GalleryController::class)->names('gallery')->middleware('permission:dashboard.view');
         // });
 
-        //green
-        // Route::middleware(['permission:green.view'])->group(function () {
-        Route::resource('green', GreenInitiativeController::class)
+    //green
+    // Route::middleware(['permission:green.view'])->group(function () {
+    Route::resource('green', GreenInitiativeController::class)
                 ->parameters([
                     'green' => 'greenInitiative'
-        ]);
+                ]);
         // });
 
         // video section
@@ -276,7 +276,7 @@ Route::prefix('admin')
         // });
         
         //Blog
-        // Route::middleware(['permission:blog.view'])->group(function () {
+        Route::middleware(['permission:blog.view'])->group(function () {
             
             Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index')->middleware('permission:dashboard.view');
             Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
@@ -294,7 +294,7 @@ Route::prefix('admin')
             Route::resource('blog/tags', BlogTagController::class)
             ->names('blog.tags')
             ->except(['show']);
-        // });
+        });
 
         //User Control
         // Route::middleware(['permission:users.view'])->group(function () {
@@ -302,33 +302,33 @@ Route::prefix('admin')
         // });
 
         //User Role Setup
-        // Route::middleware(['permission:userrole.index'])->group(function () {
+        Route::middleware(['permission:userrole.index'])->group(function () {
             Route::get('/userrole', [UserRoleController::class, 'index'])->name('userrole.index');
             Route::get('/userrole/{user}/edit', [UserRoleController::class, 'edit'])->name('userrole.edit');
             Route::post('/userrole/{user}/role', [UserRoleController::class, 'assignRole'])->name('userrole.role.assign');
-        // });
+        });
 
         //User Module Assignment
-        // Route::middleware(['permission:usermodule.view'])->group(function () {
+        Route::middleware(['permission:usermodule.view'])->group(function () {
             Route::resource('usermodule', RoleController::class)
                 ->parameters([
                     'usermodule' => 'role'
                 ]);
             Route::post('/usermodule/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('usermodule.permissions.sync');
-        // });
+        });
 
         //Social Chat
-        // Route::middleware(['permission:socialchat.edit'])->group(function () {
+        Route::middleware(['permission:socialchat.edit'])->group(function () {
             Route::get('/socialchat', [SocialChatController::class, 'edit'])->name('socialchat.edit');
             Route::post('/socialchat', [SocialChatController::class, 'update'])->name('socialchat.update');
-        // });
+        });
 
         //Notice
-        // Route::middleware(['permission:notices.index'])->group(function () {
+        Route::middleware(['permission:notices.index'])->group(function () {
             Route::get('/notices', [NoticeController::class, 'adminIndex'])->name('notices.index'); 
             Route::resource('notices', NoticeController::class)->except(['index', 'show']);
             Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
-        // });
+        });
 
         // Notice Ticker
         // Route::middleware(['permission:noticeticker.index'])->group(function () {

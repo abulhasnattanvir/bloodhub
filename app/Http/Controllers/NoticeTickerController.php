@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\NoticeTicker;
 use Illuminate\Http\Request;
-
-class NoticeTickerController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class NoticeTickerController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:noticeticker.view', only: ['index', 'show']),
+            new Middleware('permission:noticeticker.create', only: ['create', 'store']),
+            new Middleware('permission:noticeticker.edit', only: ['edit', 'update']),
+            new Middleware('permission:noticeticker.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $tickers = NoticeTicker::latest()->paginate(20);

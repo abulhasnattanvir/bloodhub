@@ -8,9 +8,20 @@ use App\Models\FeeStructure;
 use App\Models\MemberSubscription;
 use App\Models\Payment;
 use Illuminate\Http\Request;
-
-class MemberFinanceController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class MemberFinanceController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:finance.view', only: ['index', 'show']),
+            new Middleware('permission:finance.create', only: ['create', 'store']),
+            new Middleware('permission:finance.edit', only: ['edit', 'update']),
+            new Middleware('permission:finance.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $members = Member::with('payments')->get();

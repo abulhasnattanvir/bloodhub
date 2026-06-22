@@ -67,12 +67,12 @@
         <i class="fa-solid fa-photo-film"></i> Gallery
     </a>
 @endcan
-@can('video.view')
+@canany(['video.view', 'video.create'])
     <a href="{{ route('admin.videos.index') }}"
         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.videos.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
         <i class="fa-solid fa-photo-film"></i> Videos
     </a>
-@endcan
+@endcanany
 @can('green.view')
     <a href="{{ route('admin.green.index') }}"
         class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.green.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">

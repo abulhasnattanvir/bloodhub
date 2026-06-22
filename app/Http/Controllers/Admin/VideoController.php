@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class VideoController extends Controller
+class VideoController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:video.view', only: ['index', 'show']),
+            new Middleware('permission:video.create', only: ['create', 'store']),
+            new Middleware('permission:video.edit', only: ['edit', 'update']),
+            new Middleware('permission:video.delete', only: ['destroy']),
+        ];
+    }
 
     private function getYoutubeEmbedUrl($url)
     {

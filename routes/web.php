@@ -261,7 +261,7 @@ Route::prefix('admin')
             Route::resource('gallery', GalleryController::class)->names('gallery')->middleware('permission:dashboard.view');
         });
 
-        //green and video section
+        //green
         Route::middleware(['permission:green.view'])->group(function () {
             Route::resource('green', GreenInitiativeController::class)
                 ->parameters([
@@ -269,9 +269,10 @@ Route::prefix('admin')
                 ]);
         });
 
-        Route::middleware(['permission:video.view'])->group(function () {
+        // video section
+        // Route::middleware(['permission:video.view|video.create'])->group(function () {
             Route::resource('videos', VideoController::class);
-        });
+        // });
         
         //Blog
         Route::middleware(['permission:blog.view'])->group(function () {

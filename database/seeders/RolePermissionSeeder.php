@@ -158,7 +158,7 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'usermodule.permission-sync']);
 
         // Role Management
-        Permission::create(['name' => 'userrole.index']);
+        Permission::create(['name' => 'userrole.view']);
         Permission::create(['name' => 'userrole.edit']);
         Permission::create(['name' => 'userrole.role.assign']);
 
@@ -173,14 +173,14 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'socialchat.update']);
 
         // Notice Managment
-        Permission::create(['name' => 'notices.index']);
+        Permission::create(['name' => 'notices.view']);
         Permission::create(['name' => 'notices.create']);
         Permission::create(['name' => 'notices.edit']);
         Permission::create(['name' => 'notices.delete']); 
         Permission::create(['name' => 'notices.download']);
 
         // Notice Ticker Managment
-        Permission::create(['name' => 'noticeticker.index']);
+        Permission::create(['name' => 'noticeticker.view']);
         Permission::create(['name' => 'noticeticker.create']);
         Permission::create(['name' => 'noticeticker.edit']);
         Permission::create(['name' => 'noticeticker.delete']); 

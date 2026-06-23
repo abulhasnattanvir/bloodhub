@@ -138,7 +138,7 @@
     @endcan
 
     <!-- Role Assignment -->
-    @can('userrole.index')
+    @can('userrole.view')
         <a href="{{ route('admin.userrole.index') }}"
             class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.userrole.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
             <i class="fa-solid fa-user-tag mr-3"></i>
@@ -200,16 +200,16 @@
         </a>
     @endcan
 
-    @can('notices.index')
+    @can('notices.view')
         <a href="{{ route('admin.notices.index') }}"
             class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.notices.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
             <i class="fa-solid fa-file"></i> Notices
         </a>
     @endcan
-    @can('noticeticker.index')
+    @can('noticeticker.view')
         <a href="{{ route('admin.notice-ticker.index') }}"
             class="flex items-center gap-3 px-5 py-3 rounded-2xl text-sm {{ request()->routeIs('admin.notice-ticker.*') ? 'bg-red-600 text-white' : 'hover:bg-gray-100' }}">
-            <i class="fa-solid fa-file"></i> Notices Ticker
+            <i class="fa-solid fa-bullhorn"></i> Notices Ticker
         </a>
     @endcan
 </div>

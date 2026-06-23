@@ -6,11 +6,11 @@
         <div class="flex justify-between items-center mb-6">
 
             <h2 class="text-xl font-bold">
-                নোটিশ টিকার
+                Notice Ticker
             </h2>
 
             <a href="{{ route('admin.notice-ticker.create') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg">
-                নতুন যোগ করুন
+                Add New
             </a>
 
         </div>
@@ -19,10 +19,10 @@
 
             <thead>
                 <tr class="border-b">
-                    <th class="text-left p-3">শিরোনাম</th>
-                    <th class="text-left p-3">লিংক</th>
-                    <th class="text-left p-3">স্ট্যাটাস</th>
-                    <th class="text-left p-3">অ্যাকশন</th>
+                    <th class="text-left p-3">Title</th>
+                    <th class="text-left p-3">Link</th>
+                    <th class="text-left p-3">Status</th>
+                    <th class="text-left p-3">Action</th>
                 </tr>
             </thead>
 
@@ -43,11 +43,11 @@
 
                             @if ($ticker->is_active)
                                 <span class="text-green-600">
-                                    সক্রিয়
+                                    Active
                                 </span>
                             @else
                                 <span class="text-red-600">
-                                    নিষ্ক্রিয়
+                                    Inactive
                                 </span>
                             @endif
 
@@ -65,10 +65,10 @@
                                 @csrf
                                 @method('DELETE')
 
-                                <button onclick="return confirm('Delete?')" class="bg-red-500 text-white px-3 py-1 rounded">
+                                <button onclick="return confirm('Are you sure you want to delete this notice ticker?')"
+                                    class="bg-red-500 text-white px-3 py-1 rounded">
 
                                     Delete
-
                                 </button>
 
                             </form>

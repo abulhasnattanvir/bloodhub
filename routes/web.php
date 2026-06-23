@@ -131,15 +131,13 @@ Route::prefix('admin')
     ->group(function () {
 
         //Slider
-        // Route::middleware(['permission:slider.view'])->group(function () {
-            Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
-            Route::get('/sliders/create', [SliderController::class, 'create'])->name('sliders.create');
-            Route::post('/sliders', [SliderController::class, 'store'])->name('sliders.store');
-            Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('sliders.edit');
-            Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
-            Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
-        // });
-
+        Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
+        Route::get('/sliders/create', [SliderController::class, 'create'])->name('sliders.create');
+        Route::post('/sliders', [SliderController::class, 'store'])->name('sliders.store');
+        Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('sliders.edit');
+        Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
+        Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
+        
         //Dashboard
         Route::middleware(['permission:dashboard.view'])->group(function () {
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -152,188 +150,138 @@ Route::prefix('admin')
         Route::resource('/blood-groups', BloodGroupController::class);
             
         //Setting
-        // Route::middleware(['permission:settings.view'])->group(function () {
-            Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-            Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
-        // });
+        Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
 
         //Admin profile routes
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         
         //Page
-        // Route::middleware(['permission:page.view'])->group(function () {
-            Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
-            Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
-            Route::post('/pages/store', [PageController::class, 'store'])->name('pages.store');
-            Route::get('/pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
-            Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
-            Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
-        // });
+        Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
+        Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
+        Route::post('/pages/store', [PageController::class, 'store'])->name('pages.store');
+        Route::get('/pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
+        Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
+        Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 
         //Footer Setting
-        // Route::middleware(['permission:footer.edit'])->group(function () {
-            Route::get('/footer/edit', [FooterSettingController::class, 'edit'])->name('footer.edit');
-            Route::put('/footer/update', [FooterSettingController::class, 'update'])->name('footer.update');
-            Route::post('/newsletter/subscribe', [FooterSettingController::class, 'subscribe'])->name('newsletter.subscribe');
-        // });
+        Route::get('/footer/edit', [FooterSettingController::class, 'edit'])->name('footer.edit');
+        Route::put('/footer/update', [FooterSettingController::class, 'update'])->name('footer.update');
+        Route::post('/newsletter/subscribe', [FooterSettingController::class, 'subscribe'])->name('newsletter.subscribe');
 
         //Member
-        // Route::middleware(['permission:member.view'])->group(function () {
-            Route::get('/members', [MemberController::class, 'index'])->name('members.index');
-            Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
-            Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
-            Route::post('/members/{id}/approve', [MemberController::class, 'approve'])->name('members.approve');
-            Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
-            Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
-            Route::post('/members/{id}/convert-to-donor', [MemberController::class, 'convertToDonor'])
-            ->name('members.convert-to-donor');
-        // });
+        Route::get('/members', [MemberController::class, 'index'])->name('members.index');
+        Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
+        Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
+        Route::post('/members/{id}/approve', [MemberController::class, 'approve'])->name('members.approve');
+        Route::post('/members/{id}/reject', [MemberController::class, 'reject'])->name('members.reject');
+        Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
+        Route::post('/members/{id}/convert-to-donor', [MemberController::class, 'convertToDonor'])
+        ->name('members.convert-to-donor');
 
         //Council
-        // Route::middleware(['permission:council.view'])->group(function () {
-            Route::get('/council', [CouncilController::class, 'index'])->name('council.index');
-            Route::get('/council/create', [CouncilController::class, 'create'])->name('council.create');
-            Route::post('/council', [CouncilController::class, 'store'])->name('council.store');
-            Route::get('/council/{id}/edit', [CouncilController::class, 'edit'])->name('council.edit');
-            Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
-            Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
-        // });
+        Route::get('/council', [CouncilController::class, 'index'])->name('council.index');
+        Route::get('/council/create', [CouncilController::class, 'create'])->name('council.create');
+        Route::post('/council', [CouncilController::class, 'store'])->name('council.store');
+        Route::get('/council/{id}/edit', [CouncilController::class, 'edit'])->name('council.edit');
+        Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
+        Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
 
         //Donation Payment 
-        // Route::middleware(['permission:donation.view'])->group(function () {
-            Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
-            Route::post('/donations/{id}/approve', [DonationController::class, 'approve'])->name('donations.approve');
-            Route::post('/donations/{id}/reject', [DonationController::class, 'reject'])->name('donations.reject');
-            Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
-        // });
+        Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
+        Route::post('/donations/{id}/approve', [DonationController::class, 'approve'])->name('donations.approve');
+        Route::post('/donations/{id}/reject', [DonationController::class, 'reject'])->name('donations.reject');
+        Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
 
         //Menu Setting
-        // Route::middleware(['permission:menu.view'])->group(function () {
-            Route::resource('menus', MenuController::class);
-            Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
-        // });
+        Route::resource('menus', MenuController::class);
+        Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
 
         //Goals
-        // Route::middleware(['permission:goal.view'])->group(function () {
-            Route::resource('goals', AdminGoalController::class);
-        // });
+        Route::resource('goals', AdminGoalController::class);
 
         //activaities
-        // Route::middleware(['permission:activity.view'])->group(function () {
-            Route::resource('activities', AdminActivityController::class);
-        // });
+        Route::resource('activities', AdminActivityController::class);
 
         //Faq
-        // Route::middleware(['permission:faq.view'])->group(function () {
-            Route::resource('faqs', FaqController::class);
-        // });
+        Route::resource('faqs', FaqController::class);
 
         //Contact settings
-        // Route::middleware(['permission:contact.edit'])->group(function () {
-            Route::get('/contact/edit', [ContactSettingController::class, 'edit'])->name('contact.edit');
-            Route::put('/contact/update', [ContactSettingController::class, 'update'])->name('contact.update');
-        // });
+        Route::get('/contact/edit', [ContactSettingController::class, 'edit'])->name('contact.edit');
+        Route::put('/contact/update', [ContactSettingController::class, 'update'])->name('contact.update');
 
         //Messages
-        // Route::middleware(['permission:message.view'])->group(function () {
-            Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
-            Route::get('/messages/{id}', [ContactMessageController::class, 'show'])->name('messages.show');
-            Route::patch('/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.mark-read');
-            Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
-        // });
+        Route::get('/messages', [ContactMessageController::class, 'index'])->name('messages.index');
+        Route::get('/messages/{id}', [ContactMessageController::class, 'show'])->name('messages.show');
+        Route::patch('/messages/{id}/read', [ContactMessageController::class, 'markAsRead'])->name('messages.mark-read');
+        Route::delete('/messages/{id}', [ContactMessageController::class, 'destroy'])->name('messages.destroy');
 
         //Finance
-        // Route::middleware(['permission:finance.view'])->group(function () {
-            Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index')->middleware('role:Admin|Manager');
-            Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid')->middleware('role:Admin|Manager');
-            Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show')->middleware('role:Admin|Manager');
-            Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store')->middleware('role:Admin|Manager');
-        // });
+        Route::get('/finance', [MemberFinanceController::class, 'index'])->name('finance.index')->middleware('role:Admin|Manager');
+        Route::post('/finance/mark-paid/{id}', [MemberFinanceController::class, 'markPaid'])->name('finance.markPaid')->middleware('role:Admin|Manager');
+        Route::get('/finance/member/{member}',[MemberFinanceController::class, 'show'])->name('finance.show')->middleware('role:Admin|Manager');
+        Route::post('/payments',[PaymentController::class, 'store'])->name('payments.store')->middleware('role:Admin|Manager');
 
         //Fees
-        // Route::middleware(['permission:fee.view'])->group(function () {
-            Route::resource('fees',FeeStructureController::class);
-        // });
+        Route::resource('fees',FeeStructureController::class);
         
         //gallery
-        // Route::middleware(['permission:gallery.view'])->group(function () {
-            Route::resource('gallery', GalleryController::class)->names('gallery');
-            // Route::resource('gallery', GalleryController::class)->names('gallery')->middleware('permission:dashboard.view');
-        // });
+        Route::resource('gallery', GalleryController::class)->names('gallery');
 
         //green
-        // Route::middleware(['permission:green.view'])->group(function () {
         Route::resource('green', GreenInitiativeController::class)
                 ->parameters([
                     'green' => 'greenInitiative'
         ]);
-        // });
 
-        // video section
-        // Route::middleware(['permission:video.view|video.create'])->group(function () {
-            Route::resource('videos', VideoController::class);
-        // });
+        //video section
+        Route::resource('videos', VideoController::class);
         
         //Blog
-        // Route::middleware(['permission:blog.view'])->group(function () {
-            
-            Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index')->middleware('permission:dashboard.view');
-            Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
-            Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
-            Route::get('/blog/{post}/edit', [BlogController::class, 'edit'])->name('blog.edit');
-            Route::put('/blog/{post}', [BlogController::class, 'update'])->name('blog.update');
-            Route::delete('/blog/{post}', [BlogController::class, 'destroy'])->name('blog.destroy');
+        Route::get('/blog', [BlogController::class, 'adminIndex'])->name('blog.index')->middleware('permission:dashboard.view');
+        Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
+        Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
+        Route::get('/blog/{post}/edit', [BlogController::class, 'edit'])->name('blog.edit');
+        Route::put('/blog/{post}', [BlogController::class, 'update'])->name('blog.update');
+        Route::delete('/blog/{post}', [BlogController::class, 'destroy'])->name('blog.destroy');
 
-            //Blog Category
-            Route::resource('blog/categories', BlogCategoryController::class)
-                ->names('blog.categories')
-                ->except(['show']);
-
-            // Admin Tag Routes
-            Route::resource('blog/tags', BlogTagController::class)
-            ->names('blog.tags')
+        //Blog Category
+        Route::resource('blog/categories', BlogCategoryController::class)
+            ->names('blog.categories')
             ->except(['show']);
-        // });
+
+        // Admin Tag Routes
+        Route::resource('blog/tags', BlogTagController::class)
+        ->names('blog.tags')
+        ->except(['show']);
 
         //User Control
-        // Route::middleware(['permission:users.view'])->group(function () {
-            Route::resource('users', UserController::class);
-        // });
+        Route::resource('users', UserController::class);
 
         //User Role Setup
-        // Route::middleware(['permission:userrole.index'])->group(function () {
-            Route::get('/userrole', [UserRoleController::class, 'index'])->name('userrole.index');
-            Route::get('/userrole/{user}/edit', [UserRoleController::class, 'edit'])->name('userrole.edit');
-            Route::post('/userrole/{user}/role', [UserRoleController::class, 'assignRole'])->name('userrole.role.assign');
-        // });
+        Route::get('/userrole', [UserRoleController::class, 'index'])->name('userrole.index');
+        Route::get('/userrole/{user}/edit', [UserRoleController::class, 'edit'])->name('userrole.edit');
+        Route::post('/userrole/{user}/role', [UserRoleController::class, 'assignRole'])->name('userrole.role.assign');
 
         //User Module Assignment
-        // Route::middleware(['permission:usermodule.view'])->group(function () {
-            Route::resource('usermodule', RoleController::class)
-                ->parameters([
-                    'usermodule' => 'role'
-                ]);
-            Route::post('/usermodule/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('usermodule.permissions.sync');
-        // });
+        Route::resource('usermodule', RoleController::class)
+            ->parameters([
+                'usermodule' => 'role'
+            ]);
+        Route::post('/usermodule/{role}/permissions', [RoleController::class, 'syncPermissions'])->name('usermodule.permissions.sync');
 
         //Social Chat
-        // Route::middleware(['permission:socialchat.edit'])->group(function () {
-            Route::get('/socialchat', [SocialChatController::class, 'edit'])->name('socialchat.edit');
-            Route::post('/socialchat', [SocialChatController::class, 'update'])->name('socialchat.update');
-        // });
+        Route::get('/socialchat', [SocialChatController::class, 'edit'])->name('socialchat.edit');
+        Route::post('/socialchat', [SocialChatController::class, 'update'])->name('socialchat.update');
 
         //Notice
-        // Route::middleware(['permission:notices.index'])->group(function () {
-            Route::get('/notices', [NoticeController::class, 'adminIndex'])->name('notices.index'); 
-            Route::resource('notices', NoticeController::class)->except(['index', 'show']);
-            Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
-        // });
+        Route::get('/notices', [NoticeController::class, 'adminIndex'])->name('notices.index'); 
+        Route::resource('notices', NoticeController::class)->except(['index', 'show']);
+        Route::get('notices/{id}/download', [NoticeController::class, 'download'])->name('notices.download');
 
         // Notice Ticker
-        // Route::middleware(['permission:noticeticker.index'])->group(function () {
-            Route::resource('notice-ticker',NoticeTickerController::class);
-        // });
+        Route::resource('notice-ticker',NoticeTickerController::class);
 });
 
 require __DIR__.'/auth.php';

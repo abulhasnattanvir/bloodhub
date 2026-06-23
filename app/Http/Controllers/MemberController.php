@@ -15,8 +15,8 @@ class MemberController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('permission:member.view', only: ['index', 'show']),
-            new Middleware('permission:member.create', only: ['create', 'store']),
+            // new Middleware('permission:member.view', only: ['index', 'show']),
+            // new Middleware('permission:member.create', only: ['create', 'store']),
             new Middleware('permission:member.edit', only: ['edit', 'update']),
             new Middleware('permission:member.delete', only: ['destroy']),
         ];

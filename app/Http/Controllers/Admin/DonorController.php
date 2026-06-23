@@ -10,9 +10,20 @@ use App\Models\BloodGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
-class DonorController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class DonorController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:donor.view', only: ['index', 'show']),
+            new Middleware('permission:donor.create', only: ['create', 'store']),
+            new Middleware('permission:donor.edit', only: ['edit', 'update']),
+            new Middleware('permission:donor.delete', only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

@@ -131,14 +131,14 @@ Route::prefix('admin')
     ->group(function () {
 
         //Slider
-        Route::middleware(['permission:slider.view'])->group(function () {
+        // Route::middleware(['permission:slider.view'])->group(function () {
             Route::get('/sliders', [SliderController::class, 'index'])->name('sliders.index');
             Route::get('/sliders/create', [SliderController::class, 'create'])->name('sliders.create');
             Route::post('/sliders', [SliderController::class, 'store'])->name('sliders.store');
             Route::get('/sliders/{slider}/edit', [SliderController::class, 'edit'])->name('sliders.edit');
             Route::put('/sliders/{slider}', [SliderController::class, 'update'])->name('sliders.update');
             Route::delete('/sliders/{slider}', [SliderController::class, 'destroy'])->name('sliders.destroy');
-        });
+        // });
 
         //Dashboard
         Route::middleware(['permission:dashboard.view'])->group(function () {
@@ -146,40 +146,40 @@ Route::prefix('admin')
         });
             
         //Donor Groups
-        Route::resource('/donors', DonorController::class)->middleware('permission:dashboard.view');
+        Route::resource('/donors', DonorController::class);
         
         //Blood groups
-        Route::resource('/blood-groups', BloodGroupController::class)->middleware('permission:dashboard.view');
+        Route::resource('/blood-groups', BloodGroupController::class);
             
         //Setting
-        Route::middleware(['permission:settings.view'])->group(function () {
-            Route::get('/settings', [SettingController::class, 'index'])->name('settings.index')->middleware('permission:dashboard.view');
-            Route::post('/settings', [SettingController::class, 'update'])->name('settings.update')->middleware('permission:dashboard.view');
-        });
+        // Route::middleware(['permission:settings.view'])->group(function () {
+            Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+            Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+        // });
 
         //Admin profile routes
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         
         //Page
-        Route::middleware(['permission:page.view'])->group(function () {
+        // Route::middleware(['permission:page.view'])->group(function () {
             Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
             Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
             Route::post('/pages/store', [PageController::class, 'store'])->name('pages.store');
             Route::get('/pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
             Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
             Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
-        });
+        // });
 
         //Footer Setting
-        Route::middleware(['permission:footer.edit'])->group(function () {
+        // Route::middleware(['permission:footer.edit'])->group(function () {
             Route::get('/footer/edit', [FooterSettingController::class, 'edit'])->name('footer.edit');
             Route::put('/footer/update', [FooterSettingController::class, 'update'])->name('footer.update');
             Route::post('/newsletter/subscribe', [FooterSettingController::class, 'subscribe'])->name('newsletter.subscribe');
-        });
+        // });
 
         //Member
-        Route::middleware(['permission:member.view'])->group(function () {
+        // Route::middleware(['permission:member.view'])->group(function () {
             Route::get('/members', [MemberController::class, 'index'])->name('members.index');
             Route::get('/members/{id}/edit', [MemberController::class, 'edit'])->name('members.edit');
             Route::put('/members/{id}', [MemberController::class, 'update'])->name('members.update');
@@ -188,31 +188,31 @@ Route::prefix('admin')
             Route::delete('/members/{id}', [MemberController::class, 'destroy'])->name('member.destory');
             Route::post('/members/{id}/convert-to-donor', [MemberController::class, 'convertToDonor'])
             ->name('members.convert-to-donor');
-        });
+        // });
 
         //Council
-        Route::middleware(['permission:council.view'])->group(function () {
+        // Route::middleware(['permission:council.view'])->group(function () {
             Route::get('/council', [CouncilController::class, 'index'])->name('council.index');
             Route::get('/council/create', [CouncilController::class, 'create'])->name('council.create');
             Route::post('/council', [CouncilController::class, 'store'])->name('council.store');
             Route::get('/council/{id}/edit', [CouncilController::class, 'edit'])->name('council.edit');
             Route::put('/council/{id}', [CouncilController::class, 'update'])->name('council.update');
             Route::delete('/council/{id}', [CouncilController::class, 'destroy'])->name('council.destroy');
-        });
+        // });
 
         //Donation Payment 
-        Route::middleware(['permission:donation.view'])->group(function () {
+        // Route::middleware(['permission:donation.view'])->group(function () {
             Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
             Route::post('/donations/{id}/approve', [DonationController::class, 'approve'])->name('donations.approve');
             Route::post('/donations/{id}/reject', [DonationController::class, 'reject'])->name('donations.reject');
             Route::delete('/donations/{id}', [DonationController::class, 'destroy'])->name('donations.destroy');
-        });
+        // });
 
         //Menu Setting
-        Route::middleware(['permission:menu.view'])->group(function () {
+        // Route::middleware(['permission:menu.view'])->group(function () {
             Route::resource('menus', MenuController::class);
             Route::post('/menus/sort', [MenuController::class, 'sort'])->name('menus.sort');
-        });
+        // });
 
         //Goals
         // Route::middleware(['permission:goal.view'])->group(function () {

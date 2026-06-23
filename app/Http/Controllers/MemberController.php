@@ -8,9 +8,20 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-
-class MemberController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class MemberController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:member.view', only: ['index', 'show']),
+            new Middleware('permission:member.create', only: ['create', 'store']),
+            new Middleware('permission:member.edit', only: ['edit', 'update']),
+            new Middleware('permission:member.delete', only: ['destroy']),
+        ];
+    }
+
     // FRONTEND FORM
     public function create()
     {

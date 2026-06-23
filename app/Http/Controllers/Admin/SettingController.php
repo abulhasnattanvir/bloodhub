@@ -6,9 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-
-class SettingController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class SettingController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:settings.view', only: ['index', 'show']),
+            new Middleware('permission:settings.create', only: ['create', 'store']),
+            new Middleware('permission:settings.edit', only: ['edit', 'update']),
+            new Middleware('permission:settings.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $settings = Setting::pluck('value', 'key')->toArray();

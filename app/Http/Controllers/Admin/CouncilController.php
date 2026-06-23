@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Council;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-class CouncilController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class CouncilController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:council.view', only: ['index', 'show']),
+            new Middleware('permission:council.create', only: ['create', 'store']),
+            new Middleware('permission:council.edit', only: ['edit', 'update']),
+            new Middleware('permission:council.delete', only: ['destroy']),
+        ];
+    }
+
     // ADMIN LIST
     public function index()
     {

@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\FooterSetting;
 use Illuminate\Http\Request;
-
-class FooterSettingController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class FooterSettingController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:footer.view', only: ['index', 'show']),
+            new Middleware('permission:footer.create', only: ['create', 'store']),
+            new Middleware('permission:footer.edit', only: ['edit', 'update']),
+            new Middleware('permission:footer.delete', only: ['destroy']),
+        ];
+    }
+
     public function edit()
     {
         $footer = FooterSetting::firstOrCreate(['id' => 1]);

@@ -5,8 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\Request;
-class PageController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class PageController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:page.view', only: ['index', 'show']),
+            new Middleware('permission:page.create', only: ['create', 'store']),
+            new Middleware('permission:page.edit', only: ['edit', 'update']),
+            new Middleware('permission:page.delete', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $pages = Page::latest()->get();

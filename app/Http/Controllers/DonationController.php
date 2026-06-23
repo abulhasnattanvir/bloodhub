@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Donation;
 use Illuminate\Http\Request;
-
-class DonationController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class DonationController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:donation.view', only: ['index', 'show']),
+            new Middleware('permission:donation.create', only: ['create', 'store']),
+            new Middleware('permission:donation.edit', only: ['edit', 'update']),
+            new Middleware('permission:donation.delete', only: ['destroy']),
+        ];
+    }
+
     // FRONTEND FORM
     public function create()
     {

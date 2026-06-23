@@ -5,8 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-class SliderController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class SliderController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:slider.view', only: ['index', 'show']),
+            new Middleware('permission:slider.create', only: ['create', 'store']),
+            new Middleware('permission:slider.edit', only: ['edit', 'update']),
+            new Middleware('permission:slider.delete', only: ['destroy']),
+        ];
+    }
+
     // LIST
     public function index()
     {

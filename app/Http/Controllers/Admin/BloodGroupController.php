@@ -7,9 +7,20 @@ use App\Http\Requests\StoreBloodGroupRequest;
 use App\Http\Requests\UpdateBloodGroupRequest;
 use App\Models\BloodGroup;
 use Illuminate\Http\Request;
-
-class BloodGroupController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class BloodGroupController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:bloodgroup.view', only: ['index', 'show']),
+            new Middleware('permission:bloodgroup.create', only: ['create', 'store']),
+            new Middleware('permission:bloodgroup.edit', only: ['edit', 'update']),
+            new Middleware('permission:bloodgroup.delete', only: ['destroy']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */

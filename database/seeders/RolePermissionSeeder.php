@@ -21,6 +21,18 @@ class RolePermissionSeeder extends Seeder
         // Dashboard
         Permission::create(['name' => 'dashboard.view']);
 
+        // Donor
+        Permission::create(['name' => 'donor.view']);
+        Permission::create(['name' => 'donor.create']);
+        Permission::create(['name' => 'donor.edit']);
+        Permission::create(['name' => 'donor.delete']);
+
+        // Blood Group
+        Permission::create(['name' => 'bloodgroup.view']);
+        Permission::create(['name' => 'bloodgroup.create']);
+        Permission::create(['name' => 'bloodgroup.edit']);
+        Permission::create(['name' => 'bloodgroup.delete']);
+
         // Slider
         Permission::create(['name' => 'slider.view']);
         Permission::create(['name' => 'slider.create']);

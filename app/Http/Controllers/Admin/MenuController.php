@@ -5,9 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Menu;
 use Illuminate\Http\Request;
-
-class MenuController extends Controller
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+class MenuController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:menu.view', only: ['index', 'show']),
+            new Middleware('permission:menu.create', only: ['create', 'store']),
+            new Middleware('permission:menu.edit', only: ['edit', 'update']),
+            new Middleware('permission:menu.delete', only: ['destroy']),
+        ];
+    }
 
     public function index()
     {
